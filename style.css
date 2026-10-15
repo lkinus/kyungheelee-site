@@ -1,0 +1,394 @@
+/* 이 파일의 아래쪽 "GENERATED LAYOUT" 구간은 tools/build.py 가 자동 생성합니다. */
+*{box-sizing:border-box}
+html{background:#000;scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}
+body{margin:0;background:#000;color:#fff;font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:27px;letter-spacing:-.017px;overflow-x:hidden}
+p,h2,figure{margin:0}
+h2{font-weight:400}
+a{color:inherit;text-decoration:underline}
+main{display:flex;flex-direction:column;overflow-x:clip}
+main>*{flex:none}
+img{display:block;max-width:none}
+
+/* ---- hero ---- */
+.hero{position:relative;padding:120px 0 0 12vw}
+.hero .name{font-size:15px;line-height:27px;font-weight:700;color:#fff;width:61.76vw}
+.hero .intro{margin-top:18px;width:61.76vw;color:#fff7f7}
+.hero .links{position:absolute;left:87.95vw;top:163.8px;transform:translateX(-100%);text-align:right;letter-spacing:.283px}  /* 오른쪽 끝을 이미지·본문 칼럼의 오른쪽 끝(12vw + 75.95vw)에 맞춘다 */
+.hero .l-a{color:#fff7f7}
+.hero .prj{margin-top:-81px}
+.hero .inl{visibility:hidden}
+.hero .l-b{color:#fff7f7}
+
+/* ---- project header ---- */
+.head{position:relative;margin-top:500px;padding-left:12vw}
+.head h2{font-size:32px;line-height:37px;color:#fff7f7;width:88vw;letter-spacing:0}
+.head .ov{margin-top:33px;height:30px;font-size:15px;line-height:27px;letter-spacing:.283px;color:#e3e3e3}
+.head .desc{margin-top:10px;width:55.33vw;color:#fff}
+.head .info{position:absolute;left:72vw;top:110px;width:227px;color:#fff}
+
+/* ---- screenshots ---- */
+.shot{position:relative;margin-top:20px;margin-left:12vw;width:75.95vw}
+.shot img{width:100%;height:auto;object-fit:cover}
+.shot.pair{display:flex;align-items:flex-start}
+.shot.pair img{flex:none}
+#img-01 img{filter:brightness(.84)}  /* 원본: 첫 이미지 위 16% 검정 오버레이 */
+
+/* ---- footer ---- */
+footer{margin-top:500px;height:100px;background:#fff;color:#000;font-size:14px;line-height:22.4px;text-align:center}
+.f-text{width:40vw;margin:0 auto;padding-top:27.5px}
+
+/* ---- dot navigation ---- */
+.dots{position:fixed;z-index:10;right:3vw;top:calc(50vh + 9.75px);transform:translateY(-50%);display:flex;flex-direction:column;align-items:flex-end;gap:7.5px}
+.dots a{position:relative;display:block;height:16.8px;text-decoration:none;color:#fff;line-height:0;padding-top:2.4px}
+.dots svg{display:block;width:12px;height:12px;overflow:visible}
+.dots circle{fill:transparent;stroke:#fff;stroke-width:4;transition:fill .25s}
+.dots a.on circle{fill:#fff}
+.dots a span{position:absolute;right:27px;top:1.4px;font:12px/14px Arial,Helvetica,sans-serif;letter-spacing:0;color:#fff;opacity:0;visibility:hidden;transition:opacity .3s cubic-bezier(.23,1,.32,1),visibility .3s;white-space:nowrap}
+.dots a:hover span{opacity:1;visibility:visible}
+
+/* ===== GENERATED LAYOUT: desktop (1001px 이상) ===== */
+@media screen and (min-width:1001px){
+.head{padding-bottom:50px}
+  .hero{padding-bottom:600px;min-height:0px}
+  #freestream{margin-top:0px}
+  #img-01{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:400px;min-height:0}
+  #img-01 img{aspect-ratio:1.751}
+  #overhaul{margin-top:0px}
+  #img-02{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:40px}
+  #img-02 img{aspect-ratio:1.627}
+  #img-03{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:40px}
+  #img-03 img{aspect-ratio:1.627}
+  #img-04{margin-top:0px;margin-left:11.889vw;width:75.951vw;padding-bottom:20px}
+  #img-04 img{aspect-ratio:1.627}
+  #img-05{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:400px;min-height:0}
+  #img-05 img{aspect-ratio:9.602}
+  #mobile-proposal{margin-top:0px;min-height:235.5px}
+  #img-06{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:400px;min-height:0}
+  #img-06 img{aspect-ratio:1.751}
+  #sling-studio{margin-top:0px;min-height:260.7px}
+  #img-07{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-07 img{aspect-ratio:1.751}
+  #img-08-09{margin-top:0px;margin-left:12vw;width:76vw;gap:20px;padding-bottom:20px}
+  #img-08-09 img{flex:1 1 0;min-width:0;width:auto;aspect-ratio:0.814}
+  #img-10{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-10 img{aspect-ratio:1.751}
+  #img-11{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-11 img{aspect-ratio:1.751}
+  #img-12{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-12 img{aspect-ratio:1.751}
+  #img-13{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:400px;min-height:0}
+  #img-13 img{aspect-ratio:9.602}
+  #dish-mobile{margin-top:0px;min-height:285.9px}
+  #img-14{margin-top:0px;margin-left:12vw;width:75.868vw;padding-bottom:400px;min-height:0}
+  #img-14 img{aspect-ratio:1.627}
+  #adobe-rover{margin-top:0px;min-height:241px}
+  #img-15{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-15 img{aspect-ratio:1.627}
+  #img-16{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-16 img{aspect-ratio:1.627}
+  #img-17{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-17 img{aspect-ratio:1.627}
+  #img-18{margin-top:0px;margin-left:12vw;width:75.861vw;padding-bottom:400px;min-height:0}
+  #img-18 img{aspect-ratio:1.627}
+  #adobe-davinci{margin-top:0px;min-height:235.5px}
+  #img-19{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-19 img{aspect-ratio:1.627}
+  #img-20{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-20 img{aspect-ratio:1.627}
+  #img-21{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-21 img{aspect-ratio:1.627}
+  #img-22{margin-top:0px;margin-left:12vw;width:75.868vw;padding-bottom:400px;min-height:0}
+  #img-22 img{aspect-ratio:1.627}
+  #speedgrade-touch{margin-top:0px;min-height:235.5px}
+  #img-23{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-23 img{aspect-ratio:1.627}
+  #img-24{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-24 img{aspect-ratio:1.627}
+  #img-25{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-25 img{aspect-ratio:1.627}
+  #img-26{margin-top:0px;margin-left:12vw;width:75.868vw;padding-bottom:400px;min-height:0}
+  #img-26 img{aspect-ratio:1.627}
+  #speedgrade-cs7{margin-top:0px;min-height:260.8px}
+  #img-27{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:80px}
+  #img-27 img{aspect-ratio:1.36}
+  #img-28{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-28 img{aspect-ratio:1.627}
+  #img-29{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:20px}
+  #img-29 img{aspect-ratio:1.627}
+  #img-30{margin-top:0px;margin-left:12vw;width:75.868vw;padding-bottom:400px;min-height:0}
+  #img-30 img{aspect-ratio:1.627}
+  #kodak-black-fade{margin-top:0px;min-height:260.8px}
+  #img-31{margin-top:0px;margin-left:12vw;width:75.951vw;padding-bottom:400px;min-height:0}
+  #img-31 img{aspect-ratio:1.627}
+  #kodak-fire{margin-top:0px;min-height:235.5px}
+  #img-32{margin-top:0px;margin-left:12vw;width:75.868vw;padding-bottom:400px;min-height:0}
+  #img-32 img{aspect-ratio:1.627}
+  #channel-hosting{margin-top:0px;min-height:260.7px}
+  #img-33{margin-top:0px;margin-left:12vw;width:75.868vw;padding-bottom:400px;min-height:0}
+  #img-33 img{aspect-ratio:1.779}
+  #tv-baduk{margin-top:0px;min-height:241px}
+  #img-34{margin-top:0px;margin-left:12vw;width:75.868vw;padding-bottom:400px;min-height:0}
+  #img-34 img{aspect-ratio:1.779}
+  #lg-iptv{margin-top:0px;min-height:241.5px}
+  #img-35{margin-top:0px;margin-left:12vw;width:75.868vw;padding-bottom:400px;min-height:0}
+  #img-35 img{aspect-ratio:1.779}
+  #kt-media{margin-top:0px;min-height:241.6px}
+  #img-36{margin-top:0px;margin-left:12vw;width:75.868vw;padding-bottom:400px;min-height:0}
+  #img-36 img{aspect-ratio:1.779}
+  footer{margin-top:0px}
+}
+
+@media screen and (max-width:1000px){
+.head{padding-bottom:40px}
+.hero{padding-left:10vw}
+.hero .name,.hero .intro{width:74.86vw}
+.hero .prj{margin-top:0}
+.hero .links{position:static;transform:none;text-align:left;margin-top:22px;width:79.5vw;visibility:hidden}
+.hero .inl{visibility:visible}
+.head{padding-left:10vw}
+.head h2{width:79.58vw}
+.head .desc{width:73.78vw}
+.head .info{position:static;margin-top:20.2px;width:auto}
+.shot{margin-left:10vw;width:80vw}
+.f-text{width:50vw;padding-top:27.6px}
+.dots{gap:4.43px}
+.dots svg{width:15.875px}
+.dots a span{display:none}
+  .hero{padding-bottom:297px;min-height:0px}
+  .hero .links{height:81px}
+  #freestream{margin-top:0px}
+  #img-01{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-01 img{aspect-ratio:1.754}
+  #overhaul{margin-top:0px}
+  #img-02{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-02 img{aspect-ratio:1.627}
+  #img-03{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-03 img{aspect-ratio:1.627}
+  #img-04{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-04 img{aspect-ratio:1.627}
+  #img-05{margin-top:0px;margin-left:10.011vw;width:79.989vw;padding-bottom:400px;min-height:0}
+  #img-05 img{aspect-ratio:9.599}
+  #mobile-proposal{margin-top:0px;min-height:321.1px}
+  #img-06{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-06 img{aspect-ratio:1.754}
+  #sling-studio{margin-top:0px}
+  #img-07{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-07 img{aspect-ratio:1.754}
+  #img-08-09{margin-top:0px;margin-left:10vw;width:80vw;gap:20px;padding-bottom:300px}
+  #img-08-09 img{flex:1 1 0;min-width:0;width:auto;aspect-ratio:0.814}
+  #img-10{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-10 img{aspect-ratio:1.754}
+  #img-11{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-11 img{aspect-ratio:1.754}
+  #img-12{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-12 img{aspect-ratio:1.754}
+  #img-13{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-13 img{aspect-ratio:1.754}
+  #dish-mobile{margin-top:0px}
+  #img-14{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-14 img{aspect-ratio:1.777}
+  #adobe-rover{margin-top:0px}
+  #img-15{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-15 img{aspect-ratio:1.754}
+  #img-16{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-16 img{aspect-ratio:1.754}
+  #img-17{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-17 img{aspect-ratio:1.754}
+  #img-18{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-18 img{aspect-ratio:1.777}
+  #adobe-davinci{margin-top:0px;min-height:321.1px}
+  #img-19{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-19 img{aspect-ratio:1.754}
+  #img-20{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-20 img{aspect-ratio:1.754}
+  #img-21{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-21 img{aspect-ratio:1.754}
+  #img-22{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-22 img{aspect-ratio:1.777}
+  #speedgrade-touch{margin-top:0px;min-height:321.1px}
+  #img-23{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-23 img{aspect-ratio:1.754}
+  #img-24{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-24 img{aspect-ratio:1.754}
+  #img-25{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-25 img{aspect-ratio:1.754}
+  #img-26{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-26 img{aspect-ratio:1.777}
+  #speedgrade-cs7{margin-top:0px}
+  #img-27{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-27 img{aspect-ratio:1.36}
+  #img-28{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-28 img{aspect-ratio:1.754}
+  #img-29{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:20px}
+  #img-29 img{aspect-ratio:1.754}
+  #img-30{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-30 img{aspect-ratio:1.777}
+  #kodak-black-fade{margin-top:0px;min-height:321.1px}
+  #img-31{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-31 img{aspect-ratio:1.754}
+  #kodak-fire{margin-top:0px;min-height:321.2px}
+  #img-32{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-32 img{aspect-ratio:1.777}
+  #channel-hosting{margin-top:0px}
+  #img-33{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-33 img{aspect-ratio:1.777}
+  #tv-baduk{margin-top:0px}
+  #img-34{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-34 img{aspect-ratio:1.777}
+  #lg-iptv{margin-top:0px;min-height:321.2px}
+  #img-35{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-35 img{aspect-ratio:1.777}
+  #kt-media{margin-top:0px;min-height:321.1px}
+  #img-36{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:400px;min-height:0}
+  #img-36 img{aspect-ratio:1.777}
+  footer{margin-top:0px}
+}
+
+@media screen and (max-width:750px){
+.hero .links{margin-top:20px;width:77.9vw}
+.hero .l-a{font-size:13.1628px;line-height:23.693px}
+.head .ov{font-size:13.1628px;line-height:23.693px}
+.head .info{margin-top:20px}
+.f-text{padding-top:16.8px}
+.dots{gap:5.78px}
+.dots svg{width:6.875px}
+  .hero{padding-bottom:184px;min-height:0px}
+  .hero .links{height:96px}
+  #overhaul{margin-top:0px}
+  #freestream{margin-top:0px;min-height:509.3px}
+  #img-01{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-01 img{aspect-ratio:1.775}
+  #img-02{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-02 img{aspect-ratio:1.627}
+  #img-04{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-04 img{aspect-ratio:1.627}
+  #img-03{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-03 img{aspect-ratio:1.627}
+  #img-05{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-05 img{aspect-ratio:9.6}
+  #mobile-proposal{margin-top:0px;min-height:484.1px}
+  #img-06{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-06 img{aspect-ratio:1.775}
+  #sling-studio{margin-top:0px;min-height:484.1px}
+  #img-07{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-07 img{aspect-ratio:1.775}
+  #img-10{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-10 img{aspect-ratio:1.775}
+  #img-11{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-11 img{aspect-ratio:1.775}
+  #img-12{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-12 img{aspect-ratio:1.775}
+  #img-13{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-13 img{aspect-ratio:1.775}
+  #img-08-09{margin-top:0px;margin-left:10vw;width:80vw;gap:10px;padding-bottom:200px}
+  #img-08-09 img{flex:1 1 0;min-width:0;width:auto;aspect-ratio:0.814}
+  #dish-mobile{margin-top:0px;min-height:484.1px}
+  #img-14{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-14 img{aspect-ratio:1.777}
+  #adobe-rover{margin-top:0px;min-height:472.3px}
+  #img-15{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-15 img{aspect-ratio:1.775}
+  #img-16{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-16 img{aspect-ratio:1.775}
+  #img-17{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-17 img{aspect-ratio:1.775}
+  #img-18{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-18 img{aspect-ratio:1.777}
+  #adobe-davinci{margin-top:0px;min-height:396.7px}
+  #img-19{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-19 img{aspect-ratio:1.775}
+  #img-20{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-20 img{aspect-ratio:1.775}
+  #img-21{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-21 img{aspect-ratio:1.775}
+  #img-22{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-22 img{aspect-ratio:1.777}
+  #speedgrade-touch{margin-top:0px;min-height:484.1px}
+  #img-23{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-23 img{aspect-ratio:1.775}
+  #img-24{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-24 img{aspect-ratio:1.775}
+  #img-25{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-25 img{aspect-ratio:1.775}
+  #img-26{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-26 img{aspect-ratio:1.777}
+  #speedgrade-cs7{margin-top:0px}
+  #img-27{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-27 img{aspect-ratio:1.36}
+  #img-28{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-28 img{aspect-ratio:1.775}
+  #img-29{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:10px}
+  #img-29 img{aspect-ratio:1.775}
+  #img-30{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-30 img{aspect-ratio:1.777}
+  #kodak-black-fade{margin-top:0px;min-height:484.1px}
+  #img-31{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-31 img{aspect-ratio:1.775}
+  #kodak-fire{margin-top:0px;min-height:484px}
+  #channel-hosting{margin-top:0px}
+  #img-32{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-32 img{aspect-ratio:1.777}
+  #img-33{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-33 img{aspect-ratio:1.777}
+  #tv-baduk{margin-top:0px;min-height:484.1px}
+  #img-34{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-34 img{aspect-ratio:1.777}
+  #lg-iptv{margin-top:0px;min-height:484.2px}
+  #img-35{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-35 img{aspect-ratio:1.777}
+  #kt-media{margin-top:0px;min-height:484.2px}
+  #img-36{margin-top:0px;margin-left:10vw;width:80vw;padding-bottom:200px;min-height:0}
+  #img-36 img{aspect-ratio:1.777}
+  footer{margin-top:0px}
+  #hero{order:0}
+  #freestream{order:1}
+  #img-01{order:2}
+  #overhaul{order:3}
+  #img-02{order:4}
+  #img-03{order:5}
+  #img-04{order:6}
+  #img-05{order:7}
+  #mobile-proposal{order:8}
+  #img-06{order:9}
+  #sling-studio{order:10}
+  #img-07{order:11}
+  #img-08-09{order:12}
+  #img-10{order:13}
+  #img-11{order:14}
+  #img-12{order:15}
+  #img-13{order:16}
+  #dish-mobile{order:17}
+  #img-14{order:18}
+  #adobe-rover{order:19}
+  #img-15{order:20}
+  #img-16{order:21}
+  #img-17{order:22}
+  #img-18{order:23}
+  #adobe-davinci{order:24}
+  #img-19{order:25}
+  #img-20{order:26}
+  #img-21{order:27}
+  #img-22{order:28}
+  #speedgrade-touch{order:29}
+  #img-23{order:30}
+  #img-24{order:31}
+  #img-25{order:32}
+  #img-26{order:33}
+  #speedgrade-cs7{order:34}
+  #img-27{order:35}
+  #img-28{order:36}
+  #img-29{order:37}
+  #img-30{order:38}
+  #kodak-black-fade{order:39}
+  #img-31{order:40}
+  #kodak-fire{order:41}
+  #img-32{order:42}
+  #channel-hosting{order:43}
+  #img-33{order:44}
+  #tv-baduk{order:45}
+  #img-34{order:46}
+  #lg-iptv{order:47}
+  #img-35{order:48}
+  #kt-media{order:49}
+  #img-36{order:50}
+}
