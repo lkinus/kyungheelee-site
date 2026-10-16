@@ -1,9 +1,10 @@
+@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-display:block;src:url(fonts/Archivo-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 /* 이 파일의 아래쪽 "GENERATED LAYOUT" 구간은 tools/build.py 가 자동 생성합니다. */
 *{box-sizing:border-box}
-html{background:#000;scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}
-body{margin:0;background:#000;color:#fff;font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:27px;letter-spacing:-.017px;overflow-x:hidden}
+html{background:#0b0b0c;scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}
+body{margin:0;background:#0b0b0c;color:#d6d4cf;font-family:Archivo,Helvetica,"Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:27px;letter-spacing:-.017px;overflow-x:hidden}
 p,h2,figure{margin:0}
-h2{font-weight:400}
+h2{font-weight:300}
 a{color:inherit;text-decoration:underline}
 main{display:flex;flex-direction:column;overflow-x:clip}
 main>*{flex:none}
@@ -11,20 +12,21 @@ img{display:block;max-width:none}
 
 /* ---- hero ---- */
 .hero{position:relative;padding:120px 0 0 12vw}
-.hero .name{font-size:15px;line-height:27px;font-weight:700;color:#fff;width:61.76vw}
-.hero .intro{margin-top:18px;width:61.76vw;color:#fff7f7}
+.hero .name{font-size:15px;line-height:27px;font-weight:600;color:#fff;width:61.76vw}
+.hero .intro{margin-top:18px;width:61.76vw;color:#d6d4cf}
 .hero .links{position:absolute;left:87.95vw;top:163.8px;transform:translateX(-100%);text-align:right;letter-spacing:.283px}  /* 오른쪽 끝을 이미지·본문 칼럼의 오른쪽 끝(12vw + 75.95vw)에 맞춘다 */
-.hero .l-a{color:#fff7f7}
+.hero .l-a{color:#fff}
 .hero .prj{margin-top:-81px}
 .hero .inl{visibility:hidden}
-.hero .l-b{color:#fff7f7}
+.hero .l-b{color:#fff}
+.hero .prj a,.hero .inl a{color:#fff}
 
 /* ---- project header ---- */
 .head{position:relative;margin-top:500px;padding-left:12vw}
-.head h2{font-size:32px;line-height:37px;color:#fff7f7;width:88vw;letter-spacing:0}
-.head .ov{margin-top:33px;height:30px;font-size:15px;line-height:27px;letter-spacing:.283px;color:#e3e3e3}
-.head .desc{margin-top:10px;width:55.33vw;color:#fff}
-.head .info{position:absolute;left:72vw;top:110px;width:227px;color:#fff}
+.head h2{font-size:32px;line-height:37px;color:#fff;width:88vw;letter-spacing:-.03em}
+.head .ov{margin-top:33px;height:30px;font-size:15px;line-height:27px;letter-spacing:.283px;color:#83838a}
+.head .desc{margin-top:10px;width:55.33vw;color:#d6d4cf}
+.head .info{position:absolute;left:72vw;top:110px;width:227px;color:#d6d4cf}
 
 /* ---- screenshots ---- */
 .shot{position:relative;margin-top:20px;margin-left:12vw;width:75.95vw}
@@ -34,7 +36,7 @@ img{display:block;max-width:none}
 #img-01 img{filter:brightness(.84)}  /* 원본: 첫 이미지 위 16% 검정 오버레이 */
 
 /* ---- footer ---- */
-footer{margin-top:500px;height:100px;background:#fff;color:#000;font-size:14px;line-height:22.4px;text-align:center}
+footer{margin-top:500px;height:100px;background:#0b0b0c;color:#83838a;font-size:14px;line-height:22.4px;text-align:center}
 .f-text{width:40vw;margin:0 auto;padding-top:27.5px}
 
 /* ---- dot navigation ---- */
