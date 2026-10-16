@@ -13,8 +13,8 @@ img{display:block;max-width:none}
 /* ---- hero ---- */
 .hero{position:relative;padding:120px 0 0 12vw}
 .hero .name{font-size:21px;line-height:27px;font-weight:600;color:#fff;width:61.76vw}
-.hero .intro{margin-top:18px;width:61.76vw;color:#d6d4cf}
-.hero .links{position:absolute;left:87.95vw;top:163.8px;transform:translateX(-100%);text-align:right;letter-spacing:.283px}  /* 오른쪽 끝을 이미지·본문 칼럼의 오른쪽 끝(12vw + 75.95vw)에 맞춘다 */
+.hero .intro{margin-top:45px;width:61.76vw;color:#d6d4cf}
+.hero .links{position:absolute;left:87.95vw;top:190.8px;transform:translateX(-100%);text-align:right;letter-spacing:.283px}  /* 오른쪽 끝을 이미지·본문 칼럼의 오른쪽 끝(12vw + 75.95vw)에 맞춘다 */
 .hero .l-a{color:#fff}
 .hero .prj{margin-top:-81px}
 .hero .inl{visibility:hidden}
