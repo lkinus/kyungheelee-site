@@ -5,8 +5,7 @@ html{background:#0b0b0c;scroll-behavior:smooth;-webkit-text-size-adjust:100%;ove
 body{margin:0;background:#0b0b0c;color:#d6d4cf;font-family:Archivo,Helvetica,"Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:27px;letter-spacing:-.017px;overflow-x:hidden}
 p,h2,figure{margin:0}
 h2{font-weight:300}
-a{color:#e8b86d;text-decoration:none}
-a:hover{text-decoration:underline}
+a{color:inherit;text-decoration:underline}
 main{display:flex;flex-direction:column;overflow-x:clip}
 main>*{flex:none}
 img{display:block;max-width:none}
@@ -20,6 +19,7 @@ img{display:block;max-width:none}
 .hero .prj{margin-top:-81px}
 .hero .inl{visibility:hidden}
 .hero .l-b{color:#fff}
+.hero .prj a,.hero .inl a{color:#fff}
 
 /* ---- project header ---- */
 .head{position:relative;margin-top:500px;padding-left:12vw}
