@@ -19,10 +19,14 @@
       f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&controls=0' +
         '&playsinline=1&modestbranding=1&rel=0&disablekb=1&iv_load_policy=3&fs=0&enablejsapi=1';
       f.allow = 'autoplay; encrypted-media'; f.title = 'The Walking Dead preview'; f.tabIndex = -1;
-      // 플레이어 UI(재생/앞/뒤 버튼 등)가 잠깐 보이지 않도록, 실제로 재생이 시작된 뒤 2초 지나서 페이드인
-      var shown = false;
-      function show() { if (shown) return; shown = true; setTimeout(function () { box.classList.add('on'); }, 2000); }
+      // 화면에 들어온 지 1.5초 뒤에 영상이 처음부터 재생되며 보이게 한다 (소리는 항상 꺼짐).
+      // 재생 준비가 1.5초보다 늦으면 재생이 시작되는 즉시 보인다.
+      var t0 = Date.now(), shown = false;
       function cmd(fn, args) { f.contentWindow.postMessage(JSON.stringify({ event: 'command', func: fn, args: args || [] }), '*'); }
+      function show() {
+        if (shown) return; shown = true;
+        setTimeout(function () { cmd('mute'); cmd('seekTo', [0, true]); cmd('playVideo'); box.classList.add('on'); }, Math.max(0, 1500 - (Date.now() - t0)));
+      }
       // 반복은 YouTube 의 loop/playlist 대신 직접 처리 (playlist 모드는 이전/다음 버튼과 재생 오버레이를 띄움)
       window.addEventListener('message', function (e) {
         if (e.source !== f.contentWindow) return;
