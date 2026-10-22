@@ -268,7 +268,7 @@ and improve UX and features</div><div class="a" data-id="0:615" style="left:34.8
     });
     [].slice.call(document.querySelectorAll('.gl')).forEach(function(g){ g.style.left=((gl-cl)/k)+'px'; });
     /* 왼쪽 메뉴는 eunsungux 처럼 페이지 왼쪽 가장자리(여백 24 + 안쪽 32) 쪽에 붙인다 */
-    nav.style.left=((vw-Math.min(1240,vw-48))/2+32)+'px'; nav.style.display=(full&&vw>=1180)?'':'none';
+    nav.style.left=((vw-Math.min(1240,vw-48))/2+32)+'px'; nav.style.display=(full&&vw>=1000)?'':'none';
     root.classList.add('ready');
     measure(); update();
 
