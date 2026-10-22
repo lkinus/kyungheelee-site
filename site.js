@@ -10,7 +10,7 @@
 
   // TV 목업 영상.
   //  - 페이지를 열 때는 아무것도 재생하지 않는다.
-  //  - 스크롤해서 "Sling TV OVERHAUL" 헤더가 보이고 TV 화면도 화면에 들어오면 1.5초 뒤에 음소거 예고편을 재생한다
+  //  - 스크롤해서 TV 화면이 보이기 시작하면 (위에서 내려오든 아래에서 올라오든) 1.5초 뒤에 음소거 예고편을 재생한다
   //    (배경 사진 위로 페이드인). 영상은 계속 반복된다. 소리는 항상 꺼져 있다.
   //  - TV 화면(사진)을 클릭하면 일시정지 / 재생이 번갈아 된다. 일시정지하면 영상은 사진으로 페이드아웃된다
   //    (YouTube 가 가운데에 띄우는 일시정지 아이콘이 보이지 않게).
@@ -50,7 +50,7 @@
         if (vis && !tvVisible) { tvVisible = true; if (!started) since = Math.max(since, Date.now()); }
         if (!vis) tvVisible = false;
         if (vis) comeBack(); else goAway();
-      }, { threshold: 0.4 }).observe(tv.parentNode);
+      }, { threshold: 0.25 }).observe(tv.parentNode);
       // 다른 탭으로 갔다 오는 경우도 같은 방식으로 처리한다
       document.addEventListener('visibilitychange', function () { if (document.hidden) goAway(); else comeBack(); });
       // 반복은 YouTube 의 loop/playlist 대신 직접 처리한다 (playlist 모드는 이전/다음 버튼을 띄우고, 영상이 끝까지 가면
@@ -84,11 +84,11 @@
     fig.style.cursor = 'pointer';
     fig.addEventListener('click', function () { if (!booted) boot(true); else api.click(); });
     if (!reduced) {
-      var trigger = document.getElementById('overhaul') || tv.parentNode;
+      // TV 화면이 보이기 시작하면(위에서 내려오든 아래에서 올라오든) 영상을 준비하고 1.5초 뒤에 재생한다
       new IntersectionObserver(function (es, ob) {
         if (!es[0].isIntersecting) return;
         ob.disconnect(); boot(false);
-      }, { threshold: 0.3 }).observe(trigger);
+      }, { threshold: 0.25 }).observe(tv.parentNode);
     }
   }
   window.addEventListener('scroll', update, { passive: true });
