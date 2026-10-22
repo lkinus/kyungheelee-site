@@ -401,7 +401,7 @@ footer{margin-top:500px;height:100px;background:#0b0b0c;color:#83838a;font-size:
 .tvscr .vid{inset:0;opacity:0;transition:opacity 1.4s ease;overflow:hidden;
   -webkit-mask-image:linear-gradient(90deg,transparent 22%,#000 52%);mask-image:linear-gradient(90deg,transparent 22%,#000 52%)}
 .tvscr .vid.on{opacity:1}
-.tvscr .vid iframe{position:absolute;top:0;left:50%;width:calc(var(--u)*1920);height:calc(var(--u)*1080);transform:translateX(-50%) scale(1.25);border:0}
+.tvscr .vid iframe{pointer-events:none;position:absolute;top:0;left:50%;width:calc(var(--u)*1920);height:calc(var(--u)*1080);transform:translateX(-50%) scale(1.25);border:0}
 .tvscr .shade{inset:0;background:linear-gradient(90deg,rgba(18,20,40,.94) 0,rgba(18,20,40,.62) 38%,rgba(18,20,40,0) 66%),linear-gradient(0deg,rgba(18,20,40,.98) 0,rgba(18,20,40,0) 36%)}
 .tvscr .navbg{background:rgba(14,15,34,.92)}
 .tvscr .ic{fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.55;color:#fff}
