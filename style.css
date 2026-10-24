@@ -33,7 +33,6 @@ img{display:block;max-width:none}
 .shot img{width:100%;height:auto;object-fit:cover}
 .shot.pair{display:flex;align-items:flex-start}
 .shot.pair img{flex:none}
-#img-01 img{filter:brightness(.84)}
 
 /* ---- footer ---- */
 footer{margin-top:500px;height:100px;background:#0b0b0c;color:#83838a;font-size:14px;line-height:22.4px;text-align:center}
