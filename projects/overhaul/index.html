@@ -71,6 +71,15 @@ hr+.lbl{margin-top:0}
 .evt th,.evt td{padding:12px 14px;vertical-align:top;border-top:1px solid rgba(255,255,255,.1);border-left:1px solid rgba(255,255,255,.1)}
 .evt th:first-child,.evt td:first-child{border-left:0}
 .evt thead th{border-top:0;color:#fff;font-weight:600}
+.evt2{font-size:16px;min-width:0}
+.evt.evt2 thead th:first-child{width:50%}
+.evt2 td:first-child{color:#adadb2}
+.evt2 td:last-child{color:#adadb2}
+.evw2{background:none;border-radius:0}
+.evw2 th,.evw2 td{border-left:0}
+.evw2 th:first-child,.evw2 td:first-child{padding-left:0}
+.evw2 thead th{border-bottom:1px solid rgba(255,255,255,.2)}
+.evw2 .evt tbody th{color:#adadb2}
 .evt tbody th{color:#fff;font-weight:600;width:15%}
 .evt thead th:first-child{width:15%}
 
@@ -92,7 +101,35 @@ hr+.lbl{margin-top:0}
 .ft a b{font:600 28px/1 'Overused Grotesk',sans-serif;color:#fff;transition:color .2s}
 .ft a:hover{background:#26262c;color:#fff}
 .lbl[id]{scroll-margin-top:96px}
+.op{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:40px 0}
+.opi{position:relative;padding:28px;border-radius:6px;background:#1b1b1f}
+.opi h3{margin:0 0 16px;font:600 17px/1.4 'Overused Grotesk',sans-serif;color:#fff}
+.opi ul{margin:0;padding-left:20px;color:#adadb2}
+.opi li{margin:0 0 8px;font:400 15px/1.55 'Overused Grotesk',sans-serif}
+.opi li:last-child{margin-bottom:0}
+.opck{position:absolute;top:-16px;left:50%;margin-left:-16px;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:#fff}
+@media (max-width:760px){.op{grid-template-columns:1fr;gap:28px}}
+.qt{display:flex;flex-direction:column;gap:36px;margin:40px 0;padding:32px 32px 36px;border-radius:6px;background:#1b1b1f}
+.qr{display:flex;flex-direction:column;gap:10px;max-width:88%}
+.ql{font:400 13px/1.4 'Overused Grotesk',sans-serif;color:#83838a}
+.qb{display:flex;align-items:flex-end;gap:12px}
+.qb img{flex:none;width:36px;height:36px}
+.qb p{margin:0;padding:16px 22px;border-radius:22px 22px 22px 4px;background:#f0f0f0;border:1px solid #dedede;color:#000;font:400 15px/1.6 'Overused Grotesk',sans-serif}
+.qrr{align-self:flex-end}
+.qrr .ql{text-align:right}
+.qrr .qb{flex-direction:row-reverse}
+.qrr .qb p{border-radius:22px 22px 4px 22px}
+@media (max-width:760px){.qt{padding:20px}.qr{max-width:100%}}
 @media (max-width:760px){.ft{grid-template-columns:repeat(2,1fr)}}
+.evbd{margin-top:8px}.evbd li{font-size:17px;line-height:1.5}
+.vis:not(.hero){cursor:zoom-in}
+#lb{position:fixed;inset:0;z-index:200;display:none;overflow:auto;background:rgba(10,10,10,.95);padding:64px 24px 48px;-webkit-overflow-scrolling:touch}
+#lb.on{display:block}
+#lb .lbw{position:relative;margin:0 auto}
+#lb .lbw .vin{transform-origin:0 0;visibility:visible}
+#lb .lbx{position:fixed;top:16px;right:20px;z-index:201;appearance:none;border:0;background:rgba(255,255,255,.12);color:#fff;width:40px;height:40px;border-radius:50%;font:300 24px/40px 'Overused Grotesk',sans-serif;cursor:pointer}
+#lb .lbx:hover{background:#ff0000}
+body.lbo{overflow:hidden}
 
 .tog{margin:40px 0}
 .tgl{display:flex;width:max-content;margin:0 auto 28px;padding:3px;gap:0;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
@@ -149,7 +186,7 @@ Engagement</div><div class="a" data-id="0:142" style="left:865.00px;top:401.96px
 </div>
 <details class="ev" id="evidence">
 <summary><span class="evh"><span>See the evidence behind each pattern</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
-<div class="evw"><table class="evt">
+<div class="evw evw2"><table class="evt">
 <thead><tr><th></th><th>Wayfinding breaks down</th><th>Choice overload slows discovery</th><th>Relevance isn’t the default</th><th>Exploration interrupts viewing</th></tr></thead>
 <tbody>
 <tr><th>Interview</th><td>Users felt lost across surfaces — the app worked differently on each device</td><td>Users gave up browsing before finding something to watch</td><td>Recommendations felt random, not personal — users ignored them</td><td>Users expected to browse while watching, like channel-surfing on cable</td></tr>
@@ -182,28 +219,43 @@ Engagement</div><div class="a" data-id="0:142" style="left:865.00px;top:401.96px
 <hr data-y="17740">
 <div class="lbl" id="s1-1" data-y="18012">1-1 Information Architecture</div>
 <h2 data-y="18117">The existing IA had overlapping destinations and unclear content paths.</h2>
-<div class="bd" data-y="18221"><p>Sling offered a broad mix of live and on-demand content, but overlapping destinations made it harder to find and manage. Many users fell back to the familiar Guide instead of navigating the broader experience.</p></div>
-<div class="vis" data-w="1340" data-h="589" data-y="18432"><div class="vin" style="width:1340px;height:589px"><div class="a" data-id="0:227" style="left:70.00px;top:0.00px;width:1200px;height:589.66px;overflow:hidden;"><img src="a/0_227.webp" alt="" style="width:100%;height:100%;object-fit:fill"></div></div></div>
-<div class="bd" data-y="19142"><ul><li>Over 90% of users went straight to Guide or Search, bypassing the rest of the app.</li><li>Live and on-demand content were mixed without clear separation.</li><li>Labels like My TV and On Now did not match how users thought about content.</li><li>DVR recordings, watchlists, and saved content were hard to find.</li><li>Sling’s on-demand library was one of its core value propositions, but it was less visible.</li></ul></div>
-<h2 data-y="19718">The evidence pointed to three IA breakdowns.</h2>
-<div class="vis" data-w="1340" data-h="278" data-y="19853"><div class="vin" style="width:1340px;height:278px"><div class="a" data-id="0:228" style="left:0.00px;top:0.00px;width:40px;height:10px;background:#ffffff;"></div><div class="a" data-id="0:231" style="left:480.00px;top:0.00px;width:40px;height:10px;background:#ffffff;"></div><div class="a" data-id="0:234" style="left:960.00px;top:0.00px;width:40px;height:10px;background:#ffffff;"></div><div class="a" data-id="0:229" style="left:0.00px;top:34.00px;width:330px;height:68px;white-space:pre-wrap;text-align:left;margin-top:-10px;font:600 24px/40.62px 'Overused Grotesk';color:#ffffff;">Too much effort to 
-get to content</div><div class="a" data-id="0:232" style="left:480.00px;top:34.00px;width:330px;height:68px;white-space:pre-wrap;text-align:left;margin-top:-10px;font:600 24px/40.62px 'Overused Grotesk';color:#ffffff;">Guide became the 
-default path</div><div class="a" data-id="0:235" style="left:960.00px;top:34.00px;width:330px;height:68px;white-space:pre-wrap;text-align:left;margin-top:-10px;font:600 24px/40.62px 'Overused Grotesk';color:#ffffff;">Content was harder to 
-find and manage</div><div class="a" data-id="0:230" style="left:0.00px;top:143.00px;width:380px;height:135px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 24px/41.54px 'Overused Grotesk';color:#adadb2;">Users had to take too many steps before they could start watching.</div><div class="a" data-id="0:233" style="left:480.00px;top:143.00px;width:380px;height:135px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 24px/41.54px 'Overused Grotesk';color:#adadb2;">When the broader experience felt confusing, users returned to the familiar live TV guide.</div><div class="a" data-id="0:236" style="left:960.00px;top:143.00px;width:380px;height:135px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 24px/41.54px 'Overused Grotesk';color:#adadb2;">Users missed On Demand content and struggled to manage DVR or saved content.</div></div></div>
-<h2 data-y="20387">The key IA decision was how to organize content around user intent.</h2>
-<div class="bd" data-y="20512"><p>Both models had trade-offs. The category-based model offered familiar entry points, but continued to mix live and on-demand content and duplicate paths. The goal-and-state model organized destinations around what users wanted to do and whether content was live, on demand, or saved.</p><p>I chose the model that best addressed Sling’s core IA problem: reducing overlap and making each destination more predictable.</p></div>
-<div class="vis" data-w="1340" data-h="575" data-y="20817"><div class="vin" style="width:1340px;height:575px"><div class="a" data-id="0:245" style="left:0.00px;top:0.00px;width:1340px;height:575px;"><div class="a" data-id="0:246" style="left:0px;top:25px;width:650px;height:550px;border-radius:10px;background:#1b1b1f;box-shadow:none;"></div><div class="a" data-id="0:247" style="left:50px;top:115px;width:363px;height:34px;white-space:pre;text-align:left;font:600 28px/normal 'Overused Grotesk';color:#ffffff;">Option A · Category-based</div><div class="a" data-id="0:248" style="left:50px;top:210px;width:550px;height:265px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 24px/41.54px 'Overused Grotesk';color:#adadb2;"><span style="display:flex;margin-bottom:20px"><span style="flex:0 0 36px;padding-left:14px;box-sizing:border-box">▪</span><span>Movies, Shows, and Sports as primary destinations</span></span><span style="display:flex;margin-bottom:20px"><span style="flex:0 0 36px;padding-left:14px;box-sizing:border-box">▪</span><span>Familiar content categories</span></span><span style="display:flex;margin-bottom:0px"><span style="flex:0 0 36px;padding-left:14px;box-sizing:border-box">▪</span><span>Continued overlap between live and on-demand content</span></span></div><div class="a" data-id="0:249" style="left:690px;top:25px;width:650px;height:550px;border-radius:10px;background:#1b1b1f;box-shadow:none;"></div><div class="a" data-id="0:250" style="left:740px;top:115px;width:443px;height:34px;white-space:pre;text-align:left;font:600 28px/normal 'Overused Grotesk';color:#ffffff;">Option B · Goal-and-state-based</div><div class="a" data-id="0:251" style="left:740px;top:210px;width:550px;height:240px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 24px/41.54px 'Overused Grotesk';color:#adadb2;"><span style="display:flex;margin-bottom:20px"><span style="flex:0 0 36px;padding-left:14px;box-sizing:border-box">▪</span><span>Guide for live TV</span></span><span style="display:flex;margin-bottom:20px"><span style="flex:0 0 36px;padding-left:14px;box-sizing:border-box">▪</span><span>On Demand for VOD browsing</span></span><span style="display:flex;margin-bottom:20px"><span style="flex:0 0 36px;padding-left:14px;box-sizing:border-box">▪</span><span>Library for saved and recorded content</span></span><span style="display:flex;margin-bottom:0px"><span style="flex:0 0 36px;padding-left:14px;box-sizing:border-box">▪</span><span>Clearer, more distinct destination roles</span></span></div><div class="a" data-id="0:252" style="left:990px;top:0px;width:50px;height:50px;overflow:hidden;"><img src="a/0_252.webp" alt="" style="width:100%;height:100%;object-fit:fill;filter:invert(1);"></div></div></div></div>
-<h2 data-y="21662">The key alignment challenge was balancing DVR visibility with IA clarity.</h2>
-<div class="bd" data-y="21787"><p>Senior leadership wanted DVR to remain highly visible because DVR upgrades generated revenue. I advocated for grouping recorded and saved content in Library, where users expected to find it.</p></div>
-<div class="vis" data-w="1340" data-h="780" data-y="21967"><div class="vin" style="width:1340px;height:780px"><div class="a" data-id="0:255" style="left:-17.00px;top:0.00px;width:1340px;height:240px;border-radius:10px;background:#1b1b1f;box-shadow:none;"></div><div class="a" data-id="0:257" style="left:149.00px;top:45.00px;width:1081px;height:151px;"><div class="a" data-id="0:258" style="left:0px;top:0px;width:170px;height:45px;white-space:pre;text-align:left;font:600 24px/41.54px 'Overused Grotesk';color:#ffffff;">The trade-off</div><div class="a" data-id="0:259" style="left:0px;top:61px;width:1081px;height:90px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 24px/45px 'Overused Grotesk';color:#adadb2;">DVR supported upgrade revenue, but a separate top-level destination risked adding complexity to an already crowded navigation model.</div></div><div class="a" data-id="0:256" style="left:29.00px;top:84.00px;width:72px;height:72px;overflow:hidden;"><img src="a/0_256.webp" alt="" style="width:100%;height:100%;object-fit:fill;filter:invert(1);"></div><div class="a" data-id="0:260" style="left:-17.00px;top:270.00px;width:1340px;height:240px;border-radius:10px;background:#1b1b1f;box-shadow:none;"></div><div class="a" data-id="0:261" style="left:149.00px;top:315.00px;width:1081px;height:151px;"><div class="a" data-id="0:262" style="left:0px;top:0px;width:147px;height:45px;white-space:pre;text-align:left;font:600 24px/41.54px 'Overused Grotesk';color:#ffffff;">My position</div><div class="a" data-id="0:263" style="left:0px;top:61px;width:1081px;height:90px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 24px/45px 'Overused Grotesk';color:#adadb2;">Group DVR, My List, My Channels, and saved content under Library so users had one clear saved-content destination.</div></div><div class="a" data-id="0:264" style="left:31.00px;top:357.00px;width:67px;height:67px;overflow:hidden;"><img src="a/0_264.webp" alt="" style="width:100%;height:100%;object-fit:fill;filter:invert(1);"></div><div class="a" data-id="0:265" style="left:-17.00px;top:540.00px;width:1340px;height:240px;border-radius:10px;background:#1b1b1f;box-shadow:none;"></div><div class="a" data-id="0:266" style="left:149.00px;top:585.00px;width:1081px;height:151px;"><div class="a" data-id="0:267" style="left:0px;top:0px;width:199px;height:45px;white-space:pre;text-align:left;font:600 24px/41.54px 'Overused Grotesk';color:#ffffff;">How we aligned</div><div class="a" data-id="0:268" style="left:0px;top:61px;width:1081px;height:90px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 24px/45px 'Overused Grotesk';color:#adadb2;">Use Library as the primary saved-content destination, preserve DVR exposure through Home modules, and test whether DVR needed a top-level entry after launch.</div></div><div class="a" data-id="0:269" style="left:35.00px;top:630.00px;width:60px;height:60px;overflow:hidden;"><img src="a/0_269.webp" alt="" style="width:100%;height:100%;object-fit:fill;filter:invert(1);"></div></div></div>
-<h2 data-y="23017">The new IA organized Sling around clearer user goals.</h2>
-<div class="bd" data-y="23142"><p>The new structure reduced overlapping destinations and created clearer paths to start with relevant content, watch live TV, explore on-demand content, return to saved content, or search directly.</p></div>
-<div class="vis" data-w="1340" data-h="1227" data-y="23322"><div class="vin" style="width:1340px;height:1227px"><div class="a" data-id="0:272" style="left:0.00px;top:0.00px;width:1340px;height:767px;overflow:hidden;border-radius:10px;"><img src="a/0_272.webp" alt="" style="width:100%;height:100%;object-fit:fill"></div><div class="a" data-id="0:273" style="left:0.00px;top:857.00px;width:1240px;height:370px;opacity:0.7;white-space:pre-wrap;text-align:left;font:600 27.2px/43.71px 'Overused Grotesk';color:#ffffff;"><span style="font:600 27.2px/43.71px 'Overused Grotesk';color:#ffffff;">The result was a simpler five-destination model.
-</span><span style="font:400 27.2px/43.71px 'Overused Grotesk';color:#adadb2;">	▪	Home — Personalized, promotional, and curated content across live and on-demand.
-	▪	Guide — Familiar live TV browsing for cable-oriented users.
-	▪	On Demand — A dedicated destination for Sling’s on-demand library.
-	▪	Library — Saved content, favorites, watchlists, and DVR.
-	▪	Search — Direct access for users who already knew what they wanted.</span></div></div></div>
+<div class="bd" data-y="18221"><p>Live, on-demand, and saved content were spread across overlapping destinations with unclear labels. Users often fell back on Guide or Search rather than exploring the broader experience.</p></div>
+<div class="qt">
+<div class="qr"><span class="ql">User quote #1</span><div class="qb"><img src="a/q_av1.webp" alt="" width="40" height="40"><p>It takes too many clicks just to get to something to watch.</p></div></div>
+<div class="qr qrr"><span class="ql">User quote #2</span><div class="qb"><img src="a/q_av2.webp" alt="" width="40" height="40"><p>I know there are features in other parts of the app that I’d want, but I usually don’t explore them because I get confused.</p></div></div>
+</div>
+<details class="ev">
+<summary><span class="evh"><span>See the research evidence</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+<div class="evw evw2"><table class="evt evt2">
+<thead><tr><th>What we observed</th><th>What it meant for the IA</th></tr></thead>
+<tbody>
+<tr><td>Over 90% of users went straight to Guide or Search, bypassing the rest of the app.</td><td>Make every other destination clear enough to be worth opening.</td></tr>
+<tr><td>Live and on-demand content were mixed without clear separation.</td><td>Organize destinations by content state: live, on demand, or saved.</td></tr>
+<tr><td>Labels like My TV and On Now did not match how users thought about content.</td><td>Name destinations around how users think about content.</td></tr>
+<tr><td>DVR recordings, watchlists, and saved content were hard to find.</td><td>Group DVR, My List, My Channels, and saved content under Library.</td></tr>
+<tr><td>Sling’s on-demand library was one of its core value propositions, but it was less visible.</td><td>Give on-demand content a clearer, more prominent destination.</td></tr>
+</tbody></table></div>
+</details>
+<h2 data-y="20387">I organized destinations around user goals and content states.</h2>
+<div class="bd" data-y="20512"><p>I compared category-based navigation, which offered familiar entry points, with a model organized around how users wanted to access content: live, on demand, or saved. I chose the second approach to reduce overlapping paths and give each destination a clearer, more predictable role.</p></div>
+<div class="op">
+<div class="opi"><h3>Option A · Category-based</h3><ul>
+<li>Movies, Shows, and Sports as primary destinations</li>
+<li>Familiar content categories</li>
+<li>Continued overlap between live and on-demand content</li>
+</ul></div>
+<div class="opi opsel"><span class="opck" aria-label="Chosen"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3>Option B · Goal-and-state-based</h3><ul>
+<li>Guide for live TV</li>
+<li>On Demand for VOD browsing</li>
+<li>Library for saved and recorded content</li>
+<li>Clearer, more distinct destination roles</li>
+</ul></div>
+</div>
+<h2 data-y="21662">I balanced DVR visibility with a clearer saved-content structure.</h2>
+<div class="bd" data-y="21787"><p>Leadership wanted DVR to remain prominent because upgrades generated revenue, but a separate top-level destination risked crowding an already busy navigation. I advocated for grouping recordings and saved content under Library, while preserving DVR exposure through Home modules. We aligned on this approach and planned to revisit the need for a separate DVR entry after launch.</p></div>
+<h2 data-y="23017">Five core destinations, each with a clear role.</h2>
+<div class="bd" data-y="23142"><p>The new structure gave live, on-demand, and saved content clearer destinations, supported by Home for discovery and Search for direct access.</p></div>
+<div class="vis" data-w="1340" data-h="767" data-y="23322"><div class="vin" style="width:1340px;height:767px"><div class="a" data-id="0:272" style="left:0.00px;top:0.00px;width:1340px;height:767px;overflow:hidden;border-radius:10px;"><img src="a/0_272_v2.webp" alt="" style="width:100%;height:100%;object-fit:fill"></div></div></div>
 <hr data-y="24818">
 <div class="lbl" id="s1-2" data-y="25089">1-2 Main Navigation</div>
 <h2 data-y="25195">The navigation model had to balance immersion and wayfinding.</h2>
@@ -379,11 +431,36 @@ and improve UX and features</div><div class="a" data-id="0:615" style="left:34.8
 })();
 </script>
 <script>
-(function(){var d=document.getElementById('evidence');if(!d)return;
-d.addEventListener('toggle',function(){setTimeout(function(){window.dispatchEvent(new Event('resize'))},30)});})();
+(function(){document.querySelectorAll('details.ev').forEach(function(d){d.addEventListener('toggle',function(){setTimeout(function(){window.dispatchEvent(new Event('resize'))},30)});});})();
 </script>
 <script>
 (function(){document.querySelectorAll('.ft a').forEach(function(a){a.addEventListener('click',function(e){var t=document.getElementById(a.getAttribute('href').slice(1));if(!t)return;e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});});});})();
+</script>
+<script>
+(function(){
+  var lb=document.createElement('div');lb.id='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-label','Image viewer');
+  lb.innerHTML='<button class="lbx" type="button" aria-label="Close">&times;</button><div class="lbw"></div>';
+  document.body.appendChild(lb);
+  var w=lb.querySelector('.lbw');
+  function close(){lb.classList.remove('on');document.body.classList.remove('lbo');w.innerHTML='';}
+  function open(v){
+    var vin=v.querySelector('.vin');if(!vin)return;
+    var W=+v.getAttribute('data-w'),H=+v.getAttribute('data-h');
+    var s=Math.min(1,(document.documentElement.clientWidth-48)/W);
+    var c=vin.cloneNode(true);c.style.transform='scale('+s+')';c.style.visibility='visible';
+    w.innerHTML='';w.style.width=(W*s)+'px';w.style.height=(H*s)+'px';w.appendChild(c);
+    lb.scrollTop=0;lb.classList.add('on');document.body.classList.add('lbo');
+  }
+  document.addEventListener('click',function(e){
+    var v=e.target.closest&&e.target.closest('.vis');
+    if(!v||v.classList.contains('hero')||v.closest('#lb'))return;
+    if(+v.getAttribute('data-h')<150)return;
+    open(v);
+  });
+  lb.addEventListener('click',function(e){if(!e.target.closest('.lbw'))close();});
+  lb.querySelector('.lbx').addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
 </script>
 <script>
 (function(){
