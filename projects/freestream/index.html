@@ -78,6 +78,11 @@ main{padding-bottom:56px}
 #lb .lbx{position:fixed;top:16px;right:20px;z-index:201;appearance:none;border:0;background:rgba(255,255,255,.12);color:#fff;width:40px;height:40px;border-radius:50%;font:300 24px/40px 'Overused Grotesk',sans-serif;cursor:pointer}
 #lb .lbx:hover{background:#ff0000}
 body.lbo{overflow:hidden}
+
+.rv{opacity:0;transform:translateY(24px);transition:opacity .6s cubic-bezier(.16,1,.3,1) var(--rvd,0ms),transform .6s cubic-bezier(.16,1,.3,1) var(--rvd,0ms)}
+.rv.vis{transform:translateY(16px)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 </style>
 <noscript><style>.vin,#navwrap{visibility:visible}</style></noscript>
 </head>
@@ -201,6 +206,8 @@ body.lbo{overflow:hidden}
   var links=[].slice.call(nav.querySelectorAll('a')),ys=links.map(function(a){return +a.getAttribute('data-y')});
   var marks=[].slice.call(document.querySelectorAll('[data-y]')).filter(function(e){return e.tagName!=='A'});
   var tops=[], tgt=[], NAVTOP=96;
+  /* 스크롤 등장 효과(.rv)로 아래에서 올라오는 중인 요소도 제자리 기준으로 위치를 읽는다 */
+  function ry(e){ var y=e.getBoundingClientRect().top+window.scrollY; if(e.classList.contains('rv')){ var t=getComputedStyle(e).transform, m=t&&t!=='none'&&t.match(/matrix\(([^)]+)\)/); if(m) y-=parseFloat(m[1].split(',')[5])||0; } return y; }
   function layout(){
     /* 레이아웃은 기존(Figma 2200px 프레임)과 같은 비율: 소개/왼쪽 메뉴 260, 본문 599, 본문 폭 1340 (×화면비율). 좁은 화면은 한 칸 */
     var vw=document.documentElement.clientWidth, s=Math.min(1,vw/2200), full=vw>=900;
@@ -224,7 +231,7 @@ body.lbo{overflow:hidden}
     var foot=document.getElementById('pgf'); if(!foot) return;
     var cs=parseFloat(getComputedStyle(foot).marginTop)||0;   /* 레이아웃을 건드리지 않고(스크롤이 튀지 않게) 계산한다 */
     var m=96, t=tgt[tgt.length-1];
-    if(t){ var vh=document.documentElement.clientHeight, sy=window.scrollY, mb=main.getBoundingClientRect().bottom+sy-cs, lt=t.getBoundingClientRect().top+sy; m=Math.max(0,Math.ceil(vh-(NAVTOP+1)-(mb-lt))); }
+    if(t){ var vh=document.documentElement.clientHeight, sy=window.scrollY, mb=main.getBoundingClientRect().bottom+sy-cs, lt=ry(t); m=Math.max(0,Math.ceil(vh-(NAVTOP+1)-(mb-lt))); }
     if(Math.abs(m-cs)>=1){ foot.style.marginTop=m+'px'; wrap.style.height=Math.max(0,main.getBoundingClientRect().bottom-wrap.getBoundingClientRect().top)+'px'; }
     var fp=foot.querySelector('p'); if(fp) fp.style.left=(document.documentElement.clientWidth/2-foot.getBoundingClientRect().left)+'px';   /* 문구는 본문 열이 아니라 화면 전체의 가운데 */
   }
@@ -233,7 +240,7 @@ body.lbo{overflow:hidden}
     tops=links.map(function(a,i){
       var best=null; marks.forEach(function(e){ var y=+e.getAttribute('data-y'); if(y>=ys[i]-5 && (best===null||y<best.y)) best={y:y,e:e}; });
       tgt[i]=best?best.e:null;
-      return best? best.e.getBoundingClientRect().top+window.scrollY : 0;
+      return best? ry(best.e) : 0;
     });
     /* 왼쪽 메뉴: 첫 섹션 높이에서 시작해 화면 위쪽 NAVTOP 에 닿으면 CSS(sticky)가 붙잡는다. 스크롤마다 JS 로 옮기지 않아서 본문과 어긋나지 않는다 */
     /* 마지막 섹션이 짧으면 메뉴로 이동했을 때 라벨이 위로 못 올라간다: 아래 여백을 더해 다른 섹션과 같은 위치(위에서 80px)에 오게 한다 */
@@ -243,7 +250,7 @@ body.lbo{overflow:hidden}
   function update(){
     var sy=window.scrollY, vh=window.innerHeight;
     if(sy+vh*2>=document.documentElement.scrollHeight) fitFoot();   /* 맨 아래 근처에서는 매번 다시 맞춘다(이미지·토글로 높이가 바뀐 경우) */
-    var cur=-1; for(var i=0;i<tops.length;i++){ var tp=tgt[i]?tgt[i].getBoundingClientRect().top+sy:tops[i]; if(sy+vh*0.3>=tp) cur=i; }   /* 토글 높이 변화에 어긋나지 않게 매번 실제 위치로 */
+    var cur=-1; for(var i=0;i<tops.length;i++){ var tp=tgt[i]?ry(tgt[i]):tops[i]; if(sy+vh*0.3>=tp) cur=i; }   /* 토글 높이 변화에 어긋나지 않게 매번 실제 위치로 */
     if(sy+vh>=document.documentElement.scrollHeight-4) cur=tops.length-1;   /* 맨 아래에 닿으면 마지막 항목(짧은 마지막 섹션도 선택되게) */
     links.forEach(function(a,i){a.classList.toggle('sel',i===cur)});
     [].slice.call(nav.querySelectorAll('.grp')).forEach(function(g){
@@ -262,7 +269,7 @@ body.lbo{overflow:hidden}
     var own=a.closest('.grp');   /* Foundation(또는 그 하위)을 누르면 이동 + 펼침, 다른 항목을 누르면 접는다 */
     [].slice.call(nav.querySelectorAll('.grp')).forEach(function(g){ g.__man=(g===own); g.__was=false; });
     if(i===links.length-1) fitFoot();
-    var tp=tgt[i]?tgt[i].getBoundingClientRect().top+window.scrollY:tops[i];   /* 누르는 순간의 실제 위치 기준 */
+    var tp=tgt[i]?ry(tgt[i]):tops[i];   /* 누르는 순간의 실제 위치 기준 */
     window.scrollTo({top:tp-(NAVTOP+1),behavior:'smooth'});   /* 섹션 라벨이 왼쪽 메뉴 첫 항목과 같은 높이에 오도록 */
     update();
   })});
@@ -337,6 +344,19 @@ body.lbo{overflow:hidden}
   lb.addEventListener('click',function(e){if(!e.target.closest('.lbw'))close();});
   lb.querySelector('.lbx').addEventListener('click',close);
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)) return;
+  var main=document.querySelector('main'); if(!main) return;
+  var items=[].slice.call(main.children).filter(function(e){return e.tagName!=='SCRIPT'&&e.tagName!=='STYLE'&&e.id!=='pgf'});
+  items.forEach(function(e){e.classList.add('rv')});
+  var io=new IntersectionObserver(function(es){
+    var vis=es.filter(function(x){return x.isIntersecting}).sort(function(a,b){return a.boundingClientRect.top-b.boundingClientRect.top});
+    vis.forEach(function(x,i){ x.target.style.setProperty('--rvd',Math.min(i,4)*90+'ms'); x.target.classList.add('in'); io.unobserve(x.target); });
+  },{rootMargin:'0px 0px -8% 0px',threshold:0});
+  items.forEach(function(e){io.observe(e)});
 })();
 </script>
 </body>
