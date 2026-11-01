@@ -66,7 +66,7 @@ hr+.lbl{margin-top:0}
 @media (max-width:700px){h2{font-size:22px}.lead{font-size:15px;line-height:24px}}
 
 main{padding-bottom:56px}
-.pgf{position:relative;display:flex;align-items:center;justify-content:center;min-height:44px;margin-top:96px}
+.pgf{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;margin-top:96px}
 .pgf p{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;white-space:nowrap;font:400 14px/22.4px 'Overused Grotesk',sans-serif;color:#83838a}
 
 .vis[role=button]{cursor:zoom-in}
@@ -192,7 +192,7 @@ body.lbo{overflow:hidden}
 <h2 data-y="38333">Freestream worked because free access was treated as a product system.</h2>
 <div class="bd" data-y="38453"><p>The work connected strategy, user states, entitlement, monetization, measurement, and rollout guardrails—so free growth could scale within Sling’s paid ecosystem.</p></div>
 <div class="vis" data-w="1359" data-h="665" data-y="38693"><div class="vin" style="width:1359px;height:665px"><div class="a" data-id="0:116" style="left:19.00px;top:0.00px;width:1340px;height:355px;"><div class="a" data-id="0:117" style="left:0px;top:0px;width:204px;height:60px;white-space:pre;text-align:left;font:600 27.2px/58.29px 'Overused Grotesk';color:#ffffff;">WHAT I DROVE</div><div class="a" data-id="0:118" style="left:0px;top:90px;width:1340px;height:265px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 27.2px/43.71px 'Overused Grotesk';color:#adadb2;"><span style="display:flex;margin-bottom:20px"><span style="flex:0 0 38px;padding-left:15px;box-sizing:border-box">▪</span><span>Defined the free-first model: Defined how free access could live inside Sling’s paid ecosystem.</span></span><span style="display:flex;margin-bottom:20px"><span style="flex:0 0 38px;padding-left:15px;box-sizing:border-box">▪</span><span>Built the operating system: Led the UX system across user states, entitlement, upsell, and measurement.</span></span><span style="display:flex;margin-bottom:0px"><span style="flex:0 0 38px;padding-left:15px;box-sizing:border-box">▪</span><span>Turned strategy into launch: Translated an open zero-to-one brief into launchable flows and rollout guardrails.</span></span></div></div><div class="a" data-id="0:119" style="left:19.00px;top:400.00px;width:279px;height:60px;white-space:pre;text-align:left;font:600 27.2px/58.29px 'Overused Grotesk';color:#ffffff;">WHAT THIS PROVED</div><div class="a" data-id="0:120" style="left:19.00px;top:490.00px;width:1340px;height:175px;opacity:0.7;white-space:pre-wrap;text-align:left;font:400 27.2px/43.71px 'Overused Grotesk';color:#adadb2;"><span style="display:flex;margin-bottom:20px"><span style="flex:0 0 38px;padding-left:15px;box-sizing:border-box">▪</span><span>Free access needed a system, not just a destination.</span></span><span style="display:flex;margin-bottom:20px"><span style="flex:0 0 38px;padding-left:15px;box-sizing:border-box">▪</span><span>Conversion prompts belonged after intent, not before value.</span></span><span style="display:flex;margin-bottom:0px"><span style="flex:0 0 38px;padding-left:15px;box-sizing:border-box">▪</span><span>Guardrails made free growth safer to scale.</span></span></div></div></div>
-<footer class="pgf" id="pgf"><p>&copy; 2026 KYUNGHEE LEE&nbsp;&nbsp;&middot;&nbsp;&nbsp;SF BAY AREA</p></footer>
+<footer class="pgf" id="pgf"></footer>
 </main>
 <script>
 (function(){
@@ -224,7 +224,7 @@ body.lbo{overflow:hidden}
     var foot=document.getElementById('pgf'); if(!foot) return;
     var cs=parseFloat(getComputedStyle(foot).marginTop)||0;   /* 레이아웃을 건드리지 않고(스크롤이 튀지 않게) 계산한다 */
     var m=96, t=tgt[tgt.length-1];
-    if(t){ var vh=document.documentElement.clientHeight, sy=window.scrollY, mb=main.getBoundingClientRect().bottom+sy-cs, lt=t.getBoundingClientRect().top+sy; m=Math.max(0,Math.ceil(vh-80-(mb-lt))); }
+    if(t){ var vh=document.documentElement.clientHeight, sy=window.scrollY, mb=main.getBoundingClientRect().bottom+sy-cs, lt=t.getBoundingClientRect().top+sy; m=Math.max(0,Math.ceil(vh-(NAVTOP+1)-(mb-lt))); }
     if(Math.abs(m-cs)>=1){ foot.style.marginTop=m+'px'; wrap.style.height=Math.max(0,main.getBoundingClientRect().bottom-wrap.getBoundingClientRect().top)+'px'; }
     var fp=foot.querySelector('p'); if(fp) fp.style.left=(document.documentElement.clientWidth/2-foot.getBoundingClientRect().left)+'px';   /* 문구는 본문 열이 아니라 화면 전체의 가운데 */
   }
@@ -263,7 +263,7 @@ body.lbo{overflow:hidden}
     [].slice.call(nav.querySelectorAll('.grp')).forEach(function(g){ g.__man=(g===own); g.__was=false; });
     if(i===links.length-1) fitFoot();
     var tp=tgt[i]?tgt[i].getBoundingClientRect().top+window.scrollY:tops[i];   /* 누르는 순간의 실제 위치 기준 */
-    window.scrollTo({top:tp-80,behavior:'smooth'});
+    window.scrollTo({top:tp-(NAVTOP+1),behavior:'smooth'});   /* 섹션 라벨이 왼쪽 메뉴 첫 항목과 같은 높이에 오도록 */
     update();
   })});
   window.addEventListener('resize',function(){layout();measure();update()});window.addEventListener('scroll',update,{passive:true});

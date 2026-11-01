@@ -143,7 +143,7 @@ hr+.lbl{margin-top:0}
 @media (max-width:760px){.ft{grid-template-columns:repeat(2,1fr)}}
 .evbd2{margin-top:16px}
 main{padding-bottom:56px}
-.pgf{position:relative;display:flex;align-items:center;justify-content:center;min-height:44px;margin-top:96px}
+.pgf{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;margin-top:96px}
 .pgf p{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;white-space:nowrap;font:400 14px/22.4px 'Overused Grotesk',sans-serif;color:#83838a}
 
 .vis[role=button]{cursor:zoom-in}
@@ -563,7 +563,7 @@ Engagement</div><div class="a" data-id="0:142" style="left:865.00px;top:401.96px
 <div class="lbl" data-y="59145">Closing · Reflection</div>
 <h2 data-y="59251">I designed the core experience and brought four teams’ work together.</h2>
 <div class="bd" data-y="59356"><p>I shaped the redesign’s direction and directly designed its core structure, key screens, and interactions. Working with four journey teams, I brought the detailed experience together across TV, mobile, and web.</p><p>Looking back, I would connect deferred work and post-launch findings in a clearer follow-up roadmap, prioritizing them by user impact, business value, dependencies, and delivery risk.</p></div>
-<footer class="pgf" id="pgf"><p>&copy; 2026 KYUNGHEE LEE&nbsp;&nbsp;&middot;&nbsp;&nbsp;SF BAY AREA</p></footer>
+<footer class="pgf" id="pgf"></footer>
 </main>
 <script>
 (function(){
@@ -595,7 +595,7 @@ Engagement</div><div class="a" data-id="0:142" style="left:865.00px;top:401.96px
     var foot=document.getElementById('pgf'); if(!foot) return;
     var cs=parseFloat(getComputedStyle(foot).marginTop)||0;   /* 레이아웃을 건드리지 않고(스크롤이 튀지 않게) 계산한다 */
     var m=96, t=tgt[tgt.length-1];
-    if(t){ var vh=document.documentElement.clientHeight, sy=window.scrollY, mb=main.getBoundingClientRect().bottom+sy-cs, lt=t.getBoundingClientRect().top+sy; m=Math.max(0,Math.ceil(vh-80-(mb-lt))); }
+    if(t){ var vh=document.documentElement.clientHeight, sy=window.scrollY, mb=main.getBoundingClientRect().bottom+sy-cs, lt=t.getBoundingClientRect().top+sy; m=Math.max(0,Math.ceil(vh-(NAVTOP+1)-(mb-lt))); }
     if(Math.abs(m-cs)>=1){ foot.style.marginTop=m+'px'; wrap.style.height=Math.max(0,main.getBoundingClientRect().bottom-wrap.getBoundingClientRect().top)+'px'; }
     var fp=foot.querySelector('p'); if(fp) fp.style.left=(document.documentElement.clientWidth/2-foot.getBoundingClientRect().left)+'px';   /* 문구는 본문 열이 아니라 화면 전체의 가운데 */
   }
@@ -634,7 +634,7 @@ Engagement</div><div class="a" data-id="0:142" style="left:865.00px;top:401.96px
     [].slice.call(nav.querySelectorAll('.grp')).forEach(function(g){ g.__man=(g===own); g.__was=false; });
     if(i===links.length-1) fitFoot();
     var tp=tgt[i]?tgt[i].getBoundingClientRect().top+window.scrollY:tops[i];   /* 누르는 순간의 실제 위치 기준 */
-    window.scrollTo({top:tp-80,behavior:'smooth'});
+    window.scrollTo({top:tp-(NAVTOP+1),behavior:'smooth'});   /* 섹션 라벨이 왼쪽 메뉴 첫 항목과 같은 높이에 오도록 */
     update();
   })});
   window.addEventListener('resize',function(){layout();measure();update()});window.addEventListener('scroll',update,{passive:true});
