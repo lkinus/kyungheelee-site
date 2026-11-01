@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Muted Previews Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#171725}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:Inter,system-ui,sans-serif}
+#fit{position:relative;width:100vw;max-width:calc(100vh*16/9);aspect-ratio:16/9;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--bg);overflow:hidden;color:#fff}
+
+/* Backdrop: hero art + hero video (same box as the Sketch bitmap) */
+.bd{position:absolute;inset:0;transition:opacity .8s ease,transform .8s cubic-bezier(.4,0,.2,1)}
+.bd .hv{position:absolute;left:337px;top:-1px;width:1915px;height:1077px;overflow:hidden}
+.bd .hv img,.bd .hv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:70% 40%}
+.bd .hv video{opacity:0;transition:opacity .15s}
+.hv.hasv.live video{opacity:1}
+.bd:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0,var(--bg) 14%,rgba(23,23,37,.78) 34%,rgba(23,23,37,0) 62%),linear-gradient(0deg,var(--bg) 0,rgba(23,23,37,.85) 8%,rgba(23,23,37,0) 34%)}
+.hero-play .hv:not(.hasv) img{animation:kb 3.2s linear forwards}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.07)}}
+.down .bd{transform:translateY(-520px)}
+
+/* Scrolling content layer (Sketch artboard is 2118px tall) */
+#pan{position:absolute;left:0;top:0;width:1920px;height:2118px;transition:transform .8s cubic-bezier(.4,0,.2,1)}
+.down #pan{transform:translateY(-520px)}
+.down2 .bd{transform:translateY(-1100px)}
+.down2 #pan{transform:translateY(-913px)}
+
+/* Hero info */
+.hero{position:absolute;left:209px;top:37px;width:873px;height:720px}
+.hero .logo{position:absolute;left:0;top:0;width:823px;height:319px}
+.badge{position:absolute;height:37px;padding:0 12px 0 10px;display:flex;align-items:center;gap:7px;border-radius:3px;font-size:22px;font-weight:500;letter-spacing:.2px;background:#008fc6}
+.badge:before{content:"";width:9px;height:9px;border-radius:50%;background:#fff}
+.badge.rec{background:#e5001a}
+.badge.rec:before{width:14px;height:14px}
+.ep{position:absolute;left:23px;top:410px;font-size:30px;font-weight:600}
+.desc{position:absolute;left:23px;top:462px;width:900px;font-size:27px;letter-spacing:-.2px;line-height:40px;font-weight:400;color:#ececf0}
+.meta{position:absolute;left:23px;top:566px;font-size:24px;color:#d8d8de;display:flex;gap:14px;align-items:center;white-space:nowrap}
+.meta .r{border:1px solid #bbb;padding:0 10px;font-size:20px;line-height:24px;height:26px}
+.btn{position:absolute;top:653px;height:66px;display:flex;align-items:center;justify-content:center;font-size:28px;transition:background .5s,color .5s}
+.watch{left:23px;width:300px;background:#fff;color:#111;font-weight:700;gap:16px}
+.watch i{width:30px;height:30px;border:3px solid currentColor;border-radius:50%;position:relative}
+.watch i:after{content:"";position:absolute;left:9px;top:5px;border-left:11px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.more{left:343px;width:220px;background:#4a4a56;color:#fff}
+.down .watch{background:#4a4a56;color:#fff}
+
+/* Rows */
+.rowh{position:absolute;font-size:30px;font-weight:600;line-height:38px;color:#f5f5f6;white-space:nowrap}
+.tile{position:absolute;width:374px;height:210px;transition:transform .35s cubic-bezier(.3,.8,.3,1)}
+.tile .art{position:absolute;inset:0;overflow:hidden;border-radius:3px;background:#222}
+.tile .art img,.tile .art video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 40%}
+.tile .art video{opacity:0}
+.tile.hasv.play .art video{opacity:1}
+.tile .ring{position:absolute;inset:-4px;border:4px solid #fff;border-radius:6px;opacity:0;transition:opacity .2s;box-shadow:0 12px 40px rgba(0,0,0,.55)}
+.tile .ttl{position:absolute;left:0;top:226px;font-size:28px;font-weight:500;line-height:34px;color:#f5f5f6;white-space:nowrap;transition:opacity .3s}
+.tile .badge{left:10px;top:10px;z-index:2}
+.tile .pg{position:absolute;left:0;right:0;bottom:0;height:8px;background:#f5f5f6;z-index:2}
+.tile .pg b{display:block;height:100%;background:#0098d1}
+.tile.focus{transform:scale(1.1)}
+.tile.focus .ring{opacity:1}
+.tile.play:not(.hasv) .art img{animation:kb2 5s linear forwards}
+@keyframes kb2{from{transform:scale(1.02)}to{transform:scale(1.2)}}
+
+/* My Channels ribbons */
+.rib{position:absolute;width:533px;height:210px;overflow:hidden;border-radius:3px;background:#20202d}
+.rib .lg{position:absolute;left:0;top:0;width:160px;height:210px;background:#dd0000;display:flex;align-items:center;justify-content:center}
+.rib .lg img{width:73px;height:73px;object-fit:contain}
+.rib .lg span{font-weight:800;font-size:38px;letter-spacing:-1px;color:#fff}
+.rib .lg em{font-style:normal;width:70px;height:70px;border-radius:50%;background:#fff;color:#111;font-weight:800;font-size:27px;display:flex;align-items:center;justify-content:center;letter-spacing:-1px}
+.rib .im{position:absolute;left:160px;top:0;width:373px;height:210px;object-fit:cover}
+.rib .im:after{content:""}
+.rib .ov{position:absolute;left:0;right:0;bottom:0;height:105px;background:linear-gradient(0deg,#171725,rgba(51,51,76,0))}
+.rib .badge{left:10px;top:10px}
+.rib .pgr{position:absolute;left:0;right:0;bottom:0;height:6px;background:#fff}
+.rib .pgr b{display:block;height:100%;background:#0098d1}
+.rt{position:absolute;font-size:28px;font-weight:500;line-height:34px;color:#f5f5f6;white-space:nowrap}
+.rt small{display:block;font-size:24px;font-weight:400;color:#f5f5f6;line-height:29px;margin-top:6px}
+
+/* Nav (collapsed) */
+.nav{position:absolute;left:0;top:0;width:160px;height:1080px;background:var(--bg);z-index:5}
+.nav svg{position:absolute;left:56px;width:44px;height:44px;stroke:#cfcfd6;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* Replay control: shown once the demo has played through; clicking the image or the button plays it again */
+#rp{position:absolute;top:28px;right:28px;width:72px;height:72px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.55);background:rgba(10,10,18,.62);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s,background .2s;z-index:50}
+#rp:hover,#rp:focus-visible{background:rgba(255,255,255,.22);outline:none}
+#rp svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#stage.done{cursor:pointer}
+#stage.done #rp{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<div id="fit"><div id="stage">
+  <div class="bd"><div class="hv" id="hv"><img src="img/hero.webp" alt=""><video muted playsinline preload="auto" data-src="vid/hero.mp4"></video></div></div>
+
+  <div id="pan">
+    <div class="hero">
+      <img class="logo" src="img/logo.webp" alt="The Walking Dead">
+      <div class="badge" style="left:23px;top:333px">LIVE</div>
+      <div class="ep">S6 E13: The Same Boat</div>
+      <div class="desc">Rick and the other determine that the only group are taken hostage; Carol struggles morally with the lengths she has gone to survive.</div>
+      <div class="meta"><span>29 MinLeft</span>•<span>3:50-4:40PM</span>•<span>50Min</span>•<span>Drama</span><span class="r">TV-MA</span></div>
+      <div class="btn watch"><i></i>WATCH LIVE</div>
+      <div class="btn more">MORE INFO</div>
+    </div>
+
+    <!-- Row 1: Top Picks For You -->
+    <div class="rowh" style="left:209px;top:857px">Top Picks For You</div>
+    <div class="tile" id="tA" style="left:209px;top:939px"><div class="art"><img src="img/heartland.webp" alt=""><video muted playsinline preload="auto" data-src="vid/heartland.mp4"></video></div><div class="badge rec">REC</div><div class="pg"><b style="width:69.7%"></b></div><div class="ring"></div><div class="ttl">Heartland</div></div>
+    <div class="tile" id="tB" style="left:629px;top:939px"><div class="art"><img src="img/kitchen.webp" alt=""><video muted playsinline preload="auto" data-src="vid/kitchen.mp4"></video></div><div class="badge">LIVE</div><div class="ring"></div><div class="ttl">Kitchen Nightmares</div></div>
+    <div class="tile" id="tC" style="left:1049px;top:939px"><div class="art"><img src="img/southpark.webp" alt=""><video muted playsinline preload="auto" data-src="vid/southpark.mp4"></video></div><div class="ring"></div><div class="ttl">South Park</div></div>
+    <div class="tile" id="tD" style="left:1469px;top:939px"><div class="art"><img src="img/soul.webp" alt=""><video muted playsinline preload="auto" data-src="vid/soul.mp4"></video></div><div class="badge">LIVE</div><div class="ring"></div><div class="ttl">American Soul</div></div>
+    <div class="tile" style="left:1889px;top:939px"><div class="art"><img src="img/girls.webp" alt=""></div><div class="pg"><b style="width:69.7%"></b></div><div class="ring"></div></div>
+
+    <!-- Row 2: Continue Watching -->
+    <div class="rowh" style="left:205px;top:1272px">Continue Watching</div>
+    <div class="tile" style="left:205px;top:1332px"><div class="art"><img src="img/heartland.webp" alt=""></div><div class="pg"><b style="width:69.7%"></b></div><div class="ring"></div><div class="ttl">Heartland</div></div>
+    <div class="tile" style="left:625px;top:1332px"><div class="art"><img src="img/forensic.webp" alt=""></div><div class="pg"><b style="width:69.7%"></b></div><div class="ring"></div><div class="ttl">Forensic Files</div></div>
+    <div class="tile" style="left:1045px;top:1332px"><div class="art"><img src="img/joy.webp" alt=""></div><div class="pg"><b style="width:69.7%"></b></div><div class="ring"></div><div class="ttl">The Joy of Painting</div></div>
+    <div class="tile" id="tE" style="left:1465px;top:1332px"><div class="art"><img src="img/alienist.webp" alt=""><video muted playsinline preload="auto" data-src="vid/alienist.mp4"></video></div><div class="pg"><b style="width:69.7%"></b></div><div class="ring"></div><div class="ttl">The Alienist</div></div>
+
+    <!-- Row 3: My Channels -->
+    <div class="rowh" style="left:199px;top:1660px">My Channels</div>
+    <div class="rib" style="left:199px;top:1710px"><div class="lg"><img src="img/food.webp" alt=""></div><img class="im" src="img/gcg.webp" alt=""><div class="ov"></div><div class="badge">LIVE</div><div class="pgr"><b style="width:68%"></b></div></div>
+    <div class="rt" style="left:199px;top:1936px">Guy’s Grocery Games<small>23 mins left</small></div>
+    <div class="rib" style="left:778px;top:1710px"><div class="lg" style="background:#005694"><em>abc</em></div><img class="im" src="img/shark.webp" alt=""><div class="ov"></div><div class="badge">LIVE</div><div class="pgr"><b style="width:47%"></b></div></div>
+    <div class="rt" style="left:778px;top:1936px">Shark Tank<small>47 mins left</small></div>
+    <div class="rib" style="left:1357px;top:1710px"><div class="lg" style="background:#000"><span>FX</span></div><img class="im" src="img/atlanta.webp" alt=""><div class="ov"></div><div class="badge">LIVE</div><div class="pgr"><b style="width:19%"></b></div></div>
+    <div class="rt" style="left:1357px;top:1936px">Atlanta<small>52 mins left</small></div>
+  </div>
+
+  <div class="nav">
+    <svg style="top:46px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    <svg style="top:313px" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <svg style="top:416px" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg>
+    <svg style="top:509px" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 9h10M7 13h10"/></svg>
+    <svg style="top:608px" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-7.96A6 6 0 0 1 18 9a4.5 4.5 0 0 1 .5 9z"/><path d="m10 11 4 2.5-4 2.5z" fill="#cfcfd6"/></svg>
+    <svg style="top:705px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 5 3.5-5 3.5z" fill="#cfcfd6"/></svg>
+  </div>
+</div></div>
+
+<script>
+(function(){
+  /* Timing (ms) — edit here. Each preview starts `delay` after its item gets focus. */
+  var T={
+    delay:1000,  // focus -> video starts
+    hero:1500,   // hero video length on screen
+    tileA:1500,  // Heartland (focus moves down)
+    tileB:1500,  // Kitchen Nightmares (focus moves right)
+    tileC:1500,  // South Park (focus moves right)
+    tileD:1500,  // American Soul (focus moves right)
+    tileE:1500,  // The Alienist (focus moves down to Continue Watching)
+    reset:700,   // pause before the loop restarts
+    loops:1      // how many times the sequence plays
+  };
+  var stage=document.getElementById('stage'),fit=document.getElementById('fit');
+  var HV=document.getElementById('hv'),A=document.getElementById('tA'),B=document.getElementById('tB'),C=document.getElementById('tC'),D=document.getElementById('tD'),E=document.getElementById('tE');
+  var tiles=[A,B,C,D,E];
+  function scale(){stage.style.transform='scale('+(fit.clientWidth/1920)+')'}
+  addEventListener('resize',scale);scale();
+
+  /* Clips live in vid/. A missing clip falls back to a slow zoom of the key art. */
+  var slots=[HV].concat(tiles);
+  slots.forEach(function(el){
+    var v=el.querySelector('video');v.muted=true;
+    v.addEventListener('loadeddata',function(){el.classList.add('hasv')});
+    v.src=v.getAttribute('data-src');v.load();
+  });
+  function play(el){var v=el.querySelector('video');try{v.currentTime=0}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){})}
+  function stop(el){el.querySelector('video').pause()}
+
+  var timers=[],running=false,done=false,round=0;
+  function at(ms,fn){timers.push(setTimeout(fn,ms))}
+  function clear(){timers.forEach(clearTimeout);timers=[]}
+  function reset(){
+    stage.classList.remove('down','down2','hero-play','done');
+    HV.classList.remove('live');
+    tiles.forEach(function(t){t.classList.remove('focus','play')});
+    slots.forEach(stop);
+    void stage.offsetWidth;
+  }
+  function run(){
+    reset();round++;var t=0;
+    /* 1. Hero: video starts `delay` after the TV is on screen */
+    at(T.delay,function(){stage.classList.add('hero-play');HV.classList.add('live');play(HV)});
+    t+=T.delay+T.hero;
+    /* 2. Focus moves down, then right across the row; each preview starts `delay` after focus */
+    [[A,T.tileA],[B,T.tileB],[C,T.tileC],[D,T.tileD],[E,T.tileE]].forEach(function(s,i){
+      var tile=s[0],dur=s[1],prev=tiles[i-1],start=t;
+      at(start,function(){
+        if(prev){prev.classList.remove('focus','play');stop(prev)}
+        else{stage.classList.add('down');stage.classList.remove('hero-play');HV.classList.remove('live');stop(HV)}
+        if(tile===E)stage.classList.add('down2');
+        tile.classList.add('focus');
+      });
+      at(start+T.delay,function(){tile.classList.add('play');play(tile)});
+      t+=T.delay+dur;
+    });
+    /* 3. Loop */
+    at(t,function(){E.classList.remove('focus','play');stop(E)});
+    t+=T.reset;
+    at(t,function(){if(round<T.loops)run();else{done=true;finalState()}});
+  }
+  function start(){if(running||done)return;running=true;round=0;run()}
+  /* Key frame kept after playback: Top Picks with Kitchen Nightmares focused and its preview on screen */
+  function finalState(){
+    reset();stage.classList.add('down','done');
+    B.classList.add('focus','play');
+    var vb=B.querySelector('video');try{vb.currentTime=1.2}catch(e){}
+  }
+  function halt(){running=false;clear();if(done)finalState();else reset()}
+  /* Plays once; afterwards the key frame stays and the image (or the button) replays it */
+  var reduce=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var rp=document.createElement('button');rp.id='rp';rp.type='button';rp.setAttribute('aria-label','Replay');
+  rp.innerHTML='<svg viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.4-5.5"/><path d="M4.5 4.5v4.2h4.2"/></svg>';stage.appendChild(rp);
+  function replay(){if(!done)return;clear();running=false;done=false;stage.classList.remove('done');start()}
+  stage.addEventListener('click',replay);
+
+
+  /* Start as soon as the TV begins to appear while scrolling; stop when it leaves */
+  if(/[?&]test=1/.test(location.search)){start()}  /* test hook: skip the scroll trigger */
+  else if(reduce){done=true;finalState()}
+  else if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?start():halt()})},{threshold:.5}).observe(fit);
+  }else start();
+})();
+</script>
+</body>
+</html>

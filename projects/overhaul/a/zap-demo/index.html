@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Channel Zapping Demo</title>
+<style>
+:root{--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:system-ui,sans-serif}
+#fit{position:relative;width:100vw;max-width:calc(100vh*16/9);aspect-ratio:16/9;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:#000;overflow:hidden;color:#fff}
+
+/* One full-screen video per channel; switching shows the next one instantly, like a live channel change */
+.v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+.v.on{opacity:1}
+
+/* Channel list: slides in from the left, the focused channel stays centred and the list moves under it */
+#ov{position:absolute;left:0;top:0;width:700px;height:1080px;opacity:0;transition:opacity .3s;
+  background:linear-gradient(90deg,rgba(6,8,18,.9) 0,rgba(6,8,18,.78) 40%,rgba(6,8,18,0) 100%)}
+.show #ov{opacity:1}
+#win{position:absolute;left:0;top:0;width:700px;height:1080px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 78%,transparent 100%)}
+#hl{position:absolute;left:92px;top:482px;width:276px;height:116px;border-radius:16px;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 2px rgba(255,255,255,.55)}
+#list{position:absolute;left:0;top:0;width:460px;transition:transform .32s var(--ease)}
+.it{position:absolute;left:0;width:460px;height:120px;display:flex;align-items:center;justify-content:center;opacity:.35;transition:opacity .25s,transform .32s var(--ease)}
+.it img{display:block;max-width:190px;max-height:72px;width:auto;height:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,.45))}
+.it.d1{opacity:.6}
+.it.f{opacity:1;transform:scale(1.15)}
+#poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s ease}
+.end #poster{opacity:1}
+.end #ov{transition-duration:.9s}
+.nt,.nt *{transition:none!important}
+
+/* Replay control: shown once the demo has played through; clicking the image or the button plays it again */
+#rp{position:absolute;top:28px;right:28px;width:72px;height:72px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.55);background:rgba(10,10,18,.62);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s,background .2s;z-index:50}
+#rp:hover,#rp:focus-visible{background:rgba(255,255,255,.22);outline:none}
+#rp svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#stage.done{cursor:pointer}
+#stage.done #rp{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<div id="fit"><div id="stage">
+  <video class="v" data-ch="cnn" data-src="vid/cnn.mp4" muted loop playsinline preload="auto"></video>
+  <video class="v" data-ch="foxnews" data-src="vid/foxnews.mp4" muted loop playsinline preload="auto"></video>
+  <video class="v" data-ch="newsmax" data-src="vid/newsmax.mp4" muted loop playsinline preload="auto"></video>
+  <video class="v" data-ch="msnow" data-src="vid/msnow.mp4" muted loop playsinline preload="auto"></video>
+  <video class="v" data-ch="cnbc" data-src="vid/cnbc.mp4" muted loop playsinline preload="auto"></video>
+  <img id="poster" src="img/poster.jpg" alt="">
+  <div id="ov"><div id="win"><div id="hl"></div><div id="list">
+    <div class="it"><img src="img/disney.png" alt=""></div>
+    <div class="it"><img src="img/disneyjr.png" alt=""></div>
+    <div class="it"><img src="img/disneyxd.png" alt=""></div>
+    <div class="it"><img src="img/babytv.png" alt=""></div>
+    <div class="it"><img src="img/cnn.png" alt=""></div>
+    <div class="it"><img src="img/foxnews.png" alt=""></div>
+    <div class="it"><img src="img/newsmax.png" alt=""></div>
+    <div class="it"><img src="img/msnow.png" alt=""></div>
+    <div class="it"><img src="img/cnbc.png" alt=""></div>
+    <div class="it"><img src="img/foxbiz.png" alt=""></div>
+    <div class="it"><img src="img/newsnation.png" alt=""></div>
+    <div class="it"><img src="img/bloomberg.png" alt=""></div>
+    <div class="it"><img src="img/hln.png" alt=""></div>
+    <div class="it"><img src="img/law.png" alt=""></div>
+  </div></div></div>
+</div></div>
+<script>
+(function(){
+  /* Timing (ms) — edit here */
+  var T={
+    first:1400,    // starting channel plays on its own, no list yet
+    lead:700,      // list slides in, then the first press
+    step:1200,     // time per channel while zapping
+    hold:3000,     // back on CNN: the list stays for this long, then it is dismissed
+    after:3000,    // dismissed: CNN keeps playing full screen
+    dissolve:1000, // end of a round: cross-fade to the opening frame + list
+    loops:1
+  };
+  var CH=['disney','disneyjr','disneyxd','babytv','cnn','foxnews','newsmax','msnow','cnbc','foxbiz','newsnation','bloomberg','hln','law']; // list order
+  var START=4;                                  // CNN
+  var PITCH=120,CENTER=540;
+  var stage=document.getElementById('stage'),fit=document.getElementById('fit'),list=document.getElementById('list');
+  var items=[].slice.call(list.querySelectorAll('.it'));
+  var vids={};[].slice.call(document.querySelectorAll('.v')).forEach(function(v){vids[v.getAttribute('data-ch')]=v;v.muted=true;v.src=v.getAttribute('data-src');v.load()});
+  function scale(){stage.style.transform='scale('+(fit.clientWidth/1920)+')'}
+  addEventListener('resize',scale);scale();
+
+  var lq=location.search.match(/[?&]loops=(\d+)/);if(lq)T.loops=+lq[1];   // test hook
+  var cur=START;
+  function focus(i){
+    cur=i;
+    list.style.transform='translateY('+(CENTER-(i*PITCH+PITCH/2))+'px)';
+    items.forEach(function(el,k){el.classList.toggle('f',k===i);el.classList.toggle('d1',Math.abs(k-i)===1)});
+    Object.keys(vids).forEach(function(name){
+      var v=vids[name],on=CH[i]===name;
+      v.classList.toggle('on',on);
+      if(on){var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause();
+    });
+  }
+  items.forEach(function(el,k){el.style.top=(k*PITCH)+'px'});
+
+  var timers=[],running=false,done=false,round=0;
+  function at(ms,fn){timers.push(setTimeout(fn,ms))}
+  function clear(){timers.forEach(clearTimeout);timers=[]}
+  function reset(keep){
+    stage.classList.add('nt');stage.classList.remove('end','done');if(!keep)stage.classList.remove('show');
+    Object.keys(vids).forEach(function(n){var v=vids[n];v.pause();v.classList.remove('on');try{v.currentTime=0}catch(e){}});
+    focus(START);
+    Object.keys(vids).forEach(function(n){vids[n].pause()});
+    void stage.offsetWidth;
+    setTimeout(function(){stage.classList.remove('nt')},60);
+  }
+  /* End state: the opening frame of the video with the channel list on top, kept on screen after playback */
+  function still(){
+    reset();stage.classList.add('nt','show','end','done');void stage.offsetWidth;
+    setTimeout(function(){stage.classList.remove('nt')},60);
+  }
+  function run(keep){
+    reset(keep);round++;var t=0;
+    at(0,function(){focus(START)});                 // CNN plays full screen
+    t+=T.first;at(t,function(){stage.classList.add('show')});
+    t+=T.lead;
+    for(var k=1;k<=4;k++){(function(k){at(t,function(){focus(START+k)});t+=T.step})(k)}   // down: Fox News, Newsmax, MS NOW, CNBC
+    for(var k=3;k>=0;k--){(function(k){at(t,function(){focus(START+k)});t+=T.step})(k)}   // back up to CNN
+    t+=T.hold-T.step;at(t,function(){stage.classList.remove('show')});
+    t+=T.after;
+    at(t,function(){stage.classList.add('end','show')});            // dissolve into the opening frame with the list
+    at(t+T.dissolve,function(){
+      if(round<T.loops)run(true);                                     // same frame as the video start, so the next round continues seamlessly
+      else{done=true;stage.classList.add('done');Object.keys(vids).forEach(function(n){vids[n].pause()})}
+    });
+  }
+  function start(){if(running||done)return;running=true;round=0;run()}
+  function halt(){running=false;clear();if(done)still();else reset()}
+  /* Plays once; afterwards the key frame stays and the image (or the button) replays it */
+  var reduce=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var rp=document.createElement('button');rp.id='rp';rp.type='button';rp.setAttribute('aria-label','Replay');
+  rp.innerHTML='<svg viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.4-5.5"/><path d="M4.5 4.5v4.2h4.2"/></svg>';stage.appendChild(rp);
+  function replay(){if(!done)return;clear();running=false;done=false;stage.classList.remove('done');running=true;round=0;run(true)}
+  stage.addEventListener('click',replay);
+
+
+  focus(START);Object.keys(vids).forEach(function(n){vids[n].pause()});
+  var st=(location.search.match(/[?&]state=(down|top)/)||[])[1];
+  if(st){stage.classList.add('show');focus(st==='down'?8:START);}
+  else if(/[?&]test=1/.test(location.search)){start()}
+  else if(reduce){done=true;still()}
+  else if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?start():halt()})},{threshold:.5}).observe(fit);
+  }else start();
+})();
+</script>
+</body>
+</html>

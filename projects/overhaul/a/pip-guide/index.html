@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Picture-in-Picture Demo (Guide)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#171725}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:Inter,system-ui,sans-serif}
+#fit{position:relative;width:100vw;max-width:calc(100vh*16/9);aspect-ratio:16/9;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--bg);overflow:hidden;color:#fff}
+
+/* Player: ONE element that moves between home / full screen / PiP, so playback never restarts.
+   Geometry follows tvOS: the video scales into a rounded corner window and keeps playing. */
+:root{--ease:cubic-bezier(.2,.8,.2,1)}
+#pl,#pl2{position:absolute;z-index:1;left:var(--l,372px);top:var(--t,129px);width:var(--w,410px);height:var(--h,181px);overflow:hidden;border-radius:4px;background:#000;opacity:0;
+  box-shadow:0 0 0 0 rgba(0,0,0,0);
+  transition:left .8s var(--ease),top .8s var(--ease),width .8s var(--ease),height .8s var(--ease),border-radius .8s var(--ease),box-shadow .8s,opacity .35s,transform .35s var(--ease),z-index 0s linear .25s}
+#pl img,#pl video,#pl2 video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#pl video,#pl2 video{opacity:0;transition:opacity .2s}
+#pl.live video,#pl2.live video{opacity:1}
+#pl .dim,#pl2 .dim{position:absolute;inset:0;background:rgba(10,10,18,.38);opacity:0;transition:opacity .35s}
+
+.fs #pl,.fs2 #pl2{left:0;top:0;width:1920px;height:1080px;z-index:20;opacity:1;border-radius:0}
+.pip #pl{opacity:1;left:1330px;top:739px;width:500px;height:281px;border-radius:22px;z-index:20;transition-duration:.7s;
+  box-shadow:0 0 0 2px rgba(255,255,255,.16),0 24px 70px rgba(0,0,0,.65)}
+.pip.pipui #pl .dim,.pip2.pipui #pl2 .dim{opacity:1}
+.pip.pipx #pl{opacity:0;transform:scale(.9);transform-origin:100% 100%}
+.pip2 #pl2{opacity:1;left:1330px;top:739px;width:500px;height:281px;border-radius:22px;z-index:20;transition-duration:.7s;
+  box-shadow:0 0 0 2px rgba(255,255,255,.16),0 24px 70px rgba(0,0,0,.65)}
+.pip2.pipx #pl2{opacity:0;transform:scale(.9);transform-origin:100% 100%}
+
+/* PiP controls: swap (back to full screen) and stop (close) */
+.pc{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:32px;opacity:0;transition:opacity .35s}
+.pip.pipui .pc,.pip2.pipui .pc{opacity:1}
+.pc b{width:92px;height:92px;border-radius:50%;background:rgba(30,28,42,.82);border:4px solid rgba(190,190,200,.55);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s,border-color .2s}
+.pc b.f{background:#fff;border-color:#fff;transform:scale(1.14);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.pc b.f.press{transform:scale(1.02)}
+.pc svg{width:40px;height:40px;color:#fff;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pc b.f svg{color:#111}
+
+/* Home UI fades out when playback goes full screen and back in when PiP takes over */
+.nt,.nt *{transition:none!important}  /* reset snaps back; otherwise the player visibly grows back from the PiP corner */
+.ui{transition:opacity .5s}
+.fs .ui,.fs2 .ui{opacity:0;transition-duration:.2s}
+
+
+/* Sling Guide screen, rebuilt from the Sketch/screen capture (coordinates are in capture px, scaled to the 1920 stage) */
+#g{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:2;background:#0f121f;overflow:hidden;font-family:Inter,system-ui,sans-serif}
+#g .row{position:absolute;left:0;width:1920px;transition:top .25s ease,height .25s ease}
+#g .lgb{position:absolute;left:184px;top:0;width:181px;height:100%;background:#161828;transition:background .2s}
+#g .lgb img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:block}
+#g .row.f .lgb{background:var(--b,#161828)}
+#g .row:not(.f) .sub{display:none}
+#g .c{top:0;height:100%;transition:transform .15s;position:absolute;overflow:hidden;background:#060817;color:#c3c7ca;display:flex;flex-direction:column;justify-content:center;padding:0 18px 0 21px;white-space:nowrap;font-size:30px;font-weight:400;letter-spacing:-.1px}
+#g .row.f .c{color:#fff}
+#g .c.c1{background:#232633}
+#g .c b{font-weight:400;display:block;line-height:1.25}
+#g .c .sub{display:flex;align-items:center;gap:8px;font-size:22px;font-weight:400;color:#aeb1b8;margin-top:2px}
+#g .c .sub i{font-style:normal;color:#15b9f2}
+#g .c .sub u{width:6px;height:6px;border-radius:50%;background:#aeb1b8;display:inline-block}
+#g .ring{position:absolute;inset:0;border:4px solid #fff;opacity:0;transition:opacity .15s}
+#g .row.f .c1 .ring{opacity:1}
+.unf #g .row.f .c1 .ring{opacity:0}
+#g .c.press{transform:scale(.97)}
+#g .tm{position:absolute;top:128px;font-size:24px;line-height:28px;font-weight:600;color:#fff;letter-spacing:-.2px}
+#g .bar{position:absolute;top:167px;height:8px}
+#g .tab{position:absolute;top:52px;font-size:26px;line-height:30px;font-weight:500;color:#838690}
+#g .tab.on{color:#fff}
+#g .nv{position:absolute;left:56px;width:44px;height:44px;stroke:#cfcfd6;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#pan{display:none}
+
+/* Replay control: shown once the demo has played through; clicking the image or the button plays it again */
+#rp{position:absolute;top:28px;right:28px;width:72px;height:72px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.55);background:rgba(10,10,18,.62);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s,background .2s;z-index:50}
+#rp:hover,#rp:focus-visible{background:rgba(255,255,255,.22);outline:none}
+#rp svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#stage.done{cursor:pointer}
+#stage.done #rp{opacity:1;pointer-events:auto}
+</style>
+<body>
+<div id="fit"><div id="stage">
+  <div id="g" class="ui">
+    <div style="position:absolute;left:55px;top:52px;width:46px;height:46px;border-radius:50%;background:#0870f1;color:#fff;font-weight:700;font-size:26px;line-height:46px;text-align:center">M</div>
+    <svg class="nv" style="top:319px" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><svg class="nv" style="top:418px" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg><svg class="nv" style="top:516px" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2" fill="#fff" stroke="none"/><path d="M7 9h10M7 13h10" stroke="#0e111e"/></svg><div style="position:absolute;left:60px;top:560px;width:36px;height:4px;background:#fff"></div><svg class="nv" style="top:610px" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-7.96A6 6 0 0 1 18 9a4.5 4.5 0 0 1 .5 9z"/><path d="m10 11 4 2.5-4 2.5z" fill="#cfcfd6"/></svg><svg class="nv" style="top:705px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 5 3.5-5 3.5z" fill="#cfcfd6"/></svg><svg class="nv" style="top:976px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    <div class="row" data-i="0">
+      <div class="lgb"><img src="img/lg_sling.webp" alt=""></div>
+      <div class="c c1" style="left:372px;width:1547px"><b>Starlink Internet Through Sling</b><div class="ring"></div></div>
+    </div>
+    <div class="row" data-i="1" style="--b:#cd0100">
+      <div class="lgb"><img src="img/lg_cnn.webp" alt=""></div>
+      <div class="c c1" style="left:372px;width:410px"><b>Countdown to Election Night</b><span class="sub"><i>NEW</i><u></u>News<u></u>56 Min Left</span><div class="ring"></div></div>
+      <div class="c" style="left:789px;width:817px"><b>Real Time With Bill Maher</b><span class="sub"><i>NEW</i><u></u>Talk<u></u>TV-MA</span></div>
+      <div class="c" style="left:1614px;width:305px"><b>Have I Got News for You</b><span class="sub"><i>NEW</i><u></u>News</span></div>
+    </div>
+    <div class="row" data-i="2" style="--b:#00417d">
+      <div class="lgb"><img src="img/lg_fox.webp" alt=""></div>
+      <div class="c c1" style="left:372px;width:410px"><b>The Big Weekend Show</b><span class="sub">News<u></u>52 Min Left</span><div class="ring"></div></div>
+      <div class="c" style="left:789px;width:817px"><b>Life, Liberty &amp; Levin</b><span class="sub"><i>NEW</i><u></u>News<u></u>1 hr</span></div>
+      <div class="c" style="left:1614px;width:305px"><b>My View With Lara Trump</b><span class="sub"><i>NEW</i><u></u>News</span></div>
+    </div>
+    <div class="row" data-i="3" style="--b:#b3102a">
+      <div class="lgb"><img src="img/lg_newsmax.webp" alt=""></div>
+      <div class="c c1" style="left:372px;width:410px"><b>Carl Higbie This Week</b><span class="sub">News<u></u>40 Min Left</span><div class="ring"></div></div>
+      <div class="c" style="left:789px;width:410px"><b>The Big Beautiful Trump</b><span class="sub">Talk</span></div>
+      <div class="c" style="left:1206px;width:408px"><b>The Big Beautiful Trump</b><span class="sub">Talk</span></div>
+      <div class="c" style="left:1621px;width:298px"><b>Wise Guys With Joe</b><span class="sub">Talk</span></div>
+    </div>
+    <div class="row" data-i="4" style="--b:#1d4fd8">
+      <div class="lgb"><img src="img/lg_msnbc.webp" alt=""></div>
+      <div class="c c1" style="left:372px;width:410px"><b>Connect With Jacob Soboroff</b><span class="sub"><i>NEW</i><u></u>News<u></u>48 Min Left</span><div class="ring"></div></div>
+      <div class="c" style="left:789px;width:817px"><b>The Assignment With Antonia Hylton</b><span class="sub">Talk<u></u>TV-PG</span></div>
+      <div class="c" style="left:1614px;width:305px"><b>Crooked on MS NOW</b><span class="sub"><i>NEW</i><u></u>Talk</span></div>
+    </div>
+    <div class="row" data-i="5" style="--b:#005a9c">
+      <div class="lgb"><img src="img/lg_cnbc.webp" alt=""></div>
+      <div class="c c1" style="left:372px;width:410px"><b>WNBA on USA - Pregame</b><span class="sub"><i>NEW</i><u></u>Sports<u></u>31 Min Left</span><div class="ring"></div></div>
+      <div class="c" style="left:789px;width:1130px"><b>Atlanta Dream at Golden State Valkyries</b><span class="sub">Sports<u></u>WNBA</span></div>
+    </div>
+    <div class="row" data-i="6" style="--b:#00417d">
+      <div class="lgb"><img src="img/lg_foxbiz.webp" alt=""></div>
+      <div class="c c1" style="left:372px;width:410px"><b>American Gold: The Legend of Bear Gulch</b><div class="ring"></div></div>
+      <div class="c" style="left:789px;width:817px"><b>American Gold: The Legend of Bear Gulch</b></div>
+      <div class="c" style="left:1614px;width:305px"><b>American Gold: The Legend of Bear Gulch</b></div>
+    </div>
+    <div class="row" data-i="7" style="--b:#b3102a">
+      <div class="lgb"><img src="img/lg_law.webp" alt=""></div>
+      <div class="c c1" style="left:372px;width:410px"><b>Most Outrageous Crimes</b><div class="ring"></div></div>
+      <div class="c" style="left:789px;width:817px"><b>Most Outrageous Crimes</b></div>
+      <div class="c" style="left:1614px;width:305px"><b>Most Outrageous Crimes</b></div>
+    </div>
+  </div>
+
+  <div id="pl2"><video muted loop playsinline preload="auto" data-src="vid/cnbc.mp4"></video>
+    <div class="dim"></div>
+    <div class="pc">
+      <b id="bx2"><svg viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="14" height="10.5" rx="2"/><rect x="11.5" y="10" width="10" height="8" rx="1.6" fill="currentColor"/></svg></b>
+      <b id="bc2"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></b>
+    </div>
+  </div>
+
+  <div id="pl">
+    <video muted loop playsinline preload="auto" data-src="vid/cnn.mp4"></video>
+    <div class="dim"></div>
+    <div class="pc">
+      <b id="bx"><svg viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="14" height="10.5" rx="2"/><rect x="11.5" y="10" width="10" height="8" rx="1.6" fill="currentColor"/></svg></b>
+      <b id="bc"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></b>
+    </div>
+  </div>
+</div></div>
+<script>
+(function(){
+  /* Timing (ms) — edit here */
+  var T={
+    start:1500,     // CNN program is selected
+    toFull:300,     // select -> full-screen transition starts
+    full:3500,      // time in full screen
+    land:1500,      // Back: Guide returns with the PiP; focus stays on the program
+    down:650,       // time between focus moves (4 presses down)
+    beforeSelect:800,
+    toFull2:300,
+    full2:3500,     // CNBC full view
+    seek2:0,        // CNBC clip start (seconds)
+    land2:1500,     // Back from CNBC: PiP lands, focus stays on the program
+    onExpand:2000,  // Apple TV button: focus moves into the PiP, on expand
+    onClose:2000,   // focus moves to close
+    after:1000,     // guide screen after the PiP is gone
+    loops:1
+  };
+  var K=1920/1889;                        // guide capture px -> stage px
+  var stage=document.getElementById('stage'),fit=document.getElementById('fit'),pl=document.getElementById('pl'),pl2=document.getElementById('pl2'),
+      v=pl.querySelector('video'),v2=pl2.querySelector('video'),
+      rows=[].slice.call(document.querySelectorAll('#g .row')),
+      bx2=document.getElementById('bx2'),bc2=document.getElementById('bc2');
+  function scale(){stage.style.transform='scale('+(fit.clientWidth/1920)+')'}
+  addEventListener('resize',scale);scale();
+
+  [v,v2].forEach(function(x){x.muted=true;x.src=x.getAttribute('data-src');x.load()});
+  function play(el,from){try{el.currentTime=from||0}catch(e){}var p=el.play();if(p&&p.catch)p.catch(function(){})}
+
+  /* Guide layout: the focused row grows (two-line info), the others stay compact */
+  var FOCUS_H=181,ROW_H=121,GAP=8,TOP0=0;
+  function layout(fi){
+    var y=TOP0;
+    rows.forEach(function(r,i){
+      var hh=(i===fi)?FOCUS_H:ROW_H;
+      r.style.top=y+'px';r.style.height=hh+'px';
+      r.classList.toggle('f',i===fi);
+      y+=hh+GAP;
+    });
+  }
+  function cellOf(i){return rows[i].querySelector('.c1')}
+
+  var timers=[],running=false,done=false,round=0;
+  function at(ms,fn){timers.push(setTimeout(fn,ms))}
+  function clear(){timers.forEach(clearTimeout);timers=[]}
+  var fi=1;
+  function reset(){
+    stage.classList.add('nt');
+    stage.classList.remove('fs','fs2','pip','pip2','pipui','pipx','unf','done');bx2.classList.remove('f','press');bc2.classList.remove('f','press');
+    pl.classList.remove('live');pl2.classList.remove('live');
+    rows.forEach(function(r){r.querySelector('.c1').classList.remove('press')});
+    fi=1;layout(fi);
+    pl2.style.removeProperty('--l');
+    v.pause();v2.pause();try{v.currentTime=0;v2.currentTime=0}catch(e){}
+    void stage.offsetWidth;
+    setTimeout(function(){stage.classList.remove('nt')},60);
+  }
+  /* Put the second player exactly over the focused program cell, then let it grow */
+  function placeOver(el,player){
+    var f=fit.getBoundingClientRect(),r=el.getBoundingClientRect(),sc=f.width/1920;
+    player.style.setProperty('--l',((r.left-f.left)/sc)+'px');
+    player.style.setProperty('--t',((r.top-f.top)/sc)+'px');
+    player.style.setProperty('--w',(r.width/sc)+'px');
+    player.style.setProperty('--h',(r.height/sc)+'px');
+  }
+  function run(){
+    reset();round++;var t=0;
+    t+=T.start;at(t,function(){cellOf(1).classList.add('press')});
+    t+=T.toFull;at(t,function(){cellOf(1).classList.remove('press');pl.classList.add('live');play(v,0);stage.classList.add('fs')});
+    t+=800+T.full;at(t,function(){stage.classList.remove('fs');stage.classList.add('pip')});
+    t+=700+T.land;
+    for(var k=2;k<=5;k++){(function(k){t+=T.down;at(t,function(){fi=k;layout(fi)})})(k)}
+    t+=T.beforeSelect;at(t,function(){cellOf(5).classList.add('press')});
+    t+=T.toFull2;at(t,function(){
+      cellOf(5).classList.remove('press');
+      stage.classList.add('nt');placeOver(cellOf(5),pl2);void stage.offsetWidth;stage.classList.remove('nt');
+      stage.classList.add('pipx');pl2.classList.add('live');play(v2,T.seek2);stage.classList.add('fs2');
+    });
+    t+=800+T.full2;at(t,function(){stage.classList.remove('fs2','pip','pipx');stage.classList.add('pip2');v.pause()});
+    t+=700+T.land2;at(t,function(){stage.classList.add('unf','pipui');bx2.classList.add('f')});
+    t+=T.onExpand;at(t,function(){bx2.classList.remove('f');bc2.classList.add('f')});
+    t+=T.onClose;at(t,function(){bc2.classList.add('press')});
+    t+=250;at(t,function(){stage.classList.add('pipx');stage.classList.remove('unf')});
+    t+=400+T.after;at(t,function(){if(round<T.loops)run();else{done=true;finalState()}});
+  }
+  function start(){if(running||done)return;running=true;round=0;run()}
+  /* Key frame kept after playback: Guide on CNBC with the PiP window in the corner (fades in over the closed state) */
+  function finalState(){
+    reset();stage.classList.add('nt');
+    fi=5;layout(fi);placeOver(cellOf(5),pl2);void stage.offsetWidth;
+    stage.classList.add('pip2','pipx','done');pl2.classList.add('live');
+    try{v2.currentTime=1}catch(e){}v2.pause();
+    setTimeout(function(){stage.classList.remove('pipx')},120);
+  }
+  function halt(){running=false;clear();if(done)finalState();else reset()}
+  /* Plays once; afterwards the key frame stays and the image (or the button) replays it */
+  var reduce=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var rp=document.createElement('button');rp.id='rp';rp.type='button';rp.setAttribute('aria-label','Replay');
+  rp.innerHTML='<svg viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.4-5.5"/><path d="M4.5 4.5v4.2h4.2"/></svg>';stage.appendChild(rp);
+  function replay(){if(!done)return;clear();running=false;done=false;stage.classList.remove('done');start()}
+  stage.addEventListener('click',replay);
+
+
+  layout(fi);
+  var st=(location.search.match(/[?&]state=(fs|pip2a|pip2b|pip|down|full2)/)||[])[1];
+  if(st){
+    if(st==='fs'){stage.classList.add('fs');pl.classList.add('live');play(v,0)}
+    else{stage.classList.add('pip');pl.classList.add('live');play(v,0);
+      if(st==='down'||st==='full2'||st==='pip2a'||st==='pip2b'){fi=5;layout(fi)}
+      if(st==='pip2a'||st==='pip2b'){stage.classList.remove('pip');stage.classList.add('nt');placeOver(cellOf(5),pl2);void stage.offsetWidth;stage.classList.remove('nt');stage.classList.add('pip2','pipui','unf');pl2.classList.add('live');play(v2,T.seek2);(st==='pip2a'?bx2:bc2).classList.add('f')}
+      if(st==='full2'){stage.classList.add('nt');placeOver(cellOf(5),pl2);void stage.offsetWidth;stage.classList.remove('nt');stage.classList.add('pipx','fs2');pl2.classList.add('live');play(v2,T.seek2)}}
+  }  /* test hook: freeze one state */
+  else if(/[?&]test=1/.test(location.search)){start()}
+  else if(reduce){done=true;finalState()}
+  else if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?start():halt()})},{threshold:.5}).observe(fit);
+  }else start();
+})();
+</script>
+</body>
+</html>
