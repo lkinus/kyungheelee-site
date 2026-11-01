@@ -95,3 +95,20 @@
   window.addEventListener('resize', update);
   update();
 })();
+
+(function () {
+  if (!('IntersectionObserver' in window) || (window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches)) return;
+  var items = [].slice.call(document.querySelectorAll('.hero h2.name, .hero .intro, .head > h2, .head > .info, figure.shot'));
+  var fade = [].slice.call(document.querySelectorAll('.hero .links'));   /* 위치를 transform 으로 잡는 요소는 투명도만 */
+  var all = items.concat(fade);
+  all.forEach(function (e) { e.style.transition = 'none'; });   /* 숨기는 순간에는 전환 없이 (보였다 사라지는 깜빡임 방지) */
+  items.forEach(function (e) { e.classList.add('rv'); });
+  fade.forEach(function (e) { e.classList.add('rvo'); });
+  void document.body.offsetHeight;
+  all.forEach(function (e) { e.style.transition = ''; });
+  var io = new IntersectionObserver(function (es) {
+    var vis = es.filter(function (x) { return x.isIntersecting; }).sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+    vis.forEach(function (x, i) { x.target.style.setProperty('--rvd', Math.min(i, 4) * 90 + 'ms'); x.target.classList.add('in'); io.unobserve(x.target); });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+  items.concat(fade).forEach(function (e) { io.observe(e); });
+})();

@@ -729,7 +729,10 @@ Engagement</div><div class="a" data-id="0:142" style="left:865.00px;top:401.96px
   if(!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)) return;
   var main=document.querySelector('main'); if(!main) return;
   var items=[].slice.call(main.children).filter(function(e){return e.tagName!=='SCRIPT'&&e.tagName!=='STYLE'&&e.id!=='pgf'});
+  items.forEach(function(e){e.style.transition='none'});   /* 숨기는 순간에는 전환 없이 (보였다 사라지는 깜빡임 방지) */
   items.forEach(function(e){e.classList.add('rv')});
+  void document.body.offsetHeight;
+  items.forEach(function(e){e.style.transition=''});
   var io=new IntersectionObserver(function(es){
     var vis=es.filter(function(x){return x.isIntersecting}).sort(function(a,b){return a.boundingClientRect.top-b.boundingClientRect.top});
     vis.forEach(function(x,i){ x.target.style.setProperty('--rvd',Math.min(i,4)*90+'ms'); x.target.classList.add('in'); io.unobserve(x.target); });
