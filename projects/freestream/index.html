@@ -416,32 +416,37 @@ b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function
 </div>
 <script>(function(){var r=document.currentScript.parentNode;var go=function(){r.classList.remove("pre");r.classList.add("go")};if(!("IntersectionObserver" in window)){go();return}var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){io.disconnect();requestAnimationFrame(function(){requestAnimationFrame(go)})}},{threshold:.35});io.observe(r)})();</script>
 </div>
-<h2 data-y="26066">A touchpoint matrix turned the rules into specific behavior.</h2>
-<div class="bd" data-y="26186"><p>I mapped the touchpoints a user meets, from the landing page to the player, guide, DVR, and account settings. For each one, the matrix defined the next action for each of the four states. It gave UX, Product, Engineering, Ads, and Marketing one shared reference.</p><p>For example, at DVR, a Prospect is invited to sign up for a free 10-hour limit, a Lead sees that limit with an upgrade path, and a Paid user can add Unlimited DVR.</p></div>
+<h2 data-y="26066">I translated access rules into behavior at each touchpoint.</h2>
+<div class="bd" data-y="26186"><p>The matrix covered the landing page, Home, content details, playback, the guide, DVR, and account settings. At each point, I defined how access, account requirements, and subscription prompts adapted to the user’s state.</p></div>
 <div class="fmx" data-y="26411">
 <style>
 .fmx{margin:40px 0 0}
 .fmx .sc{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.fmx table{table-layout:fixed;width:100%;min-width:720px;border-collapse:collapse;font:400 14px/1.5 'Overused Grotesk',sans-serif;color:#adadb2;text-align:left}
+.fmx table{table-layout:fixed;width:100%;min-width:640px;border-collapse:collapse;font:400 14px/1.5 'Overused Grotesk',sans-serif;color:#adadb2;text-align:left}
 .fmx th,.fmx td{padding:12px 12px;vertical-align:top;border-top:1px solid rgba(255,255,255,.08)}
 .fmx th:first-child,.fmx td:first-child{padding-left:0}
 .fmx thead th{border-top:0;border-bottom:1px solid rgba(255,255,255,.12);color:#fff;font-weight:600}
 .fmx th:nth-child(1){width:22%}.fmx th:nth-child(n+2){width:19.5%}
 .fmx td:first-child{color:#fff;font-weight:500}
-.fmx .cap{margin:16px 0 0;font:400 14px/1.5 'Overused Grotesk',sans-serif;color:#83838a}
+.fmx tr.grp td{padding:28px 0 10px;border-top:0;font:500 11px/1.4 'Overused Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#83838a}
+.fmx tr.grp:first-child td{padding-top:20px}
+.fmx tr.grp+tr td{border-top:1px solid rgba(255,255,255,.12)}
+.fmx .note{margin:16px 0 0;font:400 14px/1.5 'Overused Grotesk',sans-serif;color:#83838a}
 </style>
 <div class="sc"><table>
 <thead><tr><th>Touchpoint</th><th>Prospect</th><th>Lead</th><th>Paid</th><th>Former</th></tr></thead>
 <tbody>
+<tr class="grp"><td colspan="5">Entry</td></tr>
 <tr><td>Freestream Landing Page (Web)</td><td>Stream Free CTA · Create account · Compare plans</td><td>Sign in · Continue · Upgrade</td><td>Sign in · Manage subscription</td><td>Sign in · Restart</td></tr>
 <tr><td>Entry / Home (banner / rail)</td><td>Create account · Free DVR 10h</td><td>Upgrade plans · More channels</td><td>Add-ons spotlight · DVR upgrade</td><td>Welcome back · Restart</td></tr>
+<tr class="grp"><td colspan="5">In the app</td></tr>
 <tr><td>Content Detail</td><td>Save / Record → Sign up</td><td>Locked title → Plans</td><td>Add this add-on</td><td>Restart to watch</td></tr>
 <tr><td>Player / Playback gate</td><td>Sign up to continue</td><td>Subscribe to watch</td><td>Upgrade DVR · Add-on</td><td>Restart flow</td></tr>
 <tr><td>Guide / Channel</td><td>Plan required · Sign up</td><td>Compare plans · Subscribe</td><td>Upgrade plan (streams / locals)</td><td>Plan required · Restart</td></tr>
 <tr><td>DVR (limit / storage)</td><td>Record → Sign up (10h)</td><td>10h limit · Upgrade DVR</td><td>Add Unlimited DVR</td><td>Restore via restart</td></tr>
 <tr><td>Account / Settings / My Account</td><td>Create account</td><td>Compare plans · Subscribe</td><td>Edit subscription · Add extras</td><td>Restart subscription</td></tr>
 </tbody></table></div>
-<p class="cap">Sample from a broader entitlement matrix covering access, viewing, account, and monetization touchpoints.</p>
+<p class="note">Example touchpoints from the matrix, not a complete list. Prompts such as “Sign up to continue” and “Plan required” apply to restricted content or features, not to free content.</p>
 </div>
 <hr data-y="27353">
 <div class="lbl" data-y="27626">Experience Design</div>
