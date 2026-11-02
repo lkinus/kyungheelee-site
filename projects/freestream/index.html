@@ -416,37 +416,61 @@ b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function
 </div>
 <script>(function(){var r=document.currentScript.parentNode;var go=function(){r.classList.remove("pre");r.classList.add("go")};if(!("IntersectionObserver" in window)){go();return}var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){io.disconnect();requestAnimationFrame(function(){requestAnimationFrame(go)})}},{threshold:.35});io.observe(r)})();</script>
 </div>
-<h2 data-y="26066">I translated access rules into behavior at each touchpoint.</h2>
-<div class="bd" data-y="26186"><p>The matrix covered the landing page, Home, content details, playback, the guide, DVR, and account settings. At each point, I defined how access, account requirements, and subscription prompts adapted to the user’s state.</p></div>
+<h2 data-y="26066">I defined the entry experience for each user state.</h2>
+<div class="bd" data-y="26186"><p>I mapped what users see when they first arrive through the Freestream landing page, the Roku remote button, and the Sling TV and mobile app launch. The matrix gave UX, Product, Engineering, Ads, and Marketing a shared reference, with in-app touchpoints below.</p></div>
 <div class="fmx" data-y="26411">
 <style>
 .fmx{margin:40px 0 0}
 .fmx .sc{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.fmx table{table-layout:fixed;width:100%;min-width:640px;border-collapse:collapse;font:400 14px/1.5 'Overused Grotesk',sans-serif;color:#adadb2;text-align:left}
+.fmx table{table-layout:fixed;width:100%;border-collapse:collapse;font:400 15px/1.5 'Overused Grotesk',sans-serif;color:#adadb2;text-align:left}
 .fmx th,.fmx td{padding:12px 12px;vertical-align:top;border-top:1px solid rgba(255,255,255,.08)}
 .fmx th:first-child,.fmx td:first-child{padding-left:0}
 .fmx thead th{border-top:0;border-bottom:1px solid rgba(255,255,255,.12);color:#fff;font-weight:600}
-.fmx th:nth-child(1){width:22%}.fmx th:nth-child(n+2){width:19.5%}
+.fmx th:nth-child(1){width:16%}.fmx th:nth-child(n+2){width:21%}
 .fmx td:first-child{color:#fff;font-weight:500}
+.fmx .full{font-size:14px}
+.fmx .full th:nth-child(1){width:20%}.fmx .full th:nth-child(n+2){width:20%}
 .fmx tr.grp td{padding:28px 0 10px;border-top:0;font:500 11px/1.4 'Overused Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#83838a}
 .fmx tr.grp:first-child td{padding-top:20px}
 .fmx tr.grp+tr td{border-top:1px solid rgba(255,255,255,.12)}
+.fmx details{margin:32px 0 0}
+.fmx summary{list-style:none;cursor:pointer;display:block;padding:12px 0;color:#fff;font:400 17px/1.5 'Overused Grotesk',sans-serif}
+.fmx summary::-webkit-details-marker{display:none}
+.fmx .evh{display:inline-flex;align-items:center;gap:12px;padding:1px 6px;margin:0 -6px;transition:color .15s}
+.fmx .evh svg{flex:none;color:#fff;transition:transform .25s,color .15s}
+.fmx details[open] .evh svg{transform:rotate(180deg)}
+.fmx summary:hover .evh,.fmx summary:focus-visible .evh{color:#ff0000}
+.fmx summary:hover .evh svg,.fmx summary:focus-visible .evh svg{color:#ff0000}
 .fmx .note{margin:16px 0 0;font:400 14px/1.5 'Overused Grotesk',sans-serif;color:#83838a}
+@media(max-width:720px){
+.fmx table,.fmx tbody,.fmx tr,.fmx td{display:block;width:100%}
+.fmx thead{display:none}
+.fmx tr{padding:16px 0;border-top:1px solid rgba(255,255,255,.12)}
+.fmx td,.fmx td:first-child{padding:4px 0;border:0}
+.fmx td:first-child{margin-bottom:6px;font-size:16px}
+.fmx td:not(:first-child)::before{content:attr(data-l);display:block;font:500 11px/1.4 'Overused Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#83838a;margin-top:6px}
+}
 </style>
-<div class="sc"><table>
+<div class="sc"><table class="sum">
 <thead><tr><th>Touchpoint</th><th>Prospect</th><th>Lead</th><th>Paid</th><th>Former</th></tr></thead>
 <tbody>
-<tr class="grp"><td colspan="5">Entry</td></tr>
-<tr><td>Freestream Landing Page (Web)</td><td>Stream Free CTA · Create account · Compare plans</td><td>Sign in · Continue · Upgrade</td><td>Sign in · Manage subscription</td><td>Sign in · Restart</td></tr>
-<tr><td>Entry / Home (banner / rail)</td><td>Create account · Free DVR 10h</td><td>Upgrade plans · More channels</td><td>Add-ons spotlight · DVR upgrade</td><td>Welcome back · Restart</td></tr>
-<tr class="grp"><td colspan="5">In the app</td></tr>
-<tr><td>Content Detail</td><td>Save / Record → Sign up</td><td>Locked title → Plans</td><td>Add this add-on</td><td>Restart to watch</td></tr>
-<tr><td>Player / Playback gate</td><td>Sign up to continue</td><td>Subscribe to watch</td><td>Upgrade DVR · Add-on</td><td>Restart flow</td></tr>
-<tr><td>Guide / Channel</td><td>Plan required · Sign up</td><td>Compare plans · Subscribe</td><td>Upgrade plan (streams / locals)</td><td>Plan required · Restart</td></tr>
-<tr><td>DVR (limit / storage)</td><td>Record → Sign up (10h)</td><td>10h limit · Upgrade DVR</td><td>Add Unlimited DVR</td><td>Restore via restart</td></tr>
-<tr><td>Account / Settings / My Account</td><td>Create account</td><td>Compare plans · Subscribe</td><td>Edit subscription · Add extras</td><td>Restart subscription</td></tr>
+<tr><td data-l="Touchpoint">Web marketing banner → Freestream landing page</td><td data-l="Prospect">Watch free · Optional account creation · Sign in</td><td data-l="Lead">Continue to Freestream · Explore paid plans</td><td data-l="Paid">Continue to Sling · Manage subscription</td><td data-l="Former">Watch free · Account access · Optional restart offer</td></tr>
+<tr><td data-l="Touchpoint">Roku remote button → Sling TV app</td><td data-l="Prospect">Free browsing and viewing without signing in</td><td data-l="Lead">Free-account experience · Account features</td><td data-l="Paid">Existing subscription experience · Preserve current access</td><td data-l="Former">Free viewing and account features · Optional restart offer</td></tr>
+<tr><td data-l="Touchpoint">Sling TV and mobile app launch</td><td data-l="Prospect">Free browsing and viewing without signing in</td><td data-l="Lead">Free-account experience · Account features</td><td data-l="Paid">Existing subscription experience · Preserve current access</td><td data-l="Former">Free viewing and account features · Optional restart offer</td></tr>
 </tbody></table></div>
-<p class="note">Example touchpoints from the matrix, not a complete list. Prompts such as “Sign up to continue” and “Plan required” apply to restricted content or features, not to free content.</p>
+<details>
+<summary><span class="evh"><span>See the in-app touchpoints</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+<div class="sc"><table class="full">
+<thead><tr><th>Touchpoint</th><th>Prospect</th><th>Lead</th><th>Paid</th><th>Former</th></tr></thead>
+<tbody>
+<tr><td data-l="Touchpoint">Home: Banners / rails</td><td data-l="Prospect">Free content · Account-benefit banner / Create account · Clearly labeled paid options</td><td data-l="Lead">Free content · Account features · Relevant Upgrade to Premium banner</td><td data-l="Paid">Free and included content · Relevant add-on offers outside the current plan</td><td data-l="Former">Free content · Account features · Optional Restart subscription banner</td></tr>
+<tr><td data-l="Touchpoint">Content detail</td><td data-l="Prospect">Free title: Watch · Save: Create account · Paid title: Show access options</td><td data-l="Lead">Available title: Watch · Save to watchlist · Locked title: Show paid options</td><td data-l="Paid">Free or included title: Watch · Locked title: Show the required plan, add-on, or rental offer</td><td data-l="Former">Available title: Watch · Locked title: Show relevant paid options, including restart where applicable</td></tr>
+<tr><td data-l="Touchpoint">Player / Playback gate</td><td data-l="Prospect">Play free content · Show the required paid option for locked content</td><td data-l="Lead">Play available content · Show the required plan, add-on, or rental offer for locked content</td><td data-l="Paid">Play free or included content · Show paid options only when access is missing</td><td data-l="Former">Play available content · Show relevant paid options for locked content, including restart where applicable</td></tr>
+<tr><td data-l="Touchpoint">Guide / Channel</td><td data-l="Prospect">Free channel: Watch · Paid channel: Show plan options · Favorite a channel: Create account</td><td data-l="Lead">Free channel: Watch · Favorites available · Paid channel: Show plan options</td><td data-l="Paid">Free or subscribed channel: Watch · Other channels: Show the required plan or add-on</td><td data-l="Former">Free channel: Watch · Paid channel: Restart or choose a plan</td></tr>
+<tr><td data-l="Touchpoint">DVR / Recordings</td><td data-l="Prospect">Explain recording requirements · Show account and any subscription requirements before sign-up</td><td data-l="Lead">Show DVR eligibility · Record if available; otherwise show the required plan</td><td data-l="Paid">Eligible recordings · Storage status · Relevant DVR upgrade</td><td data-l="Former">Show current recording availability · Offer a plan or restart where required</td></tr>
+<tr><td data-l="Touchpoint">Account / Settings</td><td data-l="Prospect">Sign in · Create free account · Account benefits</td><td data-l="Lead">Free-account status · Profile and settings · Subscription options</td><td data-l="Paid">Current plan · Billing · Manage subscription and add-ons</td><td data-l="Former">Inactive-subscription status · Account settings · Restart or choose a plan</td></tr>
+</tbody></table></div>
+</details>
 </div>
 <hr data-y="27353">
 <div class="lbl" data-y="27626">Experience Design</div>
