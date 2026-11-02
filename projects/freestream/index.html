@@ -360,8 +360,26 @@ b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function
 <hr data-y="23502">
 <div class="lbl" data-y="23775">Experience Architecture</div>
 <h2 data-y="23872">One Sling experience had to adapt to four user states.</h2>
-<div class="bd" data-y="23992"><p>Freestream had to behave differently depending on who the user was: Prospect, Lead, Paid, or Former. I defined how access, authentication, prompts, and upgrade paths should work for each state before designing the flows.</p></div>
-<div class="vis" data-w="1340" data-h="600" data-y="24217"><div class="vin" style="width:1340px;height:600px"><div class="a" data-id="0:138" style="left:0.00px;top:0.00px;width:1340px;height:600px;"><div class="a" data-id="0:139" style="left:0px;top:0px;width:1340px;height:600px;background:#ffffff;border-radius:10px;"></div><div class="a" data-id="0:140" style="left:407px;top:81px;width:526px;height:439px;overflow:hidden;border-radius:10px;"><img src="a/0_140.webp" alt="" style="width:100%;height:100%;object-fit:fill"></div></div></div></div>
+<div class="bd" data-y="23992"><p>I defined viewing access, account requirements, and subscription prompts for each state. Viewers could watch free content without creating an account.</p></div>
+<div class="fst" data-y="24217">
+<style>
+.fst{margin:40px 0 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.fst table{table-layout:fixed;width:100%;min-width:560px;border-collapse:collapse;font:400 16px/1.5 'Overused Grotesk',sans-serif;color:#adadb2;text-align:left}
+.fst th,.fst td{padding:14px 16px;vertical-align:top;border-top:1px solid rgba(255,255,255,.08)}
+.fst th:first-child,.fst td:first-child{padding-left:0}
+.fst thead th{border-top:0;border-bottom:1px solid rgba(255,255,255,.12);color:#fff;font-weight:600}
+.fst th:nth-child(1){width:20%}.fst th:nth-child(2){width:44%}.fst th:nth-child(3){width:36%}
+.fst td:first-child{color:#fff;font-weight:500}
+</style>
+<table>
+<thead><tr><th>User state</th><th>Meaning</th><th>Can move to</th></tr></thead>
+<tbody>
+<tr><td>Prospect</td><td>Anonymous visitor</td><td>Lead (creates a free account) or Paid</td></tr>
+<tr><td>Lead</td><td>Free account holder</td><td>Paid</td></tr>
+<tr><td>Paid</td><td>Active paid subscriber</td><td>Former (when the subscription ends)</td></tr>
+<tr><td>Former</td><td>Previous subscriber whose paid subscription has ended</td><td>Paid (resubscribes)</td></tr>
+</tbody></table>
+</div>
 <h2 data-y="25087">The same flow had to adapt to different user states.</h2>
 <div class="bd" data-y="25207"><p>Every user moved through the same basic stages — access, authentication, first-time experience, content, and upsell but the rules changed based on who they were and what they had already done.</p></div>
 <div class="vis" data-w="1340" data-h="409" data-y="25387"><div class="vin" style="width:1340px;height:409px"><div class="a" data-id="0:134" style="left:0.00px;top:0.00px;width:1340px;height:409px;"><div class="a" data-id="0:135" style="left:0px;top:0px;width:1340px;height:409px;background:#ffffff;border-radius:10px;"></div><div class="a" data-id="0:136" style="left:169px;top:281px;width:1002px;height:45px;opacity:0.7;white-space:pre;text-align:center;font:600 24px/45px 'Overused Grotesk';color:#000000;">A rules-based pipeline across user types and platforms - edge cases/platform specific</div><div class="a" data-id="0:137" style="left:114px;top:147px;width:1112px;height:68px;overflow:hidden;border-radius:10px;"><img src="a/0_137.webp" alt="" style="width:100%;height:100%;object-fit:fill"></div></div></div></div>
