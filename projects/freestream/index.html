@@ -647,10 +647,50 @@ io.observe(stage);
 })();
 </script>
 </div>
-<h2 data-y="29113">Monetization Moments appeared after intent, not before.</h2>
-<div class="bd" data-y="29233"><p>Sign-up, subscription, and upgrade prompts were placed based on user state, page context, and intent. Prospects were prompted to create a free account after engaging with content, while Leads encountered subscription prompts when they tried to unlock more channels or paid-only content.</p></div>
-<div class="vis" data-w="1340" data-h="1533" data-y="29458"><div class="vin" style="width:1340px;height:1533px"><div class="a" data-id="0:276" style="left:0.00px;top:0.00px;width:1340px;height:1458px;overflow:hidden;"><img src="a/0_276.webp" alt="" style="width:100%;height:100%;object-fit:fill"></div><div class="a" data-id="0:269" style="top:1488.00px;height:45px;opacity:0.7;white-space:pre;font:400 24px/45px 'Overused Grotesk';color:#adadb2;left:0px;width:1340px;text-align:left;">Examples of contextual conversion moments across Freestream surfaces.</div></div></div>
-<div class="bd" data-y="31081"><p>With the experience rules translated into flows, the next question was how to validate the model safely in market without disrupting existing user behavior or risking conversion loss.</p></div>
+<h2 data-y="29113">Monetization moments appeared after intent, not before.</h2>
+<div class="bd" data-y="29233"><p>Users could browse and watch free content without signing up or paying. When they wanted more, they could create a free account, subscribe, upgrade, or make a purchase.</p></div>
+<div class="mm" data-y="29458">
+<style>
+.mm{margin:40px 0 0}
+.mm .g{display:grid;grid-template-columns:200px 1fr 1fr;gap:24px;padding:36px 0;border-top:1px solid rgba(255,255,255,.08)}
+.mm .g:first-of-type{border-top:0;padding-top:0}
+.mm .g:last-of-type{border-bottom:0;padding-bottom:0}
+.mm .n{display:block;font:500 12px/1 'Overused Grotesk',sans-serif;letter-spacing:.14em;color:#ff3b2f;margin-bottom:14px}
+.mm h3{margin:0 0 10px;color:#fff;font:500 17px/1.35 'Overused Grotesk',sans-serif}
+.mm .tx p{margin:0;color:#adadb2;font:400 15px/1.5 'Overused Grotesk',sans-serif}
+.mm figure{margin:0;min-width:0}
+.mm figure.wide{grid-column:2 / span 2}
+.mm .im{display:block;width:100%;padding:0;margin:0;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#111;border:1px solid #2a2a30;cursor:zoom-in;transition:border-color .15s,transform .2s}
+.mm .im:hover,.mm .im:focus-visible{border-color:#5c5c63;outline:none}
+.mm .im img{display:block;width:100%;height:100%;object-fit:cover}
+.mm figcaption{margin-top:10px;color:#83838a;font:400 13px/1.4 'Overused Grotesk',sans-serif}
+@media(max-width:760px){.mm .g{grid-template-columns:1fr;gap:20px;padding:28px 0}.mm figure.wide{grid-column:auto}}
+#mmlb{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;background:rgba(6,6,9,.94);padding:24px;cursor:zoom-out}
+#mmlb.on{display:flex}
+#mmlb img{max-width:min(1700px,100%);max-height:100%;width:auto;height:auto;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+#mmlb button{position:fixed;top:16px;right:20px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font:300 24px/40px 'Overused Grotesk',sans-serif;cursor:pointer}
+</style>
+<div class="g"><div class="tx"><span class="n">01</span><h3>Create a free account</h3><p>I showed the benefits of a free account, so users could see the value of signing up.</p></div><figure><button type="button" class="im" data-big="a/mm_banner_l.webp?v=4" aria-label="Enlarge: Create an account banner on Home"><img src="a/mm_banner.webp?v=4" alt="Create an account banner on Home" loading="lazy"></button><figcaption>Create an account banner on Home</figcaption></figure><figure><button type="button" class="im" data-big="a/mm_signup_l.webp?v=4" aria-label="Enlarge: Create a free account"><img src="a/mm_signup.webp?v=4" alt="Create a free account" loading="lazy"></button><figcaption>Create a free account</figcaption></figure></div>
+<div class="g"><div class="tx"><span class="n">02</span><h3>Explore Sling packages</h3><p>I connected packages on Home to detail pages showing included content and subscription options.</p></div><figure><button type="button" class="im" data-big="a/mm_flex_l.webp?v=4" aria-label="Enlarge: Flexible Subscriptions: Sling packages"><img src="a/mm_flex.webp?v=4" alt="Flexible Subscriptions: Sling packages" loading="lazy"></button><figcaption>Flexible Subscriptions: Sling packages</figcaption></figure><figure><button type="button" class="im" data-big="a/mm_orange_l.webp?v=4" aria-label="Enlarge: Sling package detail (Best of Sling Orange)"><img src="a/mm_orange.webp?v=4" alt="Sling package detail (Best of Sling Orange)" loading="lazy"></button><figcaption>Sling package detail (Best of Sling Orange)</figcaption></figure></div>
+<div class="g"><div class="tx"><span class="n">03</span><h3>Explore partner services</h3><p>I helped users discover partner services in Sling, explore their content, and continue to the partner to subscribe.</p></div><figure><button type="button" class="im" data-big="a/mm_hub_l.webp?v=4" aria-label="Enlarge: Streaming Hub: partner services"><img src="a/mm_hub.webp?v=4" alt="Streaming Hub: partner services" loading="lazy"></button><figcaption>Streaming Hub: partner services</figcaption></figure><figure><button type="button" class="im" data-big="a/mm_amc_l.webp?v=4" aria-label="Enlarge: Partner service detail (AMC)"><img src="a/mm_amc.webp?v=4" alt="Partner service detail (AMC)" loading="lazy"></button><figcaption>Partner service detail (AMC)</figcaption></figure></div>
+<div class="g"><div class="tx"><span class="n">04</span><h3>Rent or buy a movie</h3><p>I connected movies on Home to detail pages showing rental or purchase options and prices.</p></div><figure><button type="button" class="im" data-big="a/mm_rent_home_l.webp?v=4" aria-label="Enlarge: Rental title on Home"><img src="a/mm_rent_home.webp?v=4" alt="Rental title on Home" loading="lazy"></button><figcaption>Rental title on Home</figcaption></figure><figure><button type="button" class="im" data-big="a/mm_rent_detail_l.webp?v=4" aria-label="Enlarge: Rental detail page: Rent HD $5.99"><img src="a/mm_rent_detail.webp?v=4" alt="Rental detail page: Rent HD $5.99" loading="lazy"></button><figcaption>Rental detail page: Rent HD $5.99</figcaption></figure></div>
+<script>
+(function(){
+var root=document.currentScript.parentNode;
+var lb=document.getElementById('mmlb');
+if(!lb){lb=document.createElement('div');lb.id='mmlb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.innerHTML='<img alt=""><button type="button" aria-label="Close">\u00d7</button>';document.body.appendChild(lb);
+ function close(){lb.classList.remove('on');document.body.style.overflow=''}
+ lb.addEventListener('click',close);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+ lb._close=close}
+var last=null;
+root.querySelectorAll('.im').forEach(function(b){
+ b.addEventListener('click',function(){last=b;var im=lb.querySelector('img');im.src=b.getAttribute('data-big');im.alt=b.querySelector('img').alt;lb.classList.add('on');document.body.style.overflow='hidden'});
+});
+})();
+</script>
+</div>
+<div class="bd" data-y="31081"></div>
 <hr data-y="31440">
 <div class="lbl" data-y="31714">Execution &amp; Rollout</div>
 <h2 data-y="31811">“Shipped small. Learned fast. Scaled carefully.”</h2>
