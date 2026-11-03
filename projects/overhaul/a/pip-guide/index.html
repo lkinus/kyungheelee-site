@@ -74,9 +74,9 @@ body{display:flex;align-items:center;justify-content:center;overflow:hidden;font
 #pan{display:none}
 
 /* Replay control: shown once the demo has played through; clicking the image or the button plays it again */
-#rp{position:absolute;top:28px;right:28px;width:72px;height:72px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.55);background:rgba(10,10,18,.62);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s,background .2s;z-index:50}
-#rp:hover,#rp:focus-visible{background:rgba(255,255,255,.22);outline:none}
-#rp svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#rp{position:absolute;right:28px;bottom:28px;display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;border:0;background:rgba(20,20,26,.78);color:#fff;font:500 24px/1 Inter,system-ui,sans-serif;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s,background .2s;z-index:50}
+#rp:hover,#rp:focus-visible{background:rgba(48,48,58,.9);outline:none}
+#rp svg{width:40px;height:40px;flex:none;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 #stage.done{cursor:pointer}
 #stage.done #rp{opacity:1;pointer-events:auto}
 </style>
@@ -249,7 +249,7 @@ body{display:flex;align-items:center;justify-content:center;overflow:hidden;font
   /* Plays once; afterwards the key frame stays and the image (or the button) replays it */
   var reduce=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
   var rp=document.createElement('button');rp.id='rp';rp.type='button';rp.setAttribute('aria-label','Replay');
-  rp.innerHTML='<svg viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.4-5.5"/><path d="M4.5 4.5v4.2h4.2"/></svg>';stage.appendChild(rp);
+  rp.innerHTML='<svg viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.4-5.5"/><path d="M4.5 4.5v4.2h4.2"/></svg>Click to replay';stage.appendChild(rp);
   function replay(){if(!done)return;clear();running=false;done=false;stage.classList.remove('done');start()}
   stage.addEventListener('click',replay);
 
