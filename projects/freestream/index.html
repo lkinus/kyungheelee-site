@@ -484,17 +484,27 @@ b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function
 .tvx .L.on{opacity:1}
 .tvx .home{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .45s ease;pointer-events:none}
 .tvx .home.on{opacity:1}
-.tvx .hin{position:absolute;left:0;top:0;width:100%;aspect-ratio:1920/3446;transform:translateY(var(--sy,0%));transition:transform .5s cubic-bezier(.3,0,.2,1)}
+.tvx .hin{position:absolute;left:0;top:0;width:100%;aspect-ratio:1920/4046;transform:translateY(var(--sy,0%));transition:transform .5s cubic-bezier(.3,0,.2,1)}
 .tvx .hin>img{position:absolute;inset:0;width:100%;height:100%;display:block}
-.tvx .ring{position:absolute;border:calc(3/1920*100cqw) solid #fff;border-radius:calc(14/1920*100cqw);opacity:0;transition:opacity .12s;pointer-events:none}
+.tvx .tz{position:absolute;opacity:0;background:url(a/tv_home3.webp) no-repeat;border-radius:calc(8/1920*100cqw);transform-origin:50% 50%;transition:transform .2s ease,box-shadow .2s ease;pointer-events:none}
+.tvx .tz.act{opacity:1}
+.tvx .tz.on{transform:scale(var(--ts,1.05));box-shadow:0 calc(14/1920*100cqw) calc(34/1920*100cqw) rgba(0,0,0,.55)}
+.tvx .tz.on.p{transform:scale(calc(var(--ts,1.05) * .965))}
+.tvx .ring{position:absolute;border:calc(3/1920*100cqw) solid #fff;border-radius:calc(14/1920*100cqw);opacity:0;transition:opacity .12s,transform .14s ease;pointer-events:none}
+.tvx .ring::after{content:'';position:absolute;inset:0;border-radius:inherit;background:rgba(0,0,0,0);transition:background .14s}
+.tvx .ring.p{transform:scale(.965)}
+.tvx .ring.g{transition:left .2s ease,top .2s ease,width .2s ease,height .2s ease,opacity .12s,transform .14s ease}
+.tvx .ring.p::after{background:rgba(0,0,0,.24)}
 .tvx .ring.on{opacity:1}
 .tvx .ov{position:absolute;display:flex;align-items:center;justify-content:center;gap:calc(14/1920*100cqw);font:700 calc(26/1920*100cqw)/1 'Overused Grotesk',sans-serif;letter-spacing:.01em;border-radius:calc(4/1920*100cqw);pointer-events:none;transition:transform .25s cubic-bezier(.3,0,.2,1),background .15s,color .15s,box-shadow .25s}
-.tvx .ovw{left:11.98%;top:19.99%;width:15.83%;height:2.0%;background:#444550;color:#fff;box-sizing:border-box}
+.tvx .ovw{left:11.98%;top:17.03%;width:15.83%;height:1.71%;background:#444550;color:#fff;box-sizing:border-box}
 .tvx .ovw.f{background:#fff;color:#14141c}
 .tvx .ovw svg{width:calc(30/1920*100cqw);height:calc(30/1920*100cqw)}
-.tvx .ovc{left:17.08%;top:60.44%;width:16.15%;height:2.03%;background:#06288a;color:#fff;border:calc(3/1920*100cqw) solid #fff;box-sizing:border-box}
-.tvx .ovc.f{background:#fff;color:#0b1b4d;transform:scale(1.16);box-shadow:0 0 calc(28/1920*100cqw) rgba(255,255,255,.45)}
-.tvx .nav{position:absolute;left:0;top:0;width:8.854%;height:100%;z-index:3;display:block;object-fit:fill}
+.tvx .ovc{left:17.08%;top:61.34%;width:16.15%;height:1.73%;background:#06288a;color:#fff;border:calc(3/1920*100cqw) solid #fff;box-sizing:border-box}
+.tvx .ovc.f{background:#fff;color:#0b1b4d;transform:scale(1.08);box-shadow:0 0 calc(28/1920*100cqw) rgba(255,255,255,.45)}
+.tvx .ovc.f.p{transform:scale(.97);box-shadow:0 0 calc(10/1920*100cqw) rgba(255,255,255,.3);background:#e4e6ee}
+.tvx .nav{position:absolute;left:0;top:0;width:8.854%;height:100%;z-index:3;display:block;object-fit:fill;transition:opacity .15s ease}
+.tvx .nav.h{opacity:0}
 .tvx .pl{position:absolute;inset:0;z-index:30;opacity:0;transition:opacity .5s ease;pointer-events:none;color:#fff;font-family:'Overused Grotesk',sans-serif;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.45) 30%,rgba(0,0,0,0) 58%),linear-gradient(to bottom,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 18%)}
 .tvx .pl.on{opacity:1}
 .tvx .pl>*{position:absolute}
@@ -510,85 +520,124 @@ b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function
 .tvx .pl .tm{right:6.93%;top:77%;font-weight:500;font-size:calc(26/1920*100cqw)}
 .tvx .pl .bar{left:6.93%;right:6.93%;top:84.9%;height:calc(9/1920*100cqw);border-radius:calc(5/1920*100cqw);background:rgba(255,255,255,.28)}
 .tvx .pl .bar b{display:block;height:100%;width:62%;border-radius:inherit;background:#0aa0e8}
-.tvx .pl .bar u{position:absolute;left:0;top:50%;width:calc(14/1920*100cqw);height:calc(14/1920*100cqw);margin-top:calc(-7/1920*100cqw);border-radius:50%;background:#fff}
+.tvx .pl .bar u{position:absolute;left:62%;top:50%;width:calc(16/1920*100cqw);height:calc(16/1920*100cqw);margin:calc(-8/1920*100cqw) 0 0 calc(-8/1920*100cqw);border-radius:50%;background:#fff}
 .tvx .pl .mn{left:6.93%;top:92%;display:flex;gap:calc(70/1920*100cqw);font-weight:500;font-size:calc(26/1920*100cqw);letter-spacing:.01em;color:rgba(255,255,255,.62);text-transform:uppercase}
-.tvx .rkf{position:absolute;left:68.33%;top:80.28%;width:11.04%;height:14.72%;border:calc(5/1920*100cqw) solid #fff;border-radius:calc(10/1920*100cqw);box-shadow:0 0 0 100cqw rgba(0,0,0,.5);opacity:0;transform:scale(1);transition:opacity .5s ease,transform .6s cubic-bezier(.3,0,.2,1);pointer-events:none;z-index:90}
+.tvx .rkf{position:absolute;left:49.64%;top:67.87%;width:11.46%;height:15.19%;border:calc(5/1920*100cqw) solid #fff;border-radius:calc(10/1920*100cqw);box-shadow:0 0 0 100cqw rgba(0,0,0,.5);opacity:0;transform:scale(1);transition:opacity .5s ease,transform .6s cubic-bezier(.3,0,.2,1);pointer-events:none;z-index:90}
 .tvx .rkf.on{opacity:1;transform:scale(1.07)}
+.tvx .rkf.on.p{transform:scale(.97)}
+.tvx .blk{position:absolute;inset:0;background:#000;opacity:0;transition:opacity .3s ease;z-index:70;pointer-events:none}
+.tvx .blk.on{opacity:1}
+.tvx .tvs.nt .L,.tvx .tvs.nt .home{transition:none}
 .tvx .rpl{position:absolute;right:calc(28/1920*100cqw);bottom:calc(28/1920*100cqw);z-index:9999;display:flex;align-items:center;gap:calc(10/1920*100cqw);padding:calc(12/1920*100cqw) calc(22/1920*100cqw);border-radius:999px;background:rgba(20,20,26,.78);color:#fff;font:500 calc(24/1920*100cqw)/1 'Overused Grotesk',sans-serif;opacity:0;transition:opacity .4s;pointer-events:none}
 .tvx .rpl.on{opacity:1}
-.tvx .cap{margin:16px 0 0;min-height:24px;font:400 15px/1.5 'Overused Grotesk',sans-serif;color:#adadb2;display:flex;align-items:center;gap:12px}
+.tvx .cap{margin:16px 0 0;min-height:24px;font:400 15px/1.5 'Overused Grotesk',sans-serif;color:#adadb2;display:flex;align-items:center;justify-content:center;gap:12px;text-align:center}
 .tvx .cap i{flex:none;width:6px;height:6px;border-radius:50%;background:#ff3b2f}
 .tvx .cap span{transition:opacity .25s}
+.tvx details{margin:32px 0 0}
+.tvx summary{list-style:none;cursor:pointer;display:block;padding:12px 0;color:#fff;font:400 17px/1.5 'Overused Grotesk',sans-serif}
+.tvx summary::-webkit-details-marker{display:none}
+.tvx .evh{display:inline-flex;align-items:center;gap:12px;padding:1px 6px;margin:0 -6px;transition:color .15s}
+.tvx .evh svg{flex:none;color:#fff;transition:transform .25s,color .15s}
+.tvx details[open] .evh svg{transform:rotate(180deg)}
+.tvx summary:hover .evh,.tvx summary:focus-visible .evh{color:#ff0000}
+.tvx summary:hover .evh svg,.tvx summary:focus-visible .evh svg{color:#ff0000}
+.tvx .fl{margin:8px 0 0;max-width:760px;color:#adadb2;font:400 17px/1.5 'Overused Grotesk',sans-serif}
+.tvx .fli{display:block;width:100%;height:auto;margin:28px 0 0;border-radius:12px}
 @media (prefers-reduced-motion:reduce){.tvx .hin,.tvx .L,.tvx .home{transition:none}}
 </style>
 <div class="tvs" role="img" aria-label="Animated walkthrough of Freestream on TV: opening Sling from Roku, browsing free content, creating an account, watching a live channel, and choosing subscription content. Click to replay.">
 <img class="L rk on" src="a/tv_roku.webp" alt="">
 <div class="rkf"></div>
 <video class="L logo" src="a/tv_logo.mp4" muted playsinline preload="auto"></video>
-<div class="home"><div class="hin"><img src="a/tv_home.webp" alt="">
+<div class="home"><div class="hin"><img src="a/tv_home3.webp" alt="">
+<div class="tz"></div>
 <div class="ring"></div>
-<div class="ov ovw f"><svg viewBox="0 0 30 30" fill="none" aria-hidden="true"><circle cx="15" cy="15" r="12" stroke="#fff" stroke-width="2.4"/><path d="M12 9.5l9 5.5-9 5.5z" fill="#fff"/></svg>WATCH LIVE</div>
+<div class="ov ovw f"><svg viewBox="0 0 30 30" fill="none" aria-hidden="true"><circle cx="15" cy="15" r="12" stroke="currentColor" stroke-width="2.4"/><path d="M12 9.5l9 5.5-9 5.5z" fill="currentColor"/></svg>WATCH LIVE</div>
 <div class="ov ovc">CREATE ACCOUNT</div>
 </div>
 <img class="nav" src="a/tv_nav.webp" alt="">
 </div>
 <img class="L acct" src="a/tv_account.webp" alt="">
 <video class="L food" src="a/tv_food.mp4" muted playsinline preload="auto"></video>
-<img class="L sign" src="a/tv_signin.webp" alt="">
+<img class="L sign" src="a/tv_signin2.webp" alt="">
 <div class="pl"><div class="live"><i></i>LIVE</div><div class="ti">Guy’s Grocery Games</div><div class="su">Food Network • 23 mins left</div><div class="ct"><span class="cb"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="2.6" height="14"/><path d="M20 5v14L8.5 12z"/></svg></span>Play From Start<span class="rc"><b></b></span></div><div class="tm">37:00 / 60:00</div><div class="bar"><b></b><u></u></div><div class="mn"><span>Recent channels</span><span>More to watch</span><span>Details</span><span>Settings</span></div></div>
+<div class="blk"></div>
 <div class="rpl"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9a6 6 0 1 0 2-4.5M3 3v3.5h3.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Click to replay</div>
 </div>
-<p class="cap" aria-live="off"><i></i><span></span></p>
+<p class="cap" aria-live="off"><i></i><span>Roku: users open Sling from the home screen or press the Sling button on the remote.</span></p>
+<details>
+<summary><span class="evh"><span>View user flows</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+<p class="fl">The walkthrough shows one example. I designed flows across multiple entry points and user states, defining how users could browse, watch, create an account, and access paid content.</p>
+<img class="fli" src="a/flow_roku.webp" alt="Overview of Roku rental flows across entry points and user states." loading="lazy">
+</details>
 <script>
 (function(){
 var root=document.currentScript.parentNode, q=function(s){return root.querySelector(s)};
-var rk=q('.rk'),rkf=q('.rkf'),logo=q('.logo'),home=q('.home'),hin=q('.hin'),ring=q('.ring'),ovw=q('.ovw'),ovc=q('.ovc'),acct=q('.acct'),food=q('.food'),sign=q('.sign'),rpl=q('.rpl'),pl=q('.pl'),cap=q('.cap span'),stage=q('.tvs');
-var W=1920,H=3446,layers=[rk,logo,home,acct,food,sign],z=1,cur=rk;
+var rk=q('.rk'),rkf=q('.rkf'),logo=q('.logo'),home=q('.home'),hin=q('.hin'),ring=q('.ring'),tz=q('.tz'),ovw=q('.ovw'),ovc=q('.ovc'),acct=q('.acct'),food=q('.food'),sign=q('.sign'),rpl=q('.rpl'),pl=q('.pl'),blk=q('.blk'),nav=q('.nav'),cap=q('.cap span'),stage=q('.tvs');
+var W=1920,H=4046,layers=[rk,logo,home,acct,food,sign],z=1,cur=rk;
 function pos(el,b){el.style.left=b[0]/W*100+'%';el.style.top=b[1]/H*100+'%';el.style.width=(b[2]-b[0])/W*100+'%';el.style.height=(b[3]-b[1])/H*100+'%'}
 function scroll(y){hin.style.setProperty('--sy',(-y/H*100)+'%')}
-var T={watch:[232,691,532,756],killer:[208,946,583,1156],chef:[208,1267,583,1829],create:[330,2085,636,2151],food:[208,2318,743,2528],dexter:[208,2723,583,2933]};
+var T={watch:[232,691,532,756],killer:[209,947,583,1156],chef:[208,1267,584,1826],create:[330,2085,636,2151],food:[209,1930,742,2140],dexter:[209,2723,582,2932],orange:[209,3043,1003,3243]};
 
 function tile(b,p){return [b[0]-p,b[1]-p,b[2]+p,b[3]+p]}
-var run=0,timers=[];
+var run=0,timers=[],C0='Roku: users open Sling from the home screen or press the Sling button on the remote.';
 function sleep(ms,id){return new Promise(function(r){var t=setTimeout(function(){r(id===run)},ms);timers.push(t)})}
 function show(el){
   if(el===cur)return;var prev=cur;cur=el;el.style.zIndex=++z;el.classList.add('on');
   timers.push(setTimeout(function(){layers.forEach(function(e){if(e!==cur)e.classList.remove('on')})},520));
 }
+function back(el,ms){blk.classList.add('on');timers.push(setTimeout(function(){stage.classList.add('nt');snap(el);void stage.offsetWidth;stage.classList.remove('nt');timers.push(setTimeout(function(){blk.classList.remove('on')},120))},ms))}
 function snap(el){z=1;cur=el;layers.forEach(function(e){e.classList.toggle('on',e===el);e.style.zIndex=''})}
 function say(t){cap.style.opacity=0;setTimeout(function(){cap.textContent=t;cap.style.opacity=1},180)}
+function press(on){ring.classList.toggle('p',!!on);tz.classList.toggle('p',!!on)}
+function navh(h){nav.classList.toggle('h',!!h)}
 function focus(k,sy){
+  press(0);
   var onW=k==='watch',onC=k==='create';
   ovw.classList.toggle('f',onW);ovc.classList.toggle('f',onC);
-  if(onW||onC){ring.classList.remove('on')}else{pos(ring,tile(T[k],7));ring.classList.add('on')}
+  if(onW||onC){
+    ring.classList.remove('on');ring.classList.remove('g');tz.classList.remove('on');
+    timers.push(setTimeout(function(){if(!tz.classList.contains('on'))tz.classList.remove('act')},230));
+  }else{
+    var b=T[k],w=b[2]-b[0],h=b[3]-b[1],sc=1+24/Math.max(w,h),pad=6,cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2,fw=w*sc+pad*2,fh=h*sc+pad*2;
+    tz.classList.remove('on');pos(tz,b);tz.style.backgroundSize=(W/w*100)+'% auto';tz.style.backgroundPosition=(b[0]/(W-w)*100)+'% '+(b[1]/(H-h)*100)+'%';tz.style.setProperty('--ts',sc);tz.classList.add('act');
+    ring.classList.remove('g');pos(ring,[b[0]-pad,b[1]-pad,b[2]+pad,b[3]+pad]);ring.classList.add('on');
+    void tz.offsetWidth;
+    tz.classList.add('on');ring.classList.add('g');pos(ring,[cx-fw/2,cy-fh/2,cx+fw/2,cy+fh/2]);
+    ring.style.setProperty('--sx',1-16/fw);ring.style.setProperty('--sy',1-16/fh);
+  }
   scroll(sy);
 }
 function reset(){
   run++;timers.forEach(clearTimeout);timers=[];
   [logo,food].forEach(function(v){v.pause();try{v.currentTime=0}catch(e){}});
-  snap(rk);rkf.classList.remove('on');rpl.classList.remove('on');scroll(0);ring.classList.remove('on');pl.classList.remove('on');ovw.classList.add('f');ovc.classList.remove('f');cap.textContent='';
+  snap(rk);navh(0);blk.classList.remove('on');rkf.classList.remove('on');rpl.classList.remove('on');scroll(0);ring.classList.remove('on');press(0);tz.classList.remove('on','act');ring.classList.remove('g');ovc.classList.remove('p');rkf.classList.remove('p');pl.classList.remove('on');ovw.classList.add('f');ovc.classList.remove('f');cap.textContent=C0;cap.style.opacity=1;
 }
 async function play(){
   reset();var id=run;
   function s(ms){return sleep(ms,id)}
-  say('Roku: users open Sling from the home screen.');
   if(!await s(700))return; rkf.classList.add('on');
-  if(!await s(3800))return; rkf.classList.remove('on');
-  if(!await s(300))return; logo.currentTime=0;logo.play();show(logo);
-  if(!await s(3300))return; show(home);focus('watch',0);say('Home: free content plays without signing in.');
-  if(!await s(2400))return; focus('killer',250);
-  if(!await s(1400))return; focus('chef',850);
-  if(!await s(1400))return; focus('create',1500);say('After browsing, a banner offers a free account.');
-  if(!await s(1900))return; show(acct);say('The account screen shows what an account unlocks.');
-  if(!await s(4800))return; show(home);
-  if(!await s(1400))return; focus('food',2000);say('Free live channels start playing right away.');
-  if(!await s(1900))return; food.currentTime=0;food.play();show(food);timers.push(setTimeout(function(){pl.classList.add('on')},900));
-  if(!await s(6000))return; pl.classList.remove('on');show(home);timers.push(setTimeout(function(){food.pause()},520));
-  if(!await s(1400))return; focus('dexter',2000);say('Choosing subscription content leads to sign in or sign up.');
-  if(!await s(1900))return; show(sign);
-  if(!await s(4800))return; show(home);
-  if(!await s(3400))return; ring.classList.remove('on');show(rk);cap.style.opacity=0;
-  if(!await s(700))return; rpl.classList.add('on');cap.textContent='';
+  if(!await s(3500))return; rkf.classList.add('p');
+  if(!await s(240))return; rkf.classList.remove('on');
+  if(!await s(260))return; logo.currentTime=0;logo.play();show(logo);
+  if(!await s(3300))return; show(home);focus('watch',0);say('Watch free \u2014 No account required');
+  if(!await s(2400))return; focus('killer',490);
+  if(!await s(1400))return; focus('chef',984);
+  if(!await s(1400))return; focus('food',1513);
+  if(!await s(1650))return; press(1);
+  if(!await s(250))return; navh(1);food.currentTime=0;food.play();show(food);timers.push(setTimeout(function(){pl.classList.add('on')},900));
+  if(!await s(5700))return; pl.classList.remove('on');press(0);back(home,320);navh(0);timers.push(setTimeout(function(){food.pause()},360));
+  if(!await s(1800))return; focus('create',1906);say('Create a free account \u2014 Optional');
+  if(!await s(1650))return; ovc.classList.add('p');
+  if(!await s(250))return; navh(1);show(acct);
+  if(!await s(4800))return; ovc.classList.remove('p');navh(0);show(home);
+  if(!await s(1400))return; focus('dexter',2267);say('Watch subscription content \u2014 Subscription required');
+  if(!await s(1700))return; focus('orange',2581);
+  if(!await s(1650))return; press(1);
+  if(!await s(250))return; navh(1);show(sign);
+  if(!await s(4800))return; press(0);navh(0);show(home);
+  if(!await s(3000))return; ring.classList.remove('on');show(rk);cap.style.opacity=0;
+  if(!await s(700))return; rpl.classList.add('on');cap.textContent=C0;cap.style.opacity=1;
 }
 var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
 if(reduce){snap(home);cap.textContent='Home: free content plays without signing in.';return}
