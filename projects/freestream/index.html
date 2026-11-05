@@ -252,16 +252,16 @@ io.observe(r)})();
 .fsg .fsl button{appearance:none;border:0;background:transparent;color:#83838a;font:500 10px/15px 'Overused Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:5px 32px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s}
 .fsg .fsl button:hover{color:#fff}
 .fsg .fsl button.on{background:#fff;color:#000}
-.fsg .fsp{display:none;background:#d9d9dd;border-radius:10px;padding:7% 0 4.5%;text-align:center}
-.fsg .fsp.on{display:block;animation:fsgin .35s}
-@keyframes fsgin{from{opacity:0}to{opacity:1}}
+.fsg .fsw{display:grid}
+.fsg .fsp{grid-area:1/1;background:#d9d9dd;border-radius:10px;padding:7% 0 4.5%;text-align:center;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
+.fsg .fsp.on{opacity:1;visibility:visible;transition:opacity .3s ease,visibility 0s}
 .fsg .fsp img{display:block;width:80.4%;height:auto;margin:0 auto;border-radius:10px;box-shadow:0 3px 3px 0 rgba(0,0,0,.55),0 10px 10px 0 rgba(0,0,0,.75)}
 .fsg .fsp p{margin:24px 0 0;font:400 15px/1.5 'Overused Grotesk',sans-serif;color:#4a4a4e;text-align:center}
 @media (max-width:640px){.fsg .fsl button{padding:5px 14px;letter-spacing:.06em}.fsg .fsp p{font-size:12px}}
 </style>
 <div class="fsl" role="tablist"><button type="button" role="tab" class="on" aria-selected="true">Separate free app</button><button type="button" role="tab" aria-selected="false">Free section in the main menu</button></div>
-<div class="fsp on"><img src="a/0_231.webp" alt="Amazon Freevee on TV"><p>Reference: Amazon Freevee</p></div>
-<div class="fsp"><img src="a/0_232.webp" alt="Sling Free navigation concept with a Free item in the main menu"><p>Reference: Sling Free navigation concept</p></div>
+<div class="fsw"><div class="fsp on"><img src="a/0_231.webp" alt="Amazon Freevee on TV"><p>Reference: Amazon Freevee</p></div>
+<div class="fsp"><img src="a/0_232.webp" alt="Sling Free navigation concept with a Free item in the main menu"><p>Reference: Sling Free navigation concept</p></div></div>
 <script>
 (function(){var r=document.currentScript.parentNode,b=r.querySelectorAll('.fsl button'),p=r.querySelectorAll('.fsp');
 b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function(y,j){y.classList.toggle('on',i===j);y.setAttribute('aria-selected',i===j)});p.forEach(function(y,j){y.classList.toggle('on',i===j)})})})})();
@@ -334,7 +334,7 @@ b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function
 .fpr li:before{content:"·";position:absolute;left:0;color:#83838a}
 @media (max-width:760px){.fpr{grid-template-columns:1fr;gap:16px}}
 </style>
-<div><h3>What had to work first?</h3><ul><li>Access</li><li>Authentication</li><li>Playback</li><li>Entitlement</li></ul></div>
+<div><h3>What had to work first?</h3><ul><li>Access</li><li>Sign-in (authentication)</li><li>Playback</li><li>Paid-content access (entitlement)</li></ul></div>
 <div><h3>What needed validation?</h3><ul><li>Upsell timing</li><li>Account prompts</li><li>Paid impact</li><li>Free account creation vs. paid sign-up</li></ul></div>
 <div><h3>What could scale later?</h3><ul><li>More surfaces</li><li>Broader packaging</li><li>Deeper experimentation</li></ul></div>
 </div>
@@ -455,8 +455,7 @@ b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function
 <thead><tr><th>Touchpoint</th><th>Prospect</th><th>Lead</th><th>Paid</th><th>Former</th></tr></thead>
 <tbody>
 <tr><td data-l="Touchpoint">Web marketing banner → Freestream landing page</td><td data-l="Prospect">Watch free · Optional account creation · Sign in</td><td data-l="Lead">Continue to Freestream · Explore paid plans</td><td data-l="Paid">Continue to Sling · Manage subscription</td><td data-l="Former">Watch free · Account access · Optional restart offer</td></tr>
-<tr><td data-l="Touchpoint">Roku remote button → Sling TV app</td><td data-l="Prospect">Free browsing and viewing without signing in</td><td data-l="Lead">Free-account experience · Account features</td><td data-l="Paid">Existing subscription experience · Preserve current access</td><td data-l="Former">Free viewing and account features · Optional restart offer</td></tr>
-<tr><td data-l="Touchpoint">Sling TV and mobile app launch</td><td data-l="Prospect">Free browsing and viewing without signing in</td><td data-l="Lead">Free-account experience · Account features</td><td data-l="Paid">Existing subscription experience · Preserve current access</td><td data-l="Former">Free viewing and account features · Optional restart offer</td></tr>
+<tr><td data-l="Touchpoint">Roku remote button, Sling TV and mobile app launch</td><td data-l="Prospect">Free browsing and viewing without signing in</td><td data-l="Lead">Free-account experience · Account features</td><td data-l="Paid">Existing subscription experience · Preserve current access</td><td data-l="Former">Free viewing and account features · Optional restart offer</td></tr>
 </tbody></table></div>
 <details>
 <summary><span class="evh"><span>See the in-app touchpoints</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
@@ -548,7 +547,7 @@ b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function
 <div class="tvs" role="img" aria-label="Animated walkthrough of Freestream on TV: opening Sling from Roku, browsing free content, creating an account, watching a live channel, and choosing subscription content. Click to replay.">
 <img class="L rk on" src="a/tv_roku2.webp" alt="">
 <div class="rkf"></div>
-<video class="L logo" src="a/tv_logo.mp4" muted playsinline preload="auto"></video>
+<video class="L logo" src="a/tv_logo.mp4" muted playsinline preload="metadata"></video>
 <div class="home"><div class="hin"><img src="a/tv_home3.webp" alt="">
 <div class="tz"></div>
 <div class="ring"></div>
@@ -558,7 +557,7 @@ b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function
 <img class="nav" src="a/tv_nav.webp" alt="">
 </div>
 <img class="L acct" src="a/tv_account.webp" alt="">
-<video class="L food" src="a/tv_food.mp4" muted playsinline preload="auto"></video>
+<video class="L food" src="a/tv_food.mp4" muted playsinline preload="metadata"></video>
 <img class="L sign" src="a/tv_orange2.webp" alt="">
 <div class="pl"><div class="live"><i></i>LIVE</div><div class="ti">Guy’s Grocery Games</div><div class="su">Food Network • 23 mins left</div><div class="ct"><span class="cb"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="2.6" height="14"/><path d="M20 5v14L8.5 12z"/></svg></span>Play From Start<span class="rc"><b></b></span></div><div class="tm">37:00 / 60:00</div><div class="bar"><b></b><u></u></div><div class="mn"><span>Recent channels</span><span>More to watch</span><span>Details</span><span>Settings</span></div></div>
 <div class="blk"></div>
@@ -721,7 +720,7 @@ root.querySelectorAll('.im').forEach(function(b){
 <div class="st" role="img" aria-label="Animated walkthrough: pressing the Sling button on a Roku remote opens the Sling app on the TV and lands on its home screen. Click to replay.">
 <img class="bg" src="a/rk_bg.webp" alt="">
 <div class="scr">
-<video class="lg" src="a/tv_logo.mp4" muted playsinline preload="auto"></video>
+<video class="lg" src="a/tv_logo.mp4" muted playsinline preload="metadata"></video>
 <img class="hm" src="a/rk_home.webp" alt="">
 <div class="gl"></div>
 </div>
