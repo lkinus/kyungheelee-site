@@ -52,8 +52,8 @@ footer{margin-top:500px;height:100px;background:#0b0b0c;color:#83838a;font-size:
 .dots a.on circle{fill:#fff}
 .dots a:hover circle{stroke:#ff0000}
 .dots a.on:hover circle{fill:#ff0000}
-.dots a span{position:absolute;right:27px;top:1.4px;font:12px/14px Arial,Helvetica,sans-serif;letter-spacing:0;color:#fff;opacity:0;visibility:hidden;transition:opacity .3s cubic-bezier(.23,1,.32,1),visibility .3s;white-space:nowrap}
-.dots a:hover span{opacity:1;visibility:visible;color:#ff0000}
+.dots a span{position:absolute;right:27px;top:1.4px;font:12px/14px Arial,Helvetica,sans-serif;letter-spacing:0;color:#ff0000;opacity:0;visibility:hidden;transition:opacity .3s cubic-bezier(.23,1,.32,1),visibility .3s;white-space:nowrap}
+.dots a:hover span{opacity:1;visibility:visible}
 
 /* ===== GENERATED LAYOUT: desktop (1001px 이상) ===== */
 @media screen and (min-width:1001px){
