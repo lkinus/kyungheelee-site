@@ -66,8 +66,15 @@ hr+.lbl{margin-top:0}
 @media (max-width:700px){h2{font-size:22px}.lead{font-size:15px;line-height:24px}}
 
 main{padding-bottom:56px}
-.pgf{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;margin-top:96px}
-.pgf p{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;white-space:nowrap;font:400 14px/22.4px 'Overused Grotesk',sans-serif;color:#83838a}
+.pgf{position:relative;display:flex;justify-content:flex-end;align-items:center;min-height:22.4px;margin-top:96px}
+.pgf p{position:absolute;left:calc(50% + var(--fx,0px));top:0;transform:translateX(-50%);margin:0;white-space:nowrap;font:400 12px/22.4px 'Overused Grotesk',sans-serif;letter-spacing:.02em;color:#83838a}
+.pgf .top{font:400 12px/22.4px 'Overused Grotesk',sans-serif;letter-spacing:.02em;text-transform:uppercase;color:#adadb2;text-decoration:none;white-space:nowrap;transition:color .2s}
+.pgf .top:hover{color:#ff0000}
+@media (max-width:760px){.pgf{flex-direction:column;align-items:center;gap:4px}.pgf p{position:static;transform:none}}
+main>.bk{margin-left:0!important}
+main>.bk+.hero{margin-top:32px}
+.bk{position:absolute;top:56px;left:0;font:400 12px/22.4px 'Overused Grotesk',sans-serif;letter-spacing:.02em;text-transform:uppercase;color:#adadb2;text-decoration:none;white-space:nowrap;transition:color .2s}
+.bk:hover{color:#ff0000}
 
 .vis[role=button]{cursor:zoom-in}
 .vis[role=button]:focus-visible{outline:2px solid #ff0000;outline-offset:4px}
@@ -90,6 +97,7 @@ body.lbo{overflow:hidden}
 <body>
 <div id="navwrap"><nav id="nav" aria-label="Sections"><a href="#" data-y="2740">Context</a><a href="#" data-y="4712">Problem</a><a href="#" data-y="8523">The Goals</a><a href="#" data-y="9912">Measurement · Guardrails</a><a href="#" data-y="12056">Strategic Direction</a><a href="#" data-y="19789">Ecosystem Mapping</a><a href="#" data-y="23675">Experience Architecture</a><a href="#" data-y="27526">Experience Design</a><a href="#" data-y="31614">Execution &amp; Rollout</a><a href="#" data-y="36725">Impact</a><a href="#" data-y="38136">Closing</a></nav></div>
 <main>
+<a class="bk" href="../../">&larr; Back</a>
 <div class="vis hero" data-w="1340" data-h="42" data-y="150"><div class="vin" style="width:1340px;height:42px"><div class="a" data-id="0:43" style="left:0.00px;top:0.00px;width:270px;height:42px;"><img class="a" src="a/0_46.svg" alt="" style="left:0px;top:0px;width:77.74px;height:42px;filter:invert(1);"><img class="a" src="a/0_59.svg" alt="Sling Freestream" style="left:90.83px;top:7.14px;width:179.17px;height:27.27px;filter:invert(1);"></div></div></div>
 <h1 class="hero" data-y="378">Sling Freestream</h1>
 <p class="lead hero" data-y="504">I defined and designed Sling’s free, ad-supported streaming service from the ground up, integrating free access into its existing ecosystem while protecting the paid subscription business.</p>
@@ -798,7 +806,7 @@ io.observe(st);
 <div class="lbl" data-y="38236">Closing · Reflection</div>
 <h2 data-y="38333">I turned an undefined opportunity into a service Sling could launch.</h2>
 <div class="bd" data-y="38453"><p>Working with the PM, I gained leadership support for building Freestream within the existing Sling experience. I translated that direction into access rules, user journeys, and the screens for viewing, account creation, and paid options.</p><p>The tradeoff was simpler access for users and more complexity within the product. I worked through that complexity across user states and touchpoints, keeping free viewing open while preserving existing subscribers’ access.</p></div>
-<footer class="pgf" id="pgf"></footer>
+<footer class="pgf" id="pgf"><p>&copy; 2026 KYUNGHEE LEE l BUILT WITH CLAUDE CODE</p><a class="top" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">Back to deck &uarr;</a></footer>
 </main>
 <script>
 (function(){
@@ -834,8 +842,8 @@ io.observe(st);
     var m=96, t=tgt[tgt.length-1];
     if(t){ var vh=document.documentElement.clientHeight, sy=window.scrollY, mb=main.getBoundingClientRect().bottom+sy-cs, lt=ry(t); m=Math.max(0,Math.ceil(vh-(NAVTOP+1)-(mb-lt))); }
     if(Math.abs(m-cs)>=1){ foot.style.marginTop=m+'px'; wrap.style.height=Math.max(0,main.getBoundingClientRect().bottom-wrap.getBoundingClientRect().top)+'px'; }
-    var fp=foot.querySelector('p'); if(fp) fp.style.left=(document.documentElement.clientWidth/2-foot.getBoundingClientRect().left)+'px';   /* 문구는 본문 열이 아니라 화면 전체의 가운데 */
-  }
+    var fr=foot.getBoundingClientRect(); foot.style.setProperty('--fx',(document.documentElement.clientWidth/2-(fr.left+fr.width/2))+'px');   /* 문구는 본문 열이 아니라 화면 전체의 가운데 */
+      }
   function measure(){
     tgt=[];
     tops=links.map(function(a,i){
@@ -951,7 +959,7 @@ io.observe(st);
 (function(){
   if(!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)) return;
   var main=document.querySelector('main'); if(!main) return;
-  var items=[].slice.call(main.children).filter(function(e){return e.tagName!=='SCRIPT'&&e.tagName!=='STYLE'&&e.id!=='pgf'});
+  var items=[].slice.call(main.children).filter(function(e){return e.tagName!=='SCRIPT'&&e.tagName!=='STYLE'&&e.id!=='pgf'&&!e.classList.contains('bk')});
   items.forEach(function(e){e.style.transition='none'});   /* 숨기는 순간에는 전환 없이 (보였다 사라지는 깜빡임 방지) */
   items.forEach(function(e){e.classList.add('rv')});
   void document.body.offsetHeight;

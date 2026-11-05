@@ -41,7 +41,7 @@ img{display:block;max-width:none}
 .shot.pair img{flex:none}
 
 /* ---- footer ---- */
-footer{margin-top:500px;height:100px;background:#0b0b0c;color:#83838a;font-size:14px;line-height:22.4px;text-align:center}
+footer{margin-top:500px;height:100px;background:#0b0b0c;color:#83838a;font-size:12px;line-height:22.4px;text-align:center}
 .f-text{width:40vw;margin:0 auto;padding-top:27.5px}
 
 /* ---- dot navigation ---- */
