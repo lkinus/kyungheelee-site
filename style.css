@@ -21,12 +21,18 @@ img{display:block;max-width:none}
 .hero .inl{visibility:hidden}
 .hero .l-b{color:#fff}
 .hero .prj a,.hero .inl a{color:#fff}
+/* 링크: 본문과 같은 색 + 밑줄, 마우스를 올리면 빨강 */
+.hero .l-a,.hero .l-b,.hero .prj a,.hero .inl a,.hero .intro a{color:#d6d4cf;transition:color .2s}
+.hero .l-a a,.hero .l-b a{color:inherit}
+.hero .prj a:hover,.hero .inl a:hover,.hero .l-a a:hover,.hero .l-b a:hover,.hero .intro a:hover{color:#ff0000}
 
 /* ---- project header ---- */
 .head{position:relative;margin-top:500px;padding-left:12vw}
 .head h2{font-size:32px;line-height:37px;color:#fff;width:88vw;letter-spacing:-.03em}
 .head .desc{margin-top:33px;width:55.33vw;color:#d6d4cf}
 .head .info{position:absolute;left:72vw;top:70px;width:227px;color:#d6d4cf}
+.head .info a,.head .desc a{transition:color .2s}
+.head .info a:hover,.head .desc a:hover{color:#ff0000}
 
 /* ---- screenshots ---- */
 .shot{position:relative;margin-top:20px;margin-left:12vw;width:75.95vw}
