@@ -21,76 +21,167 @@
     var fig = tv.closest('figure') || tv.parentNode;
     var reduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
     var booted = false, api = null;
+    // 이미지가 화면 가운데 즈음에 있을 때(중심이 화면 중심에서 화면 높이의 20% 안)만 '보이는 것'으로 본다
+    function watch(el, cb) {
+      var last = null, busy = false;
+      function chk() {
+        busy = false;
+        var r = el.getBoundingClientRect(), vh = window.innerHeight || document.documentElement.clientHeight;
+        var on = r.bottom > 0 && r.top < vh && Math.abs((r.top + r.bottom) / 2 - vh / 2) < vh * 0.2;
+        if (on !== last) { last = on; cb(on); }
+      }
+      function sched() { if (!busy) { busy = true; setTimeout(chk, 60); } }
+      window.addEventListener('scroll', sched, { passive: true });
+      window.addEventListener('resize', sched);
+      setInterval(sched, 500);   // 스크롤 이벤트가 드물게 오는 환경 대비
+      chk();
+    }
     function boot(now) {
       if (booted) return; booted = true;
-      var id = tv.getAttribute('data-yt'), box = tv.querySelector('.vid');
-      var f = document.createElement('iframe');
-      // autoplay=0: 로드만 해 두고, 조건이 맞으면 재생 명령을 보낸다
-      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=0&mute=1&controls=0' +
-        '&playsinline=1&modestbranding=1&rel=0&disablekb=1&iv_load_policy=3&fs=0&enablejsapi=1';
-      f.allow = 'autoplay; encrypted-media'; f.title = 'The Walking Dead preview'; f.tabIndex = -1;
-      var dur = 0, since = now ? 0 : Date.now(), ready = false, started = false, fading = false, tvVisible = !!now,
-          away = false, paused = false, lastSeek = 0;
-      function cmd(fn, args) { f.contentWindow.postMessage(JSON.stringify({ event: 'command', func: fn, args: args || [] }), '*'); }
-      function start() {
-        if (started || !ready || !tvVisible || Date.now() - since < 1500) return;
-        started = true; cmd('mute'); cmd('seekTo', [0, true]); cmd('playVideo');
-      }
-      function onReady() { ready = true; start(); }
+      var src = tv.getAttribute('data-vid'), box = tv.querySelector('.vid');
+      var v = document.createElement('video');
+      v.src = src; v.muted = true; v.loop = false; v.playsInline = true; v.preload = 'auto'; v.tabIndex = -1;
+      v.setAttribute('aria-hidden', 'true');
+      box.appendChild(v);
+      var since = now ? 0 : Date.now(), tvVisible = !!now, away = false, paused = false, started = false;
+      function play() { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      function start() { if (started || !tvVisible || Date.now() - since < 800) return; started = true; play(); }
+      v.addEventListener('timeupdate', function () { if (v.currentTime > 25) v.currentTime = 0; });   // 처음부터 25초만 반복
+      v.addEventListener('ended', function () { v.currentTime = 0; if (!paused && !away) play(); });
+      v.addEventListener('playing', function () { if (!away && !paused) box.classList.add('on'); });
       var poll = setInterval(function () { if (started) clearInterval(poll); else start(); }, 200);
-      function goAway() { if (!started || away) return; away = true; box.classList.remove('on'); if (!paused) cmd('pauseVideo'); }
-      function comeBack() {
-        if (!away || !tvVisible || document.hidden) return;
-        away = false; if (!paused) setTimeout(function () { cmd('playVideo'); }, 600);
-      }
-      // TV 화면이 보이지 않는 동안에는 영상을 숨기고 멈춰 두었다가, 다시 보이면 이어서 재생한다.
-      // (브라우저·YouTube 가 화면 밖 영상을 알아서 멈추면 재생/일시정지 아이콘이 가운데 뜨기 때문에 직접 처리)
-      new IntersectionObserver(function (e2) {
-        var vis = e2[0].isIntersecting;
+      function goAway() { if (!started || away) return; away = true; box.classList.remove('on'); if (!paused) v.pause(); }
+      function comeBack() { if (!away || !tvVisible || document.hidden) return; away = false; if (!paused) play(); }
+      // TV 화면이 보이지 않는 동안에는 영상을 숨기고 멈춰 두었다가, 다시 보이면 이어서 재생한다
+      watch(tv.parentNode, function (vis) {
         if (vis && !tvVisible) { tvVisible = true; if (!started) since = Math.max(since, Date.now()); }
         if (!vis) tvVisible = false;
         if (vis) comeBack(); else goAway();
-      }, { threshold: 0.25 }).observe(tv.parentNode);
-      // 다른 탭으로 갔다 오는 경우도 같은 방식으로 처리한다
-      document.addEventListener('visibilitychange', function () { if (document.hidden) goAway(); else comeBack(); });
-      // 반복은 YouTube 의 loop/playlist 대신 직접 처리한다 (playlist 모드는 이전/다음 버튼을 띄우고, 영상이 끝까지 가면
-      // "다시 재생" 아이콘이 가운데 뜨므로 끝나기 직전에 처음으로 돌린다)
-      window.addEventListener('message', function (e) {
-        if (e.source !== f.contentWindow) return;
-        var d; try { d = JSON.parse(e.data); } catch (_) { return; }
-        var inf = d.info || {};
-        if (d.event === 'onReady') onReady();
-        var st = d.event === 'onStateChange' ? d.info : (d.event === 'infoDelivery' ? inf.playerState : undefined);
-        // 재생이 시작(또는 재개)되면 YouTube 가 가운데에 잠깐 띄우는 아이콘이 사라질 때까지 숨겨 두었다가 나타나게 한다
-        if (st === 1 && started && !away && !paused && !box.classList.contains('on') && !fading) {
-          fading = true; setTimeout(function () { if (!away && !paused) box.classList.add('on'); fading = false; }, 2000);
-        }
-        if (d.event === 'onStateChange' && d.info === 0 && !paused) { box.classList.remove('on'); cmd('seekTo', [0, true]); cmd('playVideo'); }
-        if (inf.duration) dur = inf.duration;   // duration 과 currentTime 은 다른 메시지로 오므로 따로 기억해 둔다
-        if (started && !away && !paused && dur && inf.currentTime && inf.currentTime > dur - 1.2 && Date.now() - lastSeek > 3000) { lastSeek = Date.now(); cmd('seekTo', [0, true]); }
       });
-      f.onload = function () {
-        f.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), '*');
-        setTimeout(onReady, 1500);   // onReady 메시지를 못 받는 경우 대비 (재생이 시작되기 전에는 화면에 나오지 않음)
-      };
-      box.appendChild(f);
+      document.addEventListener('visibilitychange', function () { if (document.hidden) goAway(); else comeBack(); });
       // 클릭: 아직 시작 전이면 바로 시작, 재생 중이면 일시정지(사진으로 페이드아웃), 일시정지 중이면 재생
       api = { click: function () {
         if (!started) { tvVisible = true; since = 0; start(); return; }
-        if (!paused) { paused = true; box.classList.remove('on'); cmd('pauseVideo'); }
-        else { paused = false; cmd('playVideo'); }
+        if (!paused) { paused = true; box.classList.remove('on'); v.pause(); }
+        else { paused = false; play(); }
       } };
     }
     fig.style.cursor = 'pointer';
     fig.addEventListener('click', function () { if (!booted) boot(true); else api.click(); });
     if (!reduced) {
       // TV 화면이 보이기 시작하면(위에서 내려오든 아래에서 올라오든) 영상을 준비하고 1.5초 뒤에 재생한다
-      new IntersectionObserver(function (es, ob) {
-        if (!es[0].isIntersecting) return;
-        ob.disconnect(); boot(false);
-      }, { threshold: 0.25 }).observe(tv.parentNode);
+      watch(tv.parentNode, function (on) { if (on && !booted) boot(false); });
     }
   }
+
+  // 홈 두 번째 목업(노트북): 화면이 보이면 1.5초 뒤 음소거 영상을 반복 재생하고, 화면 밖이면 멈춘다. 클릭하면 일시정지/재생.
+  (function () {
+  var bw = document.querySelector('.bws');
+  if (bw && bw.getAttribute('data-vid') && 'IntersectionObserver' in window) {
+    var bfig = bw.closest('figure') || bw.parentNode;
+    var breduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var booted = false, api = null;
+    function watch(el, cb) {
+      var last = null, busy = false;
+      function chk() {
+        busy = false;
+        var r = el.getBoundingClientRect(), vh = window.innerHeight || document.documentElement.clientHeight;
+        var on = r.bottom > 0 && r.top < vh && Math.abs((r.top + r.bottom) / 2 - vh / 2) < vh * 0.2;
+        if (on !== last) { last = on; cb(on); }
+      }
+      function sched() { if (!busy) { busy = true; setTimeout(chk, 60); } }
+      window.addEventListener('scroll', sched, { passive: true });
+      window.addEventListener('resize', sched);
+      setInterval(sched, 500);   // 스크롤 이벤트가 드물게 오는 환경 대비
+      chk();
+    }
+    function boot(now) {
+      if (booted) return; booted = true;
+      var box = bw.querySelector('.vid');
+      var v = document.createElement('video');
+      v.src = bw.getAttribute('data-vid'); v.muted = true; v.loop = false; v.playsInline = true; v.preload = 'auto'; v.tabIndex = -1;
+      v.setAttribute('aria-hidden', 'true');
+      box.appendChild(v);
+      var since = now ? 0 : Date.now(), vis = !!now, away = false, paused = false, started = false;
+      function play() { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      function start() { if (started || !vis || Date.now() - since < 800) return; started = true; play(); }
+      v.addEventListener('timeupdate', function () { if (v.currentTime > 25) v.currentTime = 0; });   // 처음부터 25초만 반복
+      v.addEventListener('ended', function () { v.currentTime = 0; if (!paused && !away) play(); });
+      v.addEventListener('playing', function () { if (!away && !paused) box.classList.add('on'); });
+      var poll = setInterval(function () { if (started) clearInterval(poll); else start(); }, 200);
+      function goAway() { if (!started || away) return; away = true; box.classList.remove('on'); if (!paused) v.pause(); }
+      function comeBack() { if (!away || !vis || document.hidden) return; away = false; if (!paused) play(); }
+      watch(bw.parentNode, function (on) {
+        if (on && !vis) { vis = true; if (!started) since = Math.max(since, Date.now()); }
+        if (!on) vis = false;
+        if (on) comeBack(); else goAway();
+      });
+      document.addEventListener('visibilitychange', function () { if (document.hidden) goAway(); else comeBack(); });
+      api = { click: function () {
+        if (!started) { vis = true; since = 0; start(); return; }
+        if (!paused) { paused = true; box.classList.remove('on'); v.pause(); }
+        else { paused = false; play(); }
+      } };
+    }
+    bfig.style.cursor = 'pointer';
+    bfig.addEventListener('click', function () { if (!booted) boot(true); else api.click(); });
+    if (!breduced) {
+      watch(bw.parentNode, function (on) { if (on && !booted) boot(false); });
+    }
+  }
+  })();
+
+  // 홈 세 번째 목업(태블릿·폰): 영상의 시작 프레임이 바로 보이고, 화면 가운데 즈음에 있을 때만 재생한다. 클릭하면 일시정지/재생.
+  (function () {
+  var wrap = document.querySelector('.tbwrap');
+  if (wrap && wrap.getAttribute('data-vid')) {
+    var tfig = wrap.closest('figure') || wrap.parentNode;
+    var treduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var items = [].slice.call(wrap.querySelectorAll('.tbw')).map(function (box) {
+      var v = document.createElement('video');
+      v.src = wrap.getAttribute('data-vid'); v.muted = true; v.playsInline = true; v.preload = 'metadata'; v.tabIndex = -1;
+      v.setAttribute('aria-hidden', 'true'); v.setAttribute('playsinline', '');
+      box.querySelector('.vid').appendChild(v);
+      var frac = parseFloat(box.getAttribute('data-start')) || 0;
+      var it = { v: v, play: false };
+      var sought = false;
+      function seek() { if (v.duration && isFinite(v.duration)) { v.currentTime = v.duration * frac; sought = true; } }
+      v.addEventListener('loadedmetadata', seek);
+      v.addEventListener('canplay', function () { if (!sought) seek(); });
+      function loopSeg() { var s = v.duration * frac; if (v.duration && v.currentTime > s + 25) v.currentTime = s; }   // 시작 지점부터 25초만 반복
+      v.addEventListener('timeupdate', loopSeg);
+      v.addEventListener('ended', function () { seek(); if (it.play) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } });
+      return it;
+    });
+    var focus = false, userPaused = false;
+    function apply() {
+      items.forEach(function (it) {
+        var want = focus && !userPaused && !treduced;
+        if (want && it.v.paused) { var p = it.v.play(); if (p && p.catch) p.catch(function () {}); }
+        if (!want && !it.v.paused) it.v.pause();
+        it.play = want;
+      });
+    }
+    function watch(el, cb) {
+      var last = null, busy = false;
+      function chk() {
+        busy = false;
+        var r = el.getBoundingClientRect(), vh = window.innerHeight || document.documentElement.clientHeight;
+        var on = r.bottom > 0 && r.top < vh && Math.abs((r.top + r.bottom) / 2 - vh / 2) < vh * 0.2;
+        if (on !== last) { last = on; cb(on); }
+      }
+      function sched() { if (!busy) { busy = true; setTimeout(chk, 60); } }
+      window.addEventListener('scroll', sched, { passive: true });
+      window.addEventListener('resize', sched);
+      setInterval(sched, 500);
+      chk();
+    }
+    watch(tfig, function (on) { focus = on; apply(); });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) { var f = focus; focus = false; apply(); focus = f; } else apply(); });
+    tfig.style.cursor = 'pointer';
+    tfig.addEventListener('click', function () { userPaused = !userPaused; if (!userPaused) focus = true; apply(); });
+  }
+  })();
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update);
   update();
