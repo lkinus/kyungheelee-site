@@ -840,7 +840,7 @@ io.observe(st);
 <div class="lbl" data-y="38236">Closing · Reflection</div>
 <h2 data-y="38333">I turned an undefined opportunity into a service Sling could launch.</h2>
 <div class="bd" data-y="38453"><p>Working with the PM, I gained leadership support for building Freestream within the existing Sling experience. I translated that direction into access rules, user journeys, and the screens for viewing, account creation, and paid options.</p><p>The tradeoff was simpler access for users and more complexity within the product. I worked through that complexity across user states and touchpoints, keeping free viewing open while preserving existing subscribers’ access.</p></div>
-<footer class="pgf" id="pgf"><p>&copy; 2026 KYUNGHEE LEE l BUILT WITH CLAUDE CODE</p><a class="top" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">Back to deck &uarr;</a></footer>
+<footer class="pgf" id="pgf"><p>&copy; 2026 KYUNGHEE LEE l BUILT WITH CLAUDE CODE</p></footer>
 </main>
 <script>
 (function(){
@@ -1005,5 +1005,20 @@ io.observe(st);
   items.forEach(function(e){io.observe(e)});
 })();
 </script>
-</body>
+<style>
+.ftop{position:fixed;right:24px;bottom:24px;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.06);color:#83838a;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .3s,transform .3s,visibility .3s,background .2s,color .2s;z-index:50;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);-webkit-tap-highlight-color:transparent}
+.ftop.on{opacity:1;visibility:visible;transform:none}
+.ftop:hover,.ftop:focus-visible{background:rgba(255,255,255,.12);color:#ff0000;outline:0}
+.ftop svg{width:16px;height:16px;display:block}
+@media(max-width:700px){.ftop{width:32px;height:32px;right:16px;bottom:16px}}
+@media (prefers-reduced-motion:reduce){.ftop{transition:none;transform:none}}
+</style>
+<button class="ftop" type="button" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V3M3.5 7.5L8 3l4.5 4.5"/></svg></button>
+<script>(function(){var b=document.querySelector('.ftop'),ft=document.querySelector('.pgf'),fp=ft&&ft.querySelector('p');if(!b)return;var t=false,M=24;
+function u(){t=false;var y=window.pageYOffset||document.documentElement.scrollTop,vw=document.documentElement.clientWidth,vh=window.innerHeight,h=b.offsetHeight||36;b.classList.toggle('on',y>400);
+var top=vh-M-h;if(fp){var r=fp.getBoundingClientRect();top=Math.min(top,r.top+r.height/2-h/2)}
+b.style.top=top+'px';b.style.bottom='auto'}
+function q(){if(!t){t=true;requestAnimationFrame(u)}}
+window.addEventListener('scroll',q,{passive:true});window.addEventListener('resize',q);window.addEventListener('load',u);u();
+b.addEventListener('click',function(){var r=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;window.scrollTo({top:0,behavior:r?'auto':'smooth'})})})();</script></body>
 </html>
