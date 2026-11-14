@@ -870,32 +870,35 @@ Engagement</div><div class="a" data-id="0:142" style="left:865.00px;top:401.96px
 <style>
 .tg2{margin:40px 0}
 .tg2 .tgl.ba{margin-bottom:11px}
-.tg2 .tgl.pf{width:max-content;margin:0 auto 17px;padding:3px;gap:0;background:rgba(255,255,255,.06);border:0;border-radius:999px}
-.tg2 .tgl.pf button{position:relative;padding:3px 48px;font-size:11px;line-height:18px;background:transparent;border-radius:0;color:#83838a}
-.tg2 .tgl.pf button+button:before{content:"";position:absolute;left:0;top:50%;width:1px;height:12px;background:rgba(255,255,255,.22);transform:translateY(-50%)}
-.tg2 .tgl.pf button:hover,.tg2 .tgl.pf button.on{background:transparent;color:#fff}
-@media (max-width:600px){.tg2 .tgl.ba button{padding:5px 14px}.tg2 .tgl.pf button{padding:5px 14px;font-size:11px}}
+.tg2 .tgl.pf{position:relative;width:max-content;margin:0 auto 17px;padding:4px;gap:0;background:#141416;border:0;border-radius:999px}
+.tg2 .tgl.pf .th{position:absolute;left:0;top:4px;bottom:4px;width:0;border-radius:999px;background:#26262b;pointer-events:none;transition:transform .3s cubic-bezier(.4,0,.2,1),width .3s cubic-bezier(.4,0,.2,1)}
+.tg2 .tgl.pf.nt .th{transition:none}
+.tg2 .tgl.pf button{position:relative;z-index:1;min-width:112px;padding:5px 0;text-align:center;font-size:11px;line-height:18px;background:transparent;border:0;border-radius:999px;color:#83838a;transition:color .25s}
+.tg2 .tgl.pf button:hover{background:transparent;color:#cfcfd4}
+.tg2 .tgl.pf button.on,.tg2 .tgl.pf button.on:hover{background:transparent;color:#fff}
+@media (prefers-reduced-motion:reduce){.tg2 .tgl.pf .th{transition:none}}
+@media (max-width:600px){.tg2 .tgl.ba button{padding:5px 14px}.tg2 .tgl.pf button{min-width:0;padding:5px 18px;font-size:11px}}
 </style>
 <script>
 (function(){
   document.querySelectorAll('.tg2').forEach(function(t){
     var ba=[].slice.call(t.querySelectorAll('.tgl.ba button')),pf=[].slice.call(t.querySelectorAll('.tgl.pf button')),ps=[].slice.call(t.querySelectorAll('.tgbody>.vis')),row=t.querySelector('.tgl.pf'),body=t.querySelector('.tgbody');
-    var mode=0,plat=0;
-    function fit(){var on=body.querySelector(':scope>.vis.on');if(on)body.style.height=on.offsetHeight+'px'}
+    var mode=0,plat=0,th=document.createElement('span');th.className='th';row.insertBefore(th,row.firstChild);row.classList.add('nt');
+    function slide(){var b=pf[plat];if(!b)return;th.style.width=b.offsetWidth+'px';th.style.transform='translateX('+b.offsetLeft+'px)'}
+    function fit(){var on=body.querySelector(':scope>.vis.on');if(on)body.style.height=on.offsetHeight+'px';row.classList.add('nt');slide();void row.offsetWidth;row.classList.remove('nt')}
     function render(){
       ba.forEach(function(b,i){b.classList.toggle('on',i===mode);b.setAttribute('aria-selected',i===mode)});
       pf.forEach(function(b,i){b.classList.toggle('on',i===plat);b.setAttribute('aria-selected',i===plat)});
       row.style.visibility=mode?'visible':'hidden';
       var a=mode?1+plat:0;
-      ps.forEach(function(x,j){x.classList.toggle('on',j===a)});fit();
+      ps.forEach(function(x,j){x.classList.toggle('on',j===a)});var on=body.querySelector(':scope>.vis.on');if(on)body.style.height=on.offsetHeight+'px';slide();
     }
     ba.forEach(function(b,i){b.addEventListener('click',function(){mode=i;render()})});
     pf.forEach(function(b,i){b.addEventListener('click',function(){plat=i;render()})});
-    window.addEventListener('resize',fit);window.addEventListener('load',fit);render();
+    window.addEventListener('resize',fit);window.addEventListener('load',fit);render();fit();
   });
 })();
-</script>
-<style>
+</script><style>
 .ftop{position:fixed;right:24px;bottom:24px;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.06);color:#83838a;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .3s,transform .3s,visibility .3s,background .2s,color .2s;z-index:50;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);-webkit-tap-highlight-color:transparent}
 .ftop.on{opacity:1;visibility:visible;transform:none}
 .ftop:hover,.ftop:focus-visible{background:rgba(255,255,255,.12);color:#ff0000;outline:0}
@@ -905,7 +908,7 @@ Engagement</div><div class="a" data-id="0:142" style="left:865.00px;top:401.96px
 </style>
 <button class="ftop" type="button" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V3M3.5 7.5L8 3l4.5 4.5"/></svg></button>
 <script>(function(){var b=document.querySelector('.ftop'),ft=document.querySelector('.pgf'),fp=ft&&ft.querySelector('p');if(!b)return;var t=false,M=24;
-function u(){t=false;var y=window.pageYOffset||document.documentElement.scrollTop,vw=document.documentElement.clientWidth,vh=window.innerHeight,h=b.offsetHeight||36;b.classList.toggle('on',y>400);
+function u(){t=false;var y=window.pageYOffset||document.documentElement.scrollTop,vh=window.innerHeight,h=b.offsetHeight||36;b.classList.toggle('on',y>400);
 var top=vh-M-h;if(fp){var r=fp.getBoundingClientRect();top=Math.min(top,r.top+r.height/2-h/2)}
 b.style.top=top+'px';b.style.bottom='auto'}
 function q(){if(!t){t=true;requestAnimationFrame(u)}}
